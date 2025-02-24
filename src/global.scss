@@ -1,0 +1,740 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  font-family: var(--ion-font-family);
+}
+.ion-bg-transparent {
+  background: transparent;
+}
+.ion-no-padding-vertical {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.mb2{margin-bottom:15px !important;}
+.mt2{margin-top:15px !important;}
+.warningBt{
+    --background:transparent;
+    --border-color: var(--warningBt);
+    --border-width: 2px;
+    height: 42px;
+    font-weight: 600;
+    font-family: var(--ion-font-family-secondary) !important;
+    --color: var(--warningBt);
+    --box-shadow: none; 
+    border-radius: 40px;
+}
+.secondaryBt{
+  --background:transparent;
+  --border-color: var(--secondaryBt);
+  --border-width: 2px;
+  height: 42px;
+  font-weight: 600;
+  font-family: var(--ion-font-family-secondary) !important;
+  --color: var(--secondaryBt);
+  --box-shadow: none;
+  border-radius: 40px;
+}
+
+
+.ionNoPaddingLeft{padding-left:0px !important;}
+.dashboardBg:before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  left: 0px;
+  top: 0px;
+  background: url(assets/images/pages-bg.png) no-repeat top center / cover;
+}
+
+.dashboardBg:after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  left: 0px;
+  top: 0px;
+  background: #101040a8;
+}
+
+.dashboardBg.pageBg:after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  left: 0px;
+  top: 0px;
+  background: rgb(16 16 64 / 86%);
+}
+
+.loginBg:before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  left: 0px;
+  top: 0px;
+  background: url(assets/images/login-bg.png) no-repeat top center / cover;
+}
+
+.loginnoc {
+  padding-left: 35px;
+  padding-right: 35px;
+  margin-top: 40%;
+  .ionInput {
+    position: relative;
+    margin-bottom: 18px;
+  }
+  h1 {
+    color: var(--whiteTextColor);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    padding-left: 10px;
+  }
+  ion-img {
+    width: 190px;
+    margin: auto;
+  }
+  .label-text-wrapper {
+    color: var(--lightblueText);
+  }
+  ion-input {
+    --color: var(--whiteTextColor);
+    --border-color: var(--formControlBorderColor) !important;
+    --border-width: 2px;
+    --highlight-color-focused: #bfb6f0;
+    --placeholder-color: #bfb6f0;
+
+    font-family: var(--ion-font-family-secondary) !important;
+  }
+  ion-list {
+    background: transparent;
+  }
+  ion-item {
+    --background: transparent;
+    --inner-padding-start: 0px;
+    --inner-padding-end: 0px;
+    margin-bottom: 20px;
+  }
+  .loginBt {
+    --background: #4b3f97;
+    --border-color: var(--formControlBorderColor);
+    --border-width: 2px;
+    height: 42px;
+    font-weight: 600;
+    font-family: var(--ion-font-family-secondary) !important;
+    --color: var(--lightblueText);
+    --box-shadow: none;
+    border: solid 2px var(--formControlBorderColor);
+    border-radius: 40px;
+  }
+
+  .textLinkLogin {
+    color: var(--yellowText);
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: var(--ion-font-family-secondary) !important;
+    display: block;
+    padding-left: 10px;
+    margin-top: 30px;
+  }
+}
+
+ion-item.userNameDash {
+  --inner-padding-start: 0px;
+  --inner-padding-end: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  h5 {
+    color: var(--whiteTextColor);
+    font-size: 1rem;
+    font-family: var(--ion-font-family-secondary) !important;
+    font-weight: 500;
+  }
+}
+
+.dashboardHeader {
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --inner-padding-end: 0px;
+  width: 100%;
+
+  ion-thumbnail {
+    margin-bottom: auto;
+    margin-top: 0px;
+    background: #06071e8c;
+    --border-radius: 100%;
+    width: 45px;
+    height: 45px;
+    margin-right: 12px;
+    ion-img {
+      padding: 10px;
+    }
+  }
+
+  ion-button {
+    --padding-start: 0px;
+    --padding-end: 0px;
+    font-size: 0.7rem;
+  }
+
+  .notificationsIcon {
+    overflow: visible;
+
+    .alertNotifi {
+      position: absolute;
+      top: -6px;
+      right: 0px;
+      font-size: 8px;
+      color: #f44747;
+      border: solid 1px #fff;
+      border-radius: 100%;
+    }
+  }
+}
+
+.headerBts {
+  margin-top: 0px;
+  ion-button {
+    margin-left: 10px;
+    --background: #393c63;
+    --box-shadow: 0px 2px 5px #3b3b3b66;
+    border-radius: 100%;
+    width: 32px;
+    height: 32px;
+    min-height: 26px;
+    --padding-start: 0px;
+    --padding-end: 0px;
+    ion-img {
+      width: 20px;
+    }
+  }
+}
+
+ion-text.headingdash {
+  text-align: center;
+  padding-top: 10px;
+  display: block;
+  margin-bottom: 20px;
+
+  h1 {
+    color: var(--whiteTextColor);
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  p {
+    color: var(--whiteTextColor);
+    font-weight: 400;
+    padding: 0px;
+    margin: 0px;
+    font-size: 0.65rem;
+  }
+}
+
+.cardDash {
+  ion-button {
+    width: 100%;
+    --background: #ffdf6975;
+    --padding-start: 0px;
+    --padding-end: 0px;
+    height: 145px;
+    --border-radius: 20px;
+
+    h2 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      margin: 0px;
+    }
+    h6 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 6px 0px 0px 0px;
+    }
+  }
+}
+
+.latestUpdatesDash {
+  margin-top: 20px;
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--whiteTextColor);
+    float: left;
+    padding-left: 25px;
+  }
+  h5 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--whiteTextColor);
+    float: right;
+    padding-right: 25px;
+  }
+  swiper-container {
+    overflow: visible;
+    width: 100%;
+    padding-left: 10px;
+  }
+  swiper-slide {
+    display: flex;
+    position: relative;
+    // flex-direction: column;
+    // flex-shrink: 0;
+    align-items: start;
+    justify-content: start;
+    width: 90% !important;
+    height: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  ion-card {
+    width: 100%;
+    padding-left: 12px;
+    padding-left: 12px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    margin: 0px;
+    box-shadow: none;
+    --background: #fede6775;
+    text-align: center;
+    border-radius: 10px;
+
+    ion-text {
+      color: var(--whiteTextColor);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--whiteTextColor);
+    }
+    .swiperNum {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-right: 9px;
+    }
+  }
+}
+
+.cardColor1 {
+  --background: #fede6775 !important;
+}
+.cardColor2 {
+  --background: #0d86848c !important;
+}
+.cardColor3 {
+  --background: #9b69dc69 !important;
+}
+.cardColor4 {
+  --background: #e6895563 !important;
+}
+
+ion-header {
+  background: #1b1d43;
+  --box-shadow: none;
+  ion-toolbar {
+    --background: transparent;
+    --box-shadow: none;
+    ion-title {
+      color: var(--whiteTextColor);
+      font-size: 0.86rem;
+      padding: 0px 0px 0px 7px;
+      font-weight: 700;
+      line-height: 48px;
+  
+    }
+
+    ion-title.lineByLineText{   
+        line-height: 17px;
+      padding-top: 7px;}
+
+    ion-back-button{
+      min-width: 20px;
+      float: left;
+      color: #fff;
+      --padding-start: 0px;
+      --padding-end: 0px;
+      --margin-start: 0px;
+      --margin-end: 0px;
+      width: 25px;
+    }
+  }
+}
+
+ion-searchbar {
+  --border-radius: 40px !important;
+  font-family: var(--ion-font-family-secondary) !important;
+  border: solid 2px var(--formControlBorderColor);
+  border-radius: 40px;
+  box-shadow: none;
+  --color: var(--whiteTextColor) !important;
+  --background: transparent !important;
+  --icon-color: #8c7ad1;
+
+  .searchbar-input {
+    font-size: 0.8rem !important;
+    padding-left: 43px !important;
+    padding-right: 15px !important;
+  }
+
+  .searchbar-search-icon {
+    color: var(--lightblueText) !important;
+  }
+}
+
+.listCards {
+  margin-top: 20px;
+  ion-row {
+    padding-left: 10px;
+    width:100%;
+  }
+
+  ion-item {
+    --padding-start: 0px;
+    border-bottom: solid 1px #646b90;
+    --padding-bottom: 17px;
+    margin-bottom: 20px;
+    --detail-icon-opacity:1;
+    --detail-icon-color:var(--whiteTextColor);
+    --inner-padding-end: 0px;
+
+   
+    h6 {
+      margin: 0px;
+      color: var(--lightblueText);
+      font-size: 0.7rem;
+      font-family: var(--ion-font-family-secondary);
+    }
+    h5 {
+      margin: 3px 0px 0px 0px;
+      color: var(--whiteTextColor);
+      font-size: 0.86rem;
+    }
+    .labelName {
+      font-family: var(--ion-font-family-secondary);
+      margin: 0px;
+      color: var(--lightblueText);
+      font-size: 0.7rem;
+    }
+    .labelStatus {
+      font-family: var(--ion-font-family-secondary);
+      margin: 0px;
+      // color: var(--awaitingTrialPitApproval);
+      font-size: 0.7rem;
+    }
+  }
+}
+
+// Status
+.awaitingTrialPitApproval { 
+  border-left: solid 5px var(--awaitingTrialPitApproval) !important;
+  .labelStatus {
+    color: var(--awaitingTrialPitApproval);
+  }
+}
+.customerAction {
+  border-left: solid 5px var(--customerAction) !important;
+  .labelStatus {
+    color: var(--customerAction);
+  }
+}
+.inspectionPassed {
+  border-left: solid 5px var(--inspectionPassed) !important;
+  .labelStatus {
+    color: var(--inspectionPassed);
+  }
+}
+// Status
+
+.breakPointModal {
+  --border-radius: 30px;
+}
+
+.listNocInformation {
+  ion-list{margin-top:40px;}
+  ion-item {
+    border-left: solid 5px var(--awaitingTrialPitApproval);
+    margin-bottom: 20px;
+  }
+  ion-text {
+    color: #405189;
+    font-size:1rem;
+    font-family: var(--ion-font-family-secondary) !important;
+  }
+}
+
+.requestDetails{
+  h1{  color: var(--whiteTextColor); font-size: 1.2rem; font-weight:600;     margin: 0px 0px 15px 0px;}
+  h2{color:var(--yellowText); font-size:0.86rem; font-weight:600;   margin: 0px;}
+  h3{color:var(--secondaryColor); font-size:0.86rem;  font-weight:600;   margin: 10px 0px 6px 0px;}
+  .listCards{    margin-top: 10px;
+    ion-item{
+      --padding-bottom:5px;
+      margin-bottom: 8px;
+      h5{margin-bottom:7px;
+        font-size: 0.8rem;
+        line-height: 21px;
+      }
+    }
+  }
+  .detailBts{margin-top:20px;
+    ion-button{margin-bottom:20px;}
+  }
+
+}
+
+.requestStatus{display:block; color:var(--yellowText);font-size:0.7rem;}
+
+// FORM
+
+.ionForm {
+  margin-top:13px;
+  .ionInput {
+    margin-bottom: 18px;
+  }
+  
+  .label-text-wrapper {
+    color: var(--lightblueText);
+  }
+  ion-input {
+    --color: var(--whiteTextColor);
+    --border-color: var(--formControlBorderColor) !important;
+    --border-width: 2px;
+    --highlight-color-focused:var(--lightblueText);
+    --placeholder-color:var(--lightblueText);
+    font-family: var(--ion-font-family-secondary) !important;
+  }
+
+  ion-select {
+    --color: var(--whiteTextColor);
+    --border-color: var(--formControlBorderColor) !important;
+    --border-width: 2px;
+    --highlight-color-focused:var(--lightblueText);
+    --placeholder-color:var(--lightblueText);
+    font-family: var(--ion-font-family-secondary) !important;
+  }
+
+  ion-textarea{
+    --color: var(--whiteTextColor);
+    --border-color: var(--formControlBorderColor) !important;
+    --border-width: 2px;
+    --highlight-color-focused:var(--lightblueText);
+    --placeholder-color:var(--lightblueText);
+
+    font-family: var(--ion-font-family-secondary) !important;
+  }
+
+
+  ion-radio{
+    --color:var(--lightblueText);
+    --color-checked:var(--whiteTextColor);
+    color:var(--lightblueText);
+    margin-right: 30px;
+    :host(.radio-label-placement-end) .label-text-wrapper{margin-inline-start: 6px;}
+
+  }
+
+
+
+  ion-list {
+    background: transparent;
+  }
+  ion-item {
+    --background: transparent;
+    --inner-padding-start: 0px;
+    --inner-padding-end: 0px;
+    margin-bottom: 20px;
+  }
+}
+
+ion-datetime-button::part(native) {
+  border: solid 2px var(--formControlBorderColor);
+  border-radius: 40px;
+  background: transparent;
+  color: #fff;
+  width: 48%;
+  padding: 12px 15px;
+  font-family: var(--ion-font-family-secondary) !important;
+}
+
+.camBox{margin-top:12px;
+  border: solid 2px  var(--formControlBorderColor);
+  border-radius: 20px;
+  background: transparent;
+  color: #fff;
+  width: 100%;
+  padding: 12px 15px;
+  min-height: 93px;
+  font-family: var(--ion-font-family-secondary) !important;
+
+  .capturebutton{padding:4px; text-align:center;
+    ion-icon{margin:auto; display:block; font-size:2rem; color:var(--lightblueText);}
+    ion-text{font-size:0.8rem; color:var(--lightblueText);}
+  }
+}
+// Form End
+.trialpitDetails{  margin-top: 20px;
+  .trialpitCards:before{
+    content: "";
+    border: solid 2px #E2D0FB;
+    position: absolute;
+    left: 5px;
+    height: 100%;
+    border-radius: 4px;
+  }  
+  .ionItemTPD:before{
+    content: "";
+    width: 14px;
+    height: 14px;
+    border-radius: 100px;   
+    position: absolute;
+    left:0px;
+    top:0px;
+    box-shadow:0 0px 10px rgb(0 0 0 / 84%);
+  }
+
+
+  .ionItemTPD.customerTDP:before{background: var(--yellowText);}
+  .ionItemTPD.customerTDP{
+ 
+    h2{color: var(--yellowText);}
+  }
+
+  .ionItemTPD.inspectorTDP:before{background: var(--secondaryColor);}
+  .ionItemTPD.inspectorTDP{    
+    h2{color: var(--secondaryColor);}
+  }
+
+  .trialpitCards {
+      .availabilityText{
+        ion-text{ font-size: 0.7rem; color:var(--whiteTextColor);       font-family: var(--ion-font-family-secondary);}
+      }
+      ion-item {
+        --padding-start:32px;
+    
+        --padding-bottom: 17px;
+        margin-bottom: 20px;
+        --detail-icon-opacity:1;
+        --detail-icon-color:var(--whiteTextColor);
+        --inner-padding-end: 0px;
+
+      
+        h6 {
+          margin: 4px 0px 6px 0px;
+          color: var(--lightblueText);
+          font-size: 0.7rem;
+          font-family: var(--ion-font-family-secondary);
+          font-weight:400;
+        }
+        h5 {
+          margin: 3px 0px 0px 0px;
+          color: var(--whiteTextColor);
+          font-size: 0.8rem;
+          font-family: var(--ion-font-family-secondary);
+          line-height: 21px;
+          font-weight:400;
+        }
+        .labelName {
+          color: var(--lightblueText);
+        }
+        .labelStatus {
+          font-weight:700;
+          color: var(--customerAction);
+        }
+      }
+  }
+}
+.imagesTrialPit{display:flex;
+  margin-top:12px;
+  ion-img{
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    border: solid 2px #fff;
+    object-fit: cover;
+    overflow: hidden;
+    margin-right:10px;
+  }
+}
+
+form .error-message {
+  padding-left: 30px;
+  margin-top: 4px;
+  display: block;
+  color: #f78f8f;
+  font-size: 11px;
+}
+.showOrHidePassword {
+  position: absolute;
+  right: 0px;
+  top: 6px;
+  z-index: 1050;
+  margin: 0px !important;
+  --background: transparent !important;
+  --box-shadow: none;
+  --color: var(--ion-color-primary);
+}
+// .awaitingResponse{text-align:center; padding:20px 15px 0px 15px;
+//   h1{font-size:1rem; font-weight:600;}
+//   p{font-size:0.8rem;}
+//   ion-img{margin:auto; display:block; width:45px;}
+//   h6{font-size:2rem; font-weight:600;}
+// }
+
+
+
+
+
+
+
+
+
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";

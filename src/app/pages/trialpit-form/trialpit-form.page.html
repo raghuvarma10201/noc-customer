@@ -1,0 +1,140 @@
+<ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-back-button default-href="#"></ion-back-button>
+    <ion-title>Trial Pit Form</ion-title>
+    <div class="ion-float-end headerBts" slot="end">
+      <ion-button shape="round" routerLink="/dashboard">
+        <ion-img src="assets/images/main-icon.svg"></ion-img>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding requestDetails">
+  <div class="dashboardBg pageBg"></div>
+  <h2>Construction Project</h2>
+  <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
+
+    <ion-item color="none">
+      <ion-row class="ionNoPaddingLeft">
+        <ion-col size="4">
+          <ion-text>
+            <h6>NOC ID</h6>
+            <h5>{{nocDetails.nocRequestID}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-text>
+            <h6>Type Of NOC</h6>
+            <h5>{{nocDetails.typeOfNOCName}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-text>
+            <h6>NOC Type</h6>
+            <h5>{{nocDetails.nocTypeName}}</h5>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+
+  <div class="ionForm">
+    <form [formGroup]="trailPitForm" class="trailPitForm">
+      <div class="ionInput">
+        <ion-input shape="round" fill="outline" formControlName="location" placeholder="Enter Location"
+          [ngClass]="{ 'is-invalid': (submitted && form['location'].errors) || (form['location'].touched && form['location'].errors) }"></ion-input>
+        <div class="inputError" *ngIf="submitted||(form['location'].touched && form['location'].invalid)">
+          <small class="form-text error-message" *ngIf="form['location'].errors">
+            Location is required</small>
+        </div>
+      </div>
+      <div class="ionInput">
+        <ion-input shape="round" fill="outline" formControlName="pitDimensions" placeholder="Enter Pit Dimensions"
+          [ngClass]="{ 'is-invalid': (submitted && form['pitDimensions'].errors) || (form['pitDimensions'].touched && form['pitDimensions'].errors) }"></ion-input>
+        <div class="inputError" *ngIf="submitted||(form['pitDimensions'].touched && form['pitDimensions'].invalid)">
+          <small class="form-text error-message" *ngIf="form['pitDimensions'].errors">
+            Pit Dimensions is required</small>
+        </div>
+      </div>
+      <div class="ionInput">
+        <ion-input shape="round" fill="outline" formControlName="soilStraightGraph" placeholder="Enter Soil Stratigraph"
+          [ngClass]="{ 'is-invalid': (submitted && form['soilStraightGraph'].errors) || (form['soilStraightGraph'].touched && form['soilStraightGraph'].errors) }"></ion-input>
+        <div class="inputError"
+          *ngIf="submitted||(form['soilStraightGraph'].touched && form['soilStraightGraph'].invalid)">
+          <small class="form-text error-message" *ngIf="form['soilStraightGraph'].errors">
+            Soil Stratigraph is required</small>
+        </div>
+      </div>
+      <div class="ionInput">
+        <ion-textarea shape="round" fill="outline" formControlName="description" rows="3"
+          placeholder="Enter Description"
+          [ngClass]="{ 'is-invalid': (submitted && form['description'].errors) || (form['description'].touched && form['description'].errors) }"></ion-textarea>
+        <div class="inputError" *ngIf="submitted||(form['description'].touched && form['description'].invalid)">
+          <small class="form-text error-message" *ngIf="form['description'].errors">
+            Description is required</small>
+        </div>
+      </div>
+      <h2 class="mb2">Construction Project</h2>
+      <div class="ionInput">
+        <ion-row>
+          <ion-col size="12">
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="datetime"
+                  formControlName="date_time"
+                  presentation="date-time"
+                  (ionChange)="onDateTimeChange($event)"
+                  [formatOptions]="{
+                    date: {
+                      weekday: 'short',
+                      month: 'short',
+                      day: '2-digit',
+                    },
+                    time: {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                    },
+                  }"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+            <div class="inputError" *ngIf="submitted||(form['date_time'].touched && form['date_time'].invalid)">
+              <small class="form-text error-message" *ngIf="form['date_time'].errors">
+                Date & Time is required</small>
+            </div>
+          </ion-col>
+
+          <ion-col size="12">
+            <div class="camBox">
+              <div class="capturebutton" (click)="captureImage()">
+                <ion-icon name="camera-outline"></ion-icon>
+                <ion-text >Capture Image</ion-text>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <div *ngIf="imagePreviews.length > 0">
+          <h2 class="mb2 mt2">Captured Images</h2>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6" *ngFor="let preview of imagePreviews; let i = index" class="image-container">
+                <img [src]="preview" class="preview-image">
+                <ion-icon name="trash" class="delete-icon" (click)="deleteImage(i)"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round"
+      expand="block">Submit</ion-button>
+    </form>
+  </div>
+
+</ion-content>

@@ -1,0 +1,58 @@
+<ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-back-button default-href="#"></ion-back-button>
+    <ion-title class="lineByLineText">Comments
+      <ion-text class="requestStatus">{{nocDetails.nocRequestID}}</ion-text>
+    </ion-title>
+    <div class="ion-float-end headerBts" slot="end">
+      <ion-button shape="round" routerLink="/dashboard">
+        <ion-img src="assets/images/main-icon.svg"></ion-img>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding requestDetails">
+  <div class="dashboardBg pageBg"></div>
+
+  <div class="ionForm">
+    <form [formGroup]="trailPitForm" class="trailPitForm">
+      <div class="ionInput">
+        <ion-textarea shape="round" fill="outline" formControlName="comments" rows="6"
+          placeholder="Enter Comments"
+          [ngClass]="{ 'is-invalid': (submitted && form['comments'].errors) || (form['comments'].touched && form['comments'].errors) }"></ion-textarea>
+        <div class="inputError" *ngIf="submitted||(form['comments'].touched && form['comments'].invalid)">
+          <small class="form-text error-message" *ngIf="form['comments'].errors">
+            Comments is required</small>
+        </div>
+      </div>
+      <!-- <h2 class="mb2">Construction Project</h2> -->
+      <div class="ionInput">
+        <ion-row>
+          <ion-col size="12">
+            <div class="camBox">
+              <div class="capturebutton" (click)="captureImage()">
+                <ion-icon name="camera-outline"></ion-icon>
+                <ion-text >Capture Image</ion-text>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <div *ngIf="imagePreviews.length > 0">
+          <h2 class="mb2 mt2">Captured Images</h2>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6" *ngFor="let preview of imagePreviews; let i = index" class="image-container">
+                <img [src]="preview" class="preview-image">
+                <ion-icon name="trash" class="delete-icon" (click)="deleteImage(i)"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round"
+      expand="block">Submit</ion-button>
+    </form>
+  </div>
+
+</ion-content>

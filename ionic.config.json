@@ -1,0 +1,7 @@
+{
+  "name": "NOC Customer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

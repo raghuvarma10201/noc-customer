@@ -1,0 +1,122 @@
+<ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-back-button default-href="#"></ion-back-button>
+    <ion-title class="lineByLineText">NOC Request
+      <ion-text class="requestStatus">{{nocStatus}}</ion-text>
+    </ion-title>
+
+    <div class="ion-float-end headerBts" slot="end" routerLink="/dashboard">
+      <ion-button shape="round" routerLink="">
+        <ion-img src="assets/images/main-icon.svg"></ion-img>
+      </ion-button>
+    </div>
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding requestDetails">
+  <div class="dashboardBg pageBg"></div>
+  <h1>NOC Request Details</h1>
+
+  <h2>Construction Project</h2>
+  <ion-list *ngIf="nocDetails" lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
+
+    <ion-item color="none">
+      <ion-row class="ionNoPaddingLeft">
+        <ion-col size="4">
+          <ion-text>
+            <h6>NOC ID</h6>
+            <h5>{{nocDetails.nocRequestID}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-text>
+            <h6>Type Of NOC</h6>
+            <h5>{{nocDetails.typeOfNOCName}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-text>
+            <h6>NOC Type</h6>
+            <h5>{{nocDetails.nocTypeName}}</h5>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item color="none">
+      <ion-row class="ionNoPaddingLeft">
+        <ion-col size="6">
+          <ion-text>
+            <h6>NOC Request Sub Types</h6>
+            <h5>{{nocDetails.nocRequestSubTypeName}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-text>
+            <h6>Location</h6>
+            <h5>Al Jazirah Al Hamra</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-text>
+            <h6>Create Date</h6>
+            <h5>{{nocDetails.createdOn | date:'MMM d, y, h:mm a'}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-text>
+            <h6>Mobile Number</h6>
+            <h5>+912 123456789</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-text>
+            <h6>NOC Description</h6>
+            <h5>{{nocDetails.description}}</h5>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item color="none" lines="none">
+      <ion-row class="ionNoPaddingLeft">
+        <ion-col size="12">
+          <ion-text>
+            <h2>Comments</h2>
+            <h3>NOC Office</h3>
+            <h6>14/12/2024, 10:50 AM</h6>
+            <h5>{{nocDetails.comments}}</h5>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+  <div class="detailBts">
+    <ion-button *ngIf="isTrailPitEnabled && nocDetails.trailPitId == 0"  (click)="navigateToTraiPitForm(nocDetails)" fill="outline" class="warningBt" shape="round"
+      expand="block">Apply Trial Pit</ion-button>
+      <ion-button *ngIf="isTrailPitEnabled && nocDetails.trailPitId !== 0"  (click)="navigateToTraiPitDetails(nocDetails)" fill="outline" class="warningBt" shape="round"
+      expand="block">Trial Pit</ion-button>
+    <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId == 0" (click)="navigateToAsphaltForm(nocDetails)" fill="outline" class="secondaryBt" shape="round"
+      expand="block">Apply Asphalt / Road Cutting</ion-button>
+      <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId !== 0" (click)="navigateToAsphaltDetails(nocDetails)" fill="outline" class="secondaryBt" shape="round"
+      expand="block">Asphalt / Road Cutting</ion-button>
+  </div>
+</ion-content>
+<!-- <ion-footer>
+  <ion-toolbar>
+    <div class="detailBts">
+      <ion-button (click)="navigateToTraiPitForm(nocDetails)" fill="outline" class="warningBt" shape="round"
+        expand="block">Apply Trial Pit</ion-button>
+      <ion-button (click)="navigateToAsphaltForm(nocDetails)" fill="outline" class="secondaryBt" shape="round"
+        expand="block">Apply Asphalt / Road Cutting</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer> -->

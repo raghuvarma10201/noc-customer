@@ -1,0 +1,143 @@
+<ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-back-button default-href="#"></ion-back-button>
+    <ion-title>Asphalt / Road Cutting Form</ion-title>
+    <div class="ion-float-end headerBts" slot="end">
+      <ion-button shape="round" routerLink="/dashboard">
+        <ion-img src="assets/images/main-icon.svg"></ion-img>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding requestDetails">
+  <div class="dashboardBg pageBg"></div>
+  <h2>Construction Project</h2>
+  <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
+
+    <ion-item color="none">
+      <ion-row class="ionNoPaddingLeft">
+        <ion-col size="4">
+          <ion-text>
+            <h6>NOC ID</h6>
+            <h5>{{nocDetails.nocRequestID}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-text>
+            <h6>Type Of NOC</h6>
+            <h5>{{nocDetails.typeOfNOCName}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-text>
+            <h6>NOC Type</h6>
+            <h5>{{nocDetails.nocTypeName}}</h5>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+
+  <div class="ionForm">
+    <form [formGroup]="asphaltForm" class="asphaltForm">
+      <div class="ionInput">
+        <ion-input shape="round" fill="outline" formControlName="location" placeholder="Enter Location"
+          [ngClass]="{ 'is-invalid': (submitted && form['location'].errors) || (form['location'].touched && form['location'].errors) }"></ion-input>
+        <div class="inputError" *ngIf="submitted||(form['location'].touched && form['location'].invalid)">
+          <small class="form-text error-message" *ngIf="form['location'].errors">
+            Location is required</small>
+        </div>
+      </div>
+      <div class="ionInput">
+        <ion-input shape="round" fill="outline" formControlName="totalAreaToCutInSquareMeters" placeholder="Enter Total Area"
+          [ngClass]="{ 'is-invalid': (submitted && form['totalAreaToCutInSquareMeters'].errors) || (form['totalAreaToCutInSquareMeters'].touched && form['totalAreaToCutInSquareMeters'].errors) }"></ion-input>
+        <div class="inputError" *ngIf="submitted||(form['totalAreaToCutInSquareMeters'].touched && form['totalAreaToCutInSquareMeters'].invalid)">
+          <small class="form-text error-message" *ngIf="form['totalAreaToCutInSquareMeters'].errors">
+            Total Area is required</small>
+        </div>
+      </div>
+      <div class="ionInput">
+        <ion-input shape="round" fill="outline" formControlName="roadCutLengthInMeters" placeholder="Enter roadCutLengthInMeters"
+          [ngClass]="{ 'is-invalid': (submitted && form['roadCutLengthInMeters'].errors) || (form['roadCutLengthInMeters'].touched && form['roadCutLengthInMeters'].errors) }"></ion-input>
+        <div class="inputError" *ngIf="submitted||(form['roadCutLengthInMeters'].touched && form['roadCutLengthInMeters'].invalid)">
+          <small class="form-text error-message" *ngIf="form['roadCutLengthInMeters'].errors">
+            Length is required</small>
+        </div>
+      </div>
+      <div class="ionInput">
+        <ion-input shape="round" fill="outline" formControlName="roadCutWidthInMeters" placeholder="Enter Width"
+          [ngClass]="{ 'is-invalid': (submitted && form['roadCutWidthInMeters'].errors) || (form['roadCutWidthInMeters'].touched && form['roadCutWidthInMeters'].errors) }"></ion-input>
+        <div class="inputError" *ngIf="submitted||(form['roadCutWidthInMeters'].touched && form['roadCutWidthInMeters'].invalid)">
+          <small class="form-text error-message" *ngIf="form['roadCutWidthInMeters'].errors">
+            Width is required</small>
+        </div>
+      </div>
+      <h2 class="mb2">Will the cutting affect traffic flow?</h2>
+      <div class="ionInput">
+        <ion-radio-group value="yes" formControlName="isTrafficAffected">
+          <ion-radio value="true" label-placement="end">Yes</ion-radio>
+          <ion-radio value="false" label-placement="end">No</ion-radio>
+        </ion-radio-group>
+        <div class="inputError" *ngIf="submitted||(form['isTrafficAffected'].touched && form['isTrafficAffected'].invalid)">
+          <small class="form-text error-message" *ngIf="form['isTrafficAffected'].errors">
+            Field is required</small>
+        </div>
+      </div>
+      <div class="ionInput">
+        <ion-textarea shape="round" fill="outline" formControlName="description" rows="3"
+          placeholder="Enter Description"
+          [ngClass]="{ 'is-invalid': (submitted && form['description'].errors) || (form['description'].touched && form['description'].errors) }"></ion-textarea>
+        <div class="inputError" *ngIf="submitted||(form['description'].touched && form['description'].invalid)">
+          <small class="form-text error-message" *ngIf="form['description'].errors">
+            Description is required</small>
+        </div>
+      </div>
+      <h2 class="mb2">Time slot</h2>
+      <div class="ionInput">
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" formControlName="date_time" presentation="date-time"
+                  (ionChange)="onDateTimeChange($event)" [formatOptions]="{
+                  date: {
+                    weekday: 'short',
+                    month: 'short',
+                    day: '2-digit',
+                  },
+                  time: {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  },
+                }"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+            <div class="inputError" *ngIf="submitted||(form['date_time'].touched && form['date_time'].invalid)">
+              <small class="form-text error-message" *ngIf="form['date_time'].errors">
+                Date & Time is required</small>
+            </div>
+      </div>
+      <div class="camBox">
+        <div class="capturebutton" (click)="captureImage()">
+          <ion-icon name="camera-outline"></ion-icon>
+          <ion-text>Capture Image</ion-text>
+        </div>
+      </div>
+      <div *ngIf="imagePreviews.length > 0">
+        <h2 class="mb2 mt2">Captured Images</h2>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" *ngFor="let preview of imagePreviews; let i = index" class="image-container">
+              <img [src]="preview" class="preview-image">
+              <ion-icon name="trash" class="delete-icon" (click)="deleteImage(i)"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round" expand="block">Submit</ion-button>
+    </form>
+  </div>
+
+</ion-content>

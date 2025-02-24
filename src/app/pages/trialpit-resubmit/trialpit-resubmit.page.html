@@ -1,0 +1,37 @@
+<ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-back-button default-href="#"></ion-back-button>
+    <ion-title>Reschedule</ion-title>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding requestDetails">
+  <div class="dashboardBg pageBg"></div>
+<div class="ionForm">
+  <div class="ionInput mb2">
+    <ion-textarea shape="round" fill="outline" placeholder="Comments*"></ion-textarea>
+  </div>
+
+  <h2 class="mb2 ion-padding-top">Time Slot</h2>
+  <div class="ionInput ion-padding-bottom">
+    <ion-row>
+        <ion-col size="12">
+          <ion-datetime-button datetime="datetime" presentation="date-time"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>              
+              <ion-datetime id="datetime"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+      </ion-col>
+
+    
+    </ion-row>
+  </div>
+
+
+  <ion-button routerLink="/trial-pit-details" fill="outline" class="warningBt ion-margin-top" shape="round" expand="block">Submit</ion-button>
+</div>
+
+
+
+</ion-content>

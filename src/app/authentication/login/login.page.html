@@ -1,0 +1,46 @@
+<ion-content [fullscreen]="true">
+  <div class="loginBg"></div>
+  <div class="loginnoc">
+    <ion-img src="../../../assets/images/noc-logo.svg"></ion-img>
+
+    <ion-text>
+      <h1>Login</h1>
+    </ion-text>
+
+
+    <form [formGroup]="loginForm" class="loginForm">
+      <div class="ionInput">
+        <ion-input shape="round" fill="outline" formControlName="username" placeholder="Enter Username"
+          [ngClass]="{ 'is-invalid': (submitted && form['username'].errors) || (form['username'].touched && form['username'].errors) }"></ion-input>
+        <div class="inputError" *ngIf="submitted||(form['username'].touched && form['username'].invalid)">
+          <small class="form-text error-message" *ngIf="form['username'].errors">
+            Username is required</small>
+        </div>
+      </div>
+      <div class="ionInput">
+        <ion-button class="showOrHidePassword" (click)="showOrHidePassword()">
+          <ion-icon  *ngIf="isClicked===true" name="eye-off-outline"></ion-icon>
+          <ion-icon *ngIf="isClicked===false"  name="eye-outline"></ion-icon>
+        </ion-button>
+        <div class="inputlogin">
+          <ion-input [type]="initailType" shape="round" fill="outline"  placeholder="Enter Password" formControlName="password"
+            [ngClass]="{ 'is-invalid': (submitted && form['password'].errors) || (form['password'].touched && form['password'].errors) }"></ion-input>
+          <div class="inputError" *ngIf="submitted||(form['password'].touched && form['password'].invalid)">
+            <small class="form-text error-message" *ngIf="form['password'].errors"> Password is required</small>
+          </div>
+          </div>
+      </div>
+      <div class="ionInput">
+        
+        <ion-input shape="round" fill="outline" placeholder="Captcha"></ion-input>
+      </div>
+
+      <ion-button (click)="onSubmit()" class="loginBt" shape="round" size="default" expand="block"
+        shape="round">Login</ion-button>
+    </form>
+
+    <ion-text class="textLinkLogin">Forgot password?</ion-text>
+
+
+  </div>
+</ion-content>

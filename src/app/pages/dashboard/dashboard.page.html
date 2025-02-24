@@ -1,0 +1,111 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>dashboard</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+  <div class="dashboardBg"></div>
+
+  <ion-item lines="none" color="none" class="dashboardHeader  ion-padding-horizontal no-ion-color-item ion-padding-top">
+
+  <ion-item class="userNameDash" lines="none" color="none">
+        <ion-thumbnail>
+          <ion-img src="assets/images/user-icon.svg"></ion-img> 
+        </ion-thumbnail>
+        <ion-text><h5>Abdulla</h5></ion-text>
+    </ion-item>
+
+        <div class="ion-float-end headerBts" slot="end">
+          <ion-button  routerLink="/Notification" class="notificationsIcon " shape="round">
+              <ion-img src="assets/images/notifications-icon.svg"></ion-img> 
+              <ion-icon class="alertNotifi " icon={ellipse}></ion-icon> 
+          </ion-button>
+          <ion-button shape="round"  routerLink="">
+            <ion-img src="assets/images/main-icon.svg"></ion-img> 
+          </ion-button>
+        </div>
+  </ion-item>
+
+
+  
+
+    <ion-text class="headingdash text-center">
+          <h1>Hi, Welcome back!</h1>
+          <p> Here's your details of dashboard.</p>
+      </ion-text>
+
+<div class="ion-padding-horizontal cardDash">
+    <ion-row>
+      <ion-col size="6">
+        <ion-button class="cardColor1" routerLink="/list-noc">
+          <ion-text>
+            <h2>11</h2>
+            <h6>Total NOC's</h6>
+          </ion-text>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-button class="cardColor2">
+          <ion-text>
+            <h2>03</h2>
+            <h6>Under Process</h6>
+          </ion-text>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-button class="cardColor3">
+          <ion-text>
+            <h2>02</h2>
+            <h6>Completed</h6>
+          </ion-text>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-button class="cardColor4">
+          <ion-text>
+            <h2>06</h2>
+            <h6>Customer Action</h6>
+          </ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+</div>
+
+<div class="latestUpdatesDash">
+ 
+    <ion-text class="ion-justify-content-between">
+    <h3>Latest Updates</h3>
+   <h5>Show all</h5>
+    </ion-text>
+
+
+
+    <swiper-container [slidesPerView]="1"  [spaceBetween]="5" effect="coverflow">
+      <swiper-slide>
+          <ion-card class="cardColor1">
+              <ion-text class="swiperNum">o6</ion-text>
+              <ion-text class="swiperText">Asphalt / Road Cutting</ion-text>
+          </ion-card>
+      </swiper-slide>
+
+      <swiper-slide>
+        <ion-card class="cardColor2">
+            <ion-text class="swiperNum">o3</ion-text>
+            <ion-text class="swiperText">Trial Pit</ion-text>
+        </ion-card>
+    </swiper-slide>
+
+    
+
+
+
+    </swiper-container>
+
+
+</div>
+
+</ion-content>
