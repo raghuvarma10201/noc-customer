@@ -17,7 +17,14 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="dashboardBg pageBg"></div>
-
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      refreshingSpinner="circles"
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing..."
+    ></ion-refresher-content>
+  </ion-refresher>
   <ion-searchbar shape="round" placeholder="Search by ID, Type, Project Name ... " class="ion-no-padding"></ion-searchbar>
 
   <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">

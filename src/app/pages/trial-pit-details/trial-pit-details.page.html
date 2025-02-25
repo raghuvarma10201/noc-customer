@@ -43,10 +43,14 @@
 
   <div class="trialpitDetails">
     <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent trialpitCards">
-      <ion-item color="none" lines="none" *ngFor="let data of trialPitDetails"  class="ionItemTPD customerTDP">
+      <ion-item color="none" lines="none" *ngFor="let data of trialPitDetails"  class="ionItemTPD"
+      [ngClass]="{
+        'customerTDP': data.statusId === 4,
+        'inspectorTDP': data.statusId === 5
+      }">
         <div>
           <ion-text>
-            <h2>Customer</h2>
+            <h2>{{data.roleName}}</h2>
             <h6>{{data.transactionDate | date:'MMM d, y, h:mm a'}}</h6>
             <h5>{{data.comments}}</h5>
           </ion-text>
@@ -55,29 +59,8 @@
             <ion-text> 16 Dec 2024, 3:00 PM | </ion-text>
             <ion-text class="labelStatus"> {{data.statusName}}</ion-text>
           </div>
-          <div class="ion-justify-content-start imagesTrialPit">
-            <ion-img src="assets/images/pages-bg.png"></ion-img>
-            <ion-img src="assets/images/pages-bg.png"></ion-img>
-          </div>
-        </div>
-      </ion-item>
-
-      <ion-item color="none" lines="none" class="ionItemTPD inspectorTDP">
-        <div>
-          <ion-text>
-            <h2>Inspector</h2>
-            <h6>14/12/2024, 10:50 AM</h6>
-            <h5>We have completed the excavation and awaiting your approval. Kindly visit and inspect it on the
-              specified date.</h5>
-          </ion-text>
-          <div class="ion-justify-content-start availabilityText">
-            <ion-text class="labelName">Availability: </ion-text>
-            <ion-text> 16 Dec 2024, 3:00 PM | </ion-text>
-            <ion-text class="labelStatus"> In Progress</ion-text>
-          </div>
-          <div class="ion-justify-content-start imagesTrialPit">
-            <ion-img src="assets/images/pages-bg.png"></ion-img>
-            <ion-img src="assets/images/pages-bg.png"></ion-img>
+          <div *ngIf="data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
+            <ion-img *ngFor="let preview of data.documents; let i = index"  [src]="imgUrl + preview"></ion-img>
           </div>
         </div>
       </ion-item>

@@ -20,6 +20,10 @@ export class LoginPage implements OnInit {
   isClicked: boolean = false;
   initailType: string = 'password';
   captchaResponse: string | any;
+  captcha: string = '';
+  userInput: string = '';
+  validationMessage: string = '';
+  isCaptchaValid: boolean = false;
   constructor(
     private fb: FormBuilder,
     public router: Router,
@@ -29,6 +33,7 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private activatedRouteService: ActivatedRoute
   ) { 
+    this.refreshCaptcha();
     this.loginForm = this.fb.group({
       username: [null, [Validators.required]],
       password: [null, [Validators.required]]
@@ -44,20 +49,51 @@ export class LoginPage implements OnInit {
   }
   get form() { return this.loginForm.controls; }
   
+  // Generate new CAPTCHA
+  refreshCaptcha() {
+    this.captcha = this.generateCaptcha();
+    this.userInput = '';
+    this.validationMessage = '';
+  }
 
+  // Generate a random 6-digit number
+  generateCaptcha(): string {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  }
+
+  // Validate user input
+  validateCaptcha() {
+    if (this.userInput === this.captcha) {
+      this.isCaptchaValid = true;
+      this.validationMessage = 'CAPTCHA Verified Successfully!';
+      return true;
+    } else {
+      this.isCaptchaValid = false;
+      this.validationMessage = 'Incorrect CAPTCHA. Please try again.';
+      return false;
+    }
+  }
   onCaptchaResolved(response: string): void {
     this.captchaResponse = response;
   }
   async onSubmit() {
+    this.submitted = true;
     console.log(this.loginForm.value);
     await this.loaderService.loadingPresent();
-    this.submitted = true;
     if (this.loginForm.invalid) {
       this.loaderService.loadingDismiss();
       return;
     }
-   
-    this.authService.validateUser(this.loginForm.value).pipe(finalize(() => {
+    console.log(this.validateCaptcha());
+    if(!this.validateCaptcha()){
+      this.toastService.showError(this.validationMessage, "Error");
+      this.loaderService.loadingDismiss();
+      return;
+    }
+    let formData = this.loginForm.value;
+    formData.isAdminPortal= false;
+    formData.Type = "CUST";
+    this.authService.validateUser(formData).pipe(finalize(() => {
       this.loaderService.loadingDismiss();
      })).subscribe((res: any) => {
       console.log("Res", res);

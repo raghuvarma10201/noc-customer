@@ -31,6 +31,7 @@ export class CommentsPage implements OnInit {
   longitude: any;
   nocDetails: any;
   encryptedNocId: any;
+  customerActionId: any;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -48,9 +49,12 @@ export class CommentsPage implements OnInit {
       this.nocDetails = nocData;
       const encryptedNocId = navigation.extras.state['encryptedNocId'];
       this.encryptedNocId = encryptedNocId;
+      const customerActionId = navigation.extras.state['customerActionId'];
+      this.customerActionId = customerActionId;
       console.log(nocData);
     }
     this.trailPitForm = this.fb.group({
+      customerActionId: [this.customerActionId, [Validators.required]],
       nocId: [this.encryptedNocId, [Validators.required]],
       comments: [null, [Validators.required]],
       //image: [null, [Validators.required]]
@@ -140,7 +144,7 @@ export class CommentsPage implements OnInit {
 
     const formData = new FormData();
     this.imageFiles.forEach((file, index) => {
-      formData.append(`uploadFile[]`, file, file.name);
+      formData.append(`uploadFile`, file, file.name);
     });
     // Append form fields to FormData
 
@@ -149,6 +153,7 @@ export class CommentsPage implements OnInit {
       formData.append(`latitude`, this.latitude.toString());
       formData.append(`longitude`, this.longitude.toString());
     }
+    formData.append(`customerActionId`, formValue.customerActionId);
     formData.append(`nocId`, formValue.nocId);
     formData.append(`comments`, formValue.comments);
     
@@ -158,7 +163,11 @@ export class CommentsPage implements OnInit {
       console.log("Res", res);
       if (res.status == 201 && res.success == true) {
         this.toastService.showSuccess(res.message, "Scccess");
-        this.router.navigate(['/trial-pit-details'], { state: { nocData: this.nocDetails,encryptedNocId : this.encryptedNocId } });
+        if(this.customerActionId == 2){
+          this.router.navigate(['/trial-pit-details'], { state: { nocData: this.nocDetails,encryptedNocId : this.encryptedNocId } });
+        }else{
+          this.router.navigate(['/asphalt-details'], { state: { nocData: this.nocDetails,encryptedNocId : this.encryptedNocId } });
+        }
       }
       else {
         this.loaderService.loadingDismiss();

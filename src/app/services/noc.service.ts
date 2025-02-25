@@ -13,9 +13,11 @@ export class NocService {
   getNocs(): Observable<any> {
     return this.http.get<any>(environment.apiUrl + "NOC/GetRequestNocDetails").pipe(catchError(this.handleError));
   }
-  getTrialPitDetails(encryptedNocId : any): Observable<any> {
-    const params = new HttpParams().set('nocId', encryptedNocId);
-    return this.http.get<any>(environment.apiUrl + "Manager/NocAuditCommments",{ params }).pipe(catchError(this.handleError));
+  getComments(encryptedNocId : any, customerActionId : any): Observable<any> {
+    let params = new HttpParams()
+    .set('nocid', encryptedNocId)
+    .set('CustomerActionId', customerActionId);
+    return this.http.get<any>(environment.apiUrl + "Manager/GetCATypeCommments",{ params }).pipe(catchError(this.handleError));
   }
   getNocDetails(encryptedNocId : any): Observable<any> {
     const params = new HttpParams().set('requestNocId', encryptedNocId);
@@ -29,7 +31,7 @@ export class NocService {
     return this.http.post<any>(environment.apiUrl + "Customer/SaveTrailPitDetails", payload).pipe(catchError(this.handleError));
   }
   addComments(payload : any): Observable<any> {
-    return this.http.post<any>(environment.apiUrl + "Manager/AddNOCRequestComment", payload).pipe(catchError(this.handleError));
+    return this.http.post<any>(environment.apiUrl + "Manager/AddCATypeComments", payload).pipe(catchError(this.handleError));
   }
   rescheduleTrailPit(payload : any): Observable<any> {
     return this.http.post<any>(environment.apiUrl + "Customer/ChangeScheduleForTrailPit", payload).pipe(catchError(this.handleError));

@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
     }, error => {
       this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      console.log(this.errorMsg, "getDefaultSettings Error");
     })
   }
 }

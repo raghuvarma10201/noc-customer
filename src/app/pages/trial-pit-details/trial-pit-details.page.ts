@@ -31,6 +31,7 @@ export class TrialPitDetailsPage implements OnInit {
   nocDetails: any;
   trialPitDetails: any;
   encryptedNocId: any;
+  imgUrl: any = environment.imgUrl;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -58,15 +59,14 @@ export class TrialPitDetailsPage implements OnInit {
   async fetchNOCList() {
     await this.loaderService.loadingPresent();
 
-    this.nocService.getTrialPitDetails(this.encryptedNocId).pipe(finalize(() => {
+    this.nocService.getComments(this.encryptedNocId, 2).pipe(finalize(() => {
       this.loaderService.loadingDismiss();
     })).subscribe((res: any) => {
       console.log("Res", res);
       if(res.status == 200 && res.success == true){
         this.trialPitDetails = res.data;
         this.loaderService.loadingDismiss(); 
-      }
-      else {
+      }else {
         this.loaderService.loadingDismiss();
         this.toastService.showError(res.message, "Error");
       }
@@ -96,7 +96,7 @@ export class TrialPitDetailsPage implements OnInit {
   }
   addComments(nocData : any) {
     if (nocData) {
-      this.router.navigate(['/comments'], { state: { nocData: nocData,encryptedNocId : this.encryptedNocId } });
+      this.router.navigate(['/comments'], { state: { nocData: nocData,encryptedNocId : this.encryptedNocId, customerActionId : 2 } });
     } else {
       console.warn('Please select a date and time first!');
     }

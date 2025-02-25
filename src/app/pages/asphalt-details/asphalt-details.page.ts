@@ -58,7 +58,7 @@ export class AsphaltDetailsPage implements OnInit {
   async fetchNOCList() {
     await this.loaderService.loadingPresent();
 
-    this.nocService.getTrialPitDetails(this.encryptedNocId).pipe(finalize(() => {
+    this.nocService.getComments(this.encryptedNocId,3).pipe(finalize(() => {
       this.loaderService.loadingDismiss();
     })).subscribe((res: any) => {
       console.log("Res", res);
@@ -96,7 +96,7 @@ export class AsphaltDetailsPage implements OnInit {
   }
   addComments(nocData : any) {
     if (nocData) {
-      this.router.navigate(['/comments'], { state: { nocData: nocData,encryptedNocId : this.encryptedNocId } });
+      this.router.navigate(['/comments'], { state: { nocData: nocData,encryptedNocId : this.encryptedNocId,customerActionId : 3 } });
     } else {
       console.warn('Please select a date and time first!');
     }

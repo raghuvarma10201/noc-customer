@@ -31,8 +31,11 @@
           </div>
       </div>
       <div class="ionInput">
-        
-        <ion-input shape="round" fill="outline" placeholder="Captcha"></ion-input>
+        <div class="captcha-box">
+          <h2>{{ captcha }}</h2>
+          <ion-icon  (click)="refreshCaptcha()" name="refresh-outline"></ion-icon>
+        </div>
+        <ion-input [(ngModel)]="userInput" shape="round" [ngModelOptions]="{standalone: true}" fill="outline" maxLength="6" placeholder="Captcha"></ion-input>
       </div>
 
       <ion-button (click)="onSubmit()" class="loginBt" shape="round" size="default" expand="block"

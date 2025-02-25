@@ -1,0 +1,22 @@
+.captcha-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    border: 1px solid var(--ion-color-step-300, var(--ion-background-color-step-300, #b3b3b3));
+    padding-left: 30px;
+    //background-color: #f0f4f8; // Light gray-blue background
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    h2 {
+      font-weight: bold;
+      font-size: 1rem;
+      margin: 10px 0px;
+      letter-spacing: 3px;
+      color: var(--whiteTextColor);;
+    }
+    ion-icon{
+        font-size: 20px;
+        padding-right: 15px;
+    }
+  }

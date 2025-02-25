@@ -50,7 +50,19 @@ export class ListNocPage implements OnInit {
       this.toastService.showError(this.errorMsg, "Error");
     })
   }
+  doRefresh(event: any) {
+    console.log('Refreshing data...');
 
+    // Simulate async data fetching
+    setTimeout(() => {
+      // Add new item or refresh your data
+      this.fetchNOCList();
+
+      // Complete the refresher animation
+      event.target.complete();
+      console.log('Refresh complete');
+    }, 2000); // Simulate 2 seconds refresh time
+  }
   navigateToDisplayPage(nocId : any) {
     if (nocId) {
       this.router.navigate(['/noc-details', nocId]);

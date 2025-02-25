@@ -9,33 +9,32 @@
 
   <ion-item lines="none" color="none" class="dashboardHeader  ion-padding-horizontal no-ion-color-item ion-padding-top">
 
-  <ion-item class="userNameDash" lines="none" color="none">
-        <ion-thumbnail>
-          <ion-img src="assets/images/user-icon.svg"></ion-img> 
-        </ion-thumbnail>
-        <ion-text><h5>Abdulla</h5></ion-text>
+    <ion-item class="userNameDash" lines="none" color="none">
+      <ion-thumbnail>
+        <ion-img src="assets/images/user-icon.svg"></ion-img>
+      </ion-thumbnail>
+      <ion-text>
+        <h5>Abdulla</h5>
+      </ion-text>
     </ion-item>
 
-        <div class="ion-float-end headerBts" slot="end">
-          <ion-button  routerLink="/Notification" class="notificationsIcon " shape="round">
-              <ion-img src="assets/images/notifications-icon.svg"></ion-img> 
-              <ion-icon class="alertNotifi " icon={ellipse}></ion-icon> 
-          </ion-button>
-          <ion-button shape="round"  routerLink="">
-            <ion-img src="assets/images/main-icon.svg"></ion-img> 
-          </ion-button>
-        </div>
+    <div class="ion-float-end headerBts" slot="end">
+      <ion-button routerLink="/Notification" class="notificationsIcon " shape="round">
+        <ion-img src="assets/images/notifications-icon.svg"></ion-img>
+        <ion-icon class="alertNotifi " icon={ellipse}></ion-icon>
+      </ion-button>
+      <ion-button shape="round" routerLink="">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </div>
   </ion-item>
 
+  <ion-text class="headingdash text-center">
+    <h1>Hi, Welcome back!</h1>
+    <p> Here's your details of dashboard.</p>
+  </ion-text>
 
-  
-
-    <ion-text class="headingdash text-center">
-          <h1>Hi, Welcome back!</h1>
-          <p> Here's your details of dashboard.</p>
-      </ion-text>
-
-<div class="ion-padding-horizontal cardDash">
+  <div class="ion-padding-horizontal cardDash">
     <ion-row>
       <ion-col size="6">
         <ion-button class="cardColor1" routerLink="/list-noc">
@@ -73,39 +72,29 @@
         </ion-button>
       </ion-col>
     </ion-row>
-</div>
+  </div>
 
-<div class="latestUpdatesDash">
- 
+  <div class="latestUpdatesDash">
+
     <ion-text class="ion-justify-content-between">
-    <h3>Latest Updates</h3>
-   <h5>Show all</h5>
+      <h3>Latest Updates</h3>
+      <h5>Show all</h5>
     </ion-text>
-
-
-
-    <swiper-container [slidesPerView]="1"  [spaceBetween]="5" effect="coverflow">
+    <swiper-container [slidesPerView]="1" [spaceBetween]="5" effect="coverflow">
       <swiper-slide>
-          <ion-card class="cardColor1">
-              <ion-text class="swiperNum">o6</ion-text>
-              <ion-text class="swiperText">Asphalt / Road Cutting</ion-text>
-          </ion-card>
+        <ion-card class="cardColor1">
+          <ion-text class="swiperNum">o6</ion-text>
+          <ion-text class="swiperText">Asphalt / Road Cutting</ion-text>
+        </ion-card>
       </swiper-slide>
 
       <swiper-slide>
         <ion-card class="cardColor2">
-            <ion-text class="swiperNum">o3</ion-text>
-            <ion-text class="swiperText">Trial Pit</ion-text>
+          <ion-text class="swiperNum">o3</ion-text>
+          <ion-text class="swiperText">Trial Pit</ion-text>
         </ion-card>
-    </swiper-slide>
-
-    
-
-
-
+      </swiper-slide>
     </swiper-container>
-
-
-</div>
+  </div>
 
 </ion-content>
