@@ -9,6 +9,8 @@ import { NocService } from './services/noc.service';
 import { SharedService } from './services/shared.service';
 import { ToastService } from './services/toast.service';
 import { CommonService } from './services/common.service';
+import { Platform } from '@ionic/angular';
+import { Keyboard } from '@capacitor/keyboard';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +29,8 @@ export class AppComponent implements OnInit {
     private toastService: ToastService,
     private commonService: CommonService,
     private nocService: NocService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private platform: Platform
   ) {
     this.translate.setDefaultLang('en'); // Default language
     const browserLang = this.translate.getBrowserLang();

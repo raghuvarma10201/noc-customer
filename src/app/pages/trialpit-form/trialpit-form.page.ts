@@ -30,6 +30,7 @@ export class TrialpitFormPage implements OnInit {
   latitude: any;
   longitude: any;
   nocDetails: any;
+  encryptedNocId: any;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -45,6 +46,8 @@ export class TrialpitFormPage implements OnInit {
     if (navigation?.extras.state) {
       const nocData = navigation.extras.state['nocData'];
       this.nocDetails = nocData;
+      this.encryptedNocId = navigation.extras.state['encryptedNocId'];
+      console.log(this.encryptedNocId, "encryptedNocId");
       console.log(nocData);
     }
     this.trailPitForm = this.fb.group({
@@ -171,7 +174,7 @@ export class TrialpitFormPage implements OnInit {
       console.log("Res", res);
       if (res.status == 201 && res.success == true) {
         this.toastService.showSuccess(res.message, "Scccess");
-        this.router.navigate(['/trial-pit-details'], { state: { nocData: this.nocDetails } });
+        this.router.navigate(['/trial-pit-details'], { state: { nocData: this.nocDetails, encryptedNocId: this.encryptedNocId } });
       }
       else {
         this.loaderService.loadingDismiss();

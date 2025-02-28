@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -13,8 +13,9 @@ import { TrialPitDetailsPage } from './trial-pit-details.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TrialPitDetailsPageRoutingModule
+    TrialPitDetailsPageRoutingModule,
   ],
-  declarations: [TrialPitDetailsPage]
+  declarations: [TrialPitDetailsPage],
+  providers: [DatePipe]
 })
 export class TrialPitDetailsPageModule {}

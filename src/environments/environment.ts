@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl:'http://148.72.246.27:1111/api/',
-  imgUrl : 'http://148.72.246.27:1111/',
+  apiUrl:'https://rpwebapps.us/clients/noc/api/api/',
+  imgUrl : 'https://rpwebapps.us/clients/noc/api/',
   production: false,
 
 };

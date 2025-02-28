@@ -98,15 +98,40 @@
         </ion-col>
       </ion-row>
     </ion-item>
+
+    <ion-item color="none" lines="none" *ngIf="documentslist && documentslist.length > 0">
+      <ion-row class="ionNoPaddingLeft">
+        <ion-col size="12">
+          <ion-text>
+            <h2>Documents</h2>
+            <ion-item lines="none" color="none" *ngFor="let doc of documentslist">
+              <ion-icon class="leftIcon" slot="start" name="document-text-outline"></ion-icon>
+               <ion-text>
+                 <h6> {{doc.entityType}} </h6>
+                 <h5> {{doc.approveFilename}} </h5>
+               </ion-text>                 
+              <ion-button class="outLineIconButton" slot="end" shape="round" fill="outline" size="small" (click)="downloadFile(doc)">
+               <ion-icon name="cloud-download-outline"></ion-icon>
+             </ion-button>
+           </ion-item>
+            <h5></h5>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-item>
   </ion-list>
+
+  
+
   <div class="detailBts">
-    <ion-button *ngIf="isTrailPitEnabled && nocDetails.trailPitId == 0"  (click)="navigateToTraiPitForm(nocDetails)" fill="outline" class="warningBt" shape="round"
-      expand="block">Apply Trial Pit</ion-button>
-      <ion-button *ngIf="isTrailPitEnabled && nocDetails.trailPitId !== 0"  (click)="navigateToTraiPitDetails(nocDetails)" fill="outline" class="warningBt" shape="round"
-      expand="block">Trial Pit</ion-button>
-    <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId == 0" (click)="navigateToAsphaltForm(nocDetails)" fill="outline" class="secondaryBt" shape="round"
-      expand="block">Apply Asphalt / Road Cutting</ion-button>
-      <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId !== 0" (click)="navigateToAsphaltDetails(nocDetails)" fill="outline" class="secondaryBt" shape="round"
+    <ion-button *ngIf="isTrailPitEnabled && nocDetails.trailPitId == 0" (click)="navigateToTraiPitForm(nocDetails)"
+      fill="outline" class="warningBt" shape="round" expand="block">Apply Trial Pit</ion-button>
+    <ion-button *ngIf="isTrailPitEnabled && nocDetails.trailPitId !== 0" (click)="navigateToTraiPitDetails(nocDetails)"
+      fill="outline" class="warningBt" shape="round" expand="block">Trial Pit</ion-button>
+    <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId == 0" (click)="navigateToAsphaltForm(nocDetails)"
+      fill="outline" class="secondaryBt" shape="round" expand="block">Apply Asphalt / Road Cutting</ion-button>
+    <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId !== 0"
+      (click)="navigateToAsphaltDetails(nocDetails)" fill="outline" class="secondaryBt" shape="round"
       expand="block">Asphalt / Road Cutting</ion-button>
   </div>
 </ion-content>

@@ -14,6 +14,15 @@ export class CommonService {
     return this.http.get<any>(environment.apiUrl + "Customer/GetConfigSettings").pipe(catchError(this.handleError));
   }
 
+  getDadhboardCounts(): Observable<any> {
+    return this.http.get<any>(environment.apiUrl + "Manager/GetDashBoardDetails").pipe(catchError(this.handleError));
+  }
+
+  getDocumentslist(id: any): Observable<any> {
+    const params = new HttpParams().set('nocid', id);
+    return this.http.get<any>(environment.apiUrl + "NOC/NocCustomerActionDocList", {params}).pipe(catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     let msg = '';
     if (error.error instanceof ErrorEvent) {

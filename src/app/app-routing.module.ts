@@ -63,7 +63,19 @@ const routes: Routes = [
   {
     path: 'comments',
     loadChildren: () => import('./pages/comments/comments.module').then( m => m.CommentsPageModule)
+  },  {
+    path: 'under-process-list',
+    loadChildren: () => import('./pages/under-process-list/under-process-list.module').then( m => m.UnderProcessListPageModule)
   },
+  {
+    path: 'completed-noc',
+    loadChildren: () => import('./pages/completed-noc/completed-noc.module').then( m => m.CompletedNocPageModule)
+  },
+  {
+    path: 'customer-action-noc',
+    loadChildren: () => import('./pages/customer-action-noc/customer-action-noc.module').then( m => m.CustomerActionNocPageModule)
+  },
+
 
 ];
 

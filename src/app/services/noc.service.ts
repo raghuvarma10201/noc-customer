@@ -10,8 +10,9 @@ export class NocService {
   apiUrl: string = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  getNocs(): Observable<any> {
-    return this.http.get<any>(environment.apiUrl + "NOC/GetRequestNocDetails").pipe(catchError(this.handleError));
+  getNocs(userType: string): Observable<any> {
+    const params = new HttpParams().set('usertype', userType);
+    return this.http.get<any>(environment.apiUrl + "NOC/GetRequestNocDetails",{params}).pipe(catchError(this.handleError));
   }
   getComments(encryptedNocId : any, customerActionId : any): Observable<any> {
     let params = new HttpParams()

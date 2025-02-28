@@ -1,0 +1,88 @@
+<ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-back-button default-href="#"></ion-back-button>
+    <ion-title>Under Process List</ion-title>
+
+    <div class="ion-float-end headerBts" slot="end">
+      <ion-button  routerLink="/Notification" shape="round">
+        <ion-icon name="filter-outline"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" id="open-modal">
+        <ion-icon name="information-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="dashboardBg pageBg"></div>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      refreshingSpinner="circles"
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing..."
+    ></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar shape="round" placeholder="Search by ID, Type, Project Name ... " class="ion-no-padding"></ion-searchbar>
+
+  <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
+   
+    <ion-item [button]="true" detail="true" color="none" *ngFor="let data of nocList">
+      <ion-row class="awaitingTrialPitApproval">
+        <ion-col size="6">
+            <ion-text>
+              <h6>NOC ID</h6>
+              <h5>{{data.nocRequestID}}</h5>
+            </ion-text>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-text>
+            <h6>TYPE</h6>
+            <h5>{{data.nocTypeName}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding-vertical">
+          <ion-text class="labelName">{{data.typeOfNOCName}}  | </ion-text>  <ion-text class="labelStatus">{{data.userNocStatus}}</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+
+
+
+  <!-- listNocInformation -->
+  <ion-modal class="breakPointModal listNocInformation" #modal trigger="open-modal" [initialBreakpoint]="0.50" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+    <ng-template>
+      <ion-content class="ion-padding">       
+        <ion-list lines="none" class="ion-padding">
+          <ion-item class="awaitingTrialPitApproval">
+            <ion-text>Awaiting for Trial Pit Approval</ion-text>
+          </ion-item>
+
+          <ion-item class="customerAction">
+            <ion-text>Customer Action</ion-text>
+          </ion-item>
+
+          <ion-item class="inspectionPassed">
+            <ion-text>Inspection Passed</ion-text>
+          </ion-item>          
+        </ion-list>
+      </ion-content> 
+
+    <!-- <ion-content class="ion-padding">       
+        <ion-text class="awaitingResponse">
+          <h1>Awaiting Response</h1>
+          <p>Aenean condimentum dui quis euismod molestie. In sollicitudin luctus</p>
+          <ion-img src="../../../assets/images/timer-icon.gif"></ion-img>
+          <h6>00:00</h6>
+        </ion-text>
+      </ion-content> -->
+      
+    </ng-template>
+  </ion-modal>
+  <!-- listNocInformation END -->
+</ion-content>

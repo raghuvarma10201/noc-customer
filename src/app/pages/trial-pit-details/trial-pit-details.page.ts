@@ -11,6 +11,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { GeolocationService } from 'src/app/services/geolocation.service';
 import { finalize } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-trial-pit-details',
@@ -29,7 +30,7 @@ export class TrialPitDetailsPage implements OnInit {
   latitude: any;
   longitude: any;
   nocDetails: any;
-  trialPitDetails: any;
+  trialPitDetails: any[] = [];
   encryptedNocId: any;
   imgUrl: any = environment.imgUrl;
   constructor(
@@ -41,19 +42,23 @@ export class TrialPitDetailsPage implements OnInit {
     private sharedService: SharedService,
     private nocService: NocService,
     private activatedRouteService: ActivatedRoute,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private datePipe: DatePipe
   ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       const nocData = navigation.extras.state['nocData'];
       this.nocDetails = nocData;
       this.encryptedNocId = navigation.extras.state['encryptedNocId'];; 
-      console.log(this.encryptedNocId);
+      console.log(this.encryptedNocId,"encryptedNocId");
     }
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    
+  }
+  ionViewWillEnter() {
     this.fetchNOCList();
   }
   async fetchNOCList() {
@@ -65,6 +70,7 @@ export class TrialPitDetailsPage implements OnInit {
       console.log("Res", res);
       if(res.status == 200 && res.success == true){
         this.trialPitDetails = res.data;
+        console.log("TrialPitDetails", this.trialPitDetails[0].activeStatusName);
         this.loaderService.loadingDismiss(); 
       }else {
         this.loaderService.loadingDismiss();
@@ -101,4 +107,12 @@ export class TrialPitDetailsPage implements OnInit {
       console.warn('Please select a date and time first!');
     }
   }
+
+  formatTime(time: string | null | undefined): string {
+    if (!time) {
+      return ''; // Return an empty string if the time is null/undefined
+    }
+    return this.datePipe.transform(`1970-01-01T${time}`, 'h:mm a') || '';
+  }
+  
 }

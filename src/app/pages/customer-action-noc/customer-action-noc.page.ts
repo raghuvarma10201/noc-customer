@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { NocService } from 'src/app/services/noc.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
-  selector: 'app-list-noc',
-  templateUrl: './list-noc.page.html',
-  standalone: false,
-  styleUrls: ['./list-noc.page.scss'],
+  selector: 'app-customer-action-noc',
+  templateUrl: './customer-action-noc.page.html',
+  styleUrls: ['./customer-action-noc.page.scss'],
+  standalone: false
 })
-export class ListNocPage implements OnInit {
+export class CustomerActionNocPage implements OnInit {
+
   errorMsg: any;
   nocList: any = [];
   encryptedUserType: any;
-  userType: string | null;
   constructor(
     private fb: FormBuilder,
     public router: Router,
@@ -27,20 +26,17 @@ export class ListNocPage implements OnInit {
     private sharedService: SharedService,
     private nocService: NocService,
     private activatedRouteService: ActivatedRoute
-  ) { 
-    this.userType = this.activatedRouteService.snapshot.paramMap.get('userType');
-    console.log('User Type:', this.userType);
-  }
+  ) { }
 
   ngOnInit() {
-    this.encryptuserType(this.userType);
+    this.encryptuserType();
   }
 
-  encryptuserType(userType: any) {
-    this.nocService.getEncryptedString(userType).pipe(finalize(() => {
+  encryptuserType() {
+    this.nocService.getEncryptedString("CustomerActions").pipe(finalize(() => {
     })).subscribe((res: any) => {
       console.log("ResEncrypted", res);
-      
+
       if (res.status == 200 && res.success == true) {
         this.encryptedUserType = res.data;
         this.fetchNOCList(this.encryptedUserType);
@@ -62,9 +58,9 @@ export class ListNocPage implements OnInit {
       this.loaderService.loadingDismiss();
     })).subscribe((res: any) => {
       console.log("Res", res);
-      if(res.status == 200 && res.success == true){
+      if (res.status == 200 && res.success == true) {
         this.nocList = res.data;
-        this.loaderService.loadingDismiss(); 
+        this.loaderService.loadingDismiss();
       }
       else {
         this.loaderService.loadingDismiss();
@@ -89,11 +85,5 @@ export class ListNocPage implements OnInit {
       console.log('Refresh complete');
     }, 2000); // Simulate 2 seconds refresh time
   }
-  navigateToDisplayPage(nocId : any) {
-    if (nocId) {
-      this.router.navigate(['/noc-details', nocId]);
-    } else {
-      console.warn('Please select a date and time first!');
-    }
-  }
+
 }

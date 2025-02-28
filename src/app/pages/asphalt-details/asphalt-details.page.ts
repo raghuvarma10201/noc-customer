@@ -29,8 +29,9 @@ export class AsphaltDetailsPage implements OnInit {
   latitude: any;
   longitude: any;
   nocDetails: any;
-  trialPitDetails: any;
+  trialPitDetails: any[] = [];
   encryptedNocId: any;
+  imgUrl: any = environment.imgUrl;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
