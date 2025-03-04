@@ -23,6 +23,14 @@ export class CommonService {
     return this.http.get<any>(environment.apiUrl + "NOC/NocCustomerActionDocList", {params}).pipe(catchError(this.handleError));
   }
 
+  changeScheduleForTrailPit(body: any){
+    return this.http.post<any>(environment.apiUrl + "Customer/ChangeScheduleForTrailPit", body).pipe(catchError(this.handleError));
+  }
+
+  acceptTrailPitOrRoadCutting(body: any){
+    return this.http.post<any>(environment.apiUrl + "Customer/AcceptTrailPitOrRoadCutting", body).pipe(catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     let msg = '';
     if (error.error instanceof ErrorEvent) {

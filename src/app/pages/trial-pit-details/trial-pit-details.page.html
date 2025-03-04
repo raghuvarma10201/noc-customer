@@ -38,12 +38,12 @@
           </ion-text>
         </ion-col>
 
-        <ion-col size="12">
+        <!-- <ion-col size="12">
           <ion-text>
             <h6>Inspection Time</h6>
             <h5>{{trialPitDetails[0]?.inspectionDate | date:'MMM d, y'}},{{formatTime(trialPitDetails[0]?.inspectionTime)}}</h5>
           </ion-text>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
     </ion-item>
   </ion-list>
@@ -52,8 +52,8 @@
     <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent trialpitCards">
       <ion-item color="none" lines="none" *ngFor="let data of trialPitDetails"  class="ionItemTPD"
       [ngClass]="{
-        'customerTDP': data.nocStatus === 4,
-        'inspectorTDP': data.nocStatus === 5
+        'customerTDP': data.roleId === 4,
+        'inspectorTDP': data.roleId === 2
       }">
         <div>
           <ion-text>
@@ -70,13 +70,34 @@
           <div *ngIf="data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
             <ion-img *ngFor="let preview of data.documents; let i = index"  [src]="imgUrl + preview"></ion-img>
           </div>
+          <div class="ion-justify-content-start availabilityText">
+            <ion-text class="labelName">Inspection Date & Time: </ion-text>
+            <ion-text class="labelStatus"> {{data.inspectionDate | date:'MMM d, y'}},{{formatTime(data.inspectionTime)}}</ion-text>
+          </div>
+          <div class="ion-justify-content-start availabilityText">
+            <ion-text class="labelName">Status: </ion-text>
+            <ion-text class="labelStatus" *ngIf="data.accepted"> Accepted </ion-text>
+            <ion-text class="labelStatus" *ngIf="!data.accepted && data.rescheduled"> Rescheduled </ion-text>
+          </div>
+          <ion-row *ngIf="data.rescheduled == false && data.accepted == false && data.roleId != 2 && data.isActive">
+            <ion-col size="6">
+              <ion-button fill="outline" class="warningBt" size="small" shape="round" expand="block" (click)="reschedule(nocDetails)" >
+                Reschedule
+              </ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button fill="outline" class="secondaryBt" size="small" shape="round" expand="block" (click)="confirmAccept(data)"> 
+                Accept
+              </ion-button>
+            </ion-col>
+          </ion-row>
         </div>
       </ion-item>
     </ion-list>
 
   </div>
 
-  <ion-row *ngIf="trialPitDetails[0]?.activeStatusName == 'In Progress' || trialPitDetails[0]?.activeStatusName == 'Customer Action'">
+  <ion-row *ngIf="trialPitDetails[0]?.caStatusName == 'In Progress' || trialPitDetails[0]?.caStatusName == 'Customer Action'">
     <ion-col size="6">
       <ion-button (click)="addComments(nocDetails)" fill="outline" class="warningBt mb2" shape="round"
         expand="block">Comments</ion-button>
@@ -88,14 +109,50 @@
     </ion-col>
   </ion-row>
 
-  <ion-col size="6" *ngIf="trialPitDetails[0]?.activeStatusName == 'Approved'">
+  <ion-col size="6" *ngIf="trialPitDetails[0]?.caStatusName == 'Approved'">
     <ion-button [disabled]="true" fill="outline" class="warningBt mb2" shape="round"
       expand="block">Accepted</ion-button>
   </ion-col>
 
-  <ion-col size="6" *ngIf="trialPitDetails[0]?.activeStatusName == 'Reject'">
+  <ion-col size="6" *ngIf="trialPitDetails[0]?.caStatusName == 'Reject'">
     <ion-button [disabled]="true" fill="outline" class="warningBt mb2" shape="round"
       expand="block">Rejected</ion-button>
   </ion-col>
+
+  <ng-template>
+    <ion-content class="ion-padding formModal ion-form">
+      <ion-text>
+        <h2>Reschedule</h2>
+      </ion-text>
+      <form [formGroup]="rescheduleForm" (ngSubmit)="submitReschedule()">
+        <ion-list class="ion-no-padding">
+          <ion-item class="ionFormItem">
+            <div class="width100">
+              <ion-label>Comments</ion-label>
+              <ion-textarea formControlName="comments" placeholder="Enter Comments"></ion-textarea>
+            </div>
+          </ion-item>
+
+          <ion-item lines="none">
+            <div class="width100">
+              <ion-label>Time slot</ion-label>
+              <ion-datetime-button datetime="datetime" formControlName="datetime"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="datetime" formControlName="datetime"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </div>
+          </ion-item>
+
+          <ion-button [disabled]="rescheduleForm.invalid || isSubmitting" class="modalyellowBt" shape="round" expand="block" type="submit">
+            <ion-spinner *ngIf="isSubmitting" name="dots"></ion-spinner>
+            <span *ngIf="!isSubmitting">Submit</span>
+          </ion-button>
+          <ion-button fill="clear" expand="block" (click)="rescheduleModal.dismiss()">Cancel</ion-button>
+        </ion-list>
+      </form>
+    </ion-content>
+  </ng-template>
 
 </ion-content>

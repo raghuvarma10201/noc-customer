@@ -709,6 +709,59 @@ form .error-message {
     font-size: 26px;
   }
 }
+
+ion-modal {
+  --border-radius: 30px;
+  h2 {
+    color:var(--modalheadingColor);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 17px;
+    margin-top: 25px;
+}
+
+.ionFormItem{--border-color:#000;}
+    // ion-item{
+    //   margin-bottom:20px;
+    //       ion-label {
+    //         font-size: 0.86rem;
+    //         font-weight: 500;
+    //         font-family: var(--ion-font-family-secondary) !important;
+    //       }
+    //       ion-textarea {
+    //         font-family: var(--ion-font-family-secondary) !important;
+    //         font-weight: 500;
+    //         --padding-top: 7px !important;
+    //       }
+    //       ion-input {
+    //         font-family: var(--ion-font-family-secondary) !important;
+    //       }
+
+    //       ion-datetime-button{    margin-top: 9px;}
+    // }
+
+    
+    ion-datetime-button::part(native) {
+      border-bottom: solid 1px #000;
+      border-radius: 0px;
+      background: transparent;
+      color: #000;
+      width: 45%;
+      padding: 12px 15px;
+      margin-right: 10px;
+      font-family: var(--ion-font-family-secondary) !important;
+    }
+
+    // .modalyellowBt{
+    //   --background:var(--modalyellowBt);
+    //   --box-shadow:none;
+    //   font-weight:600;
+    // }
+}
+// .formModal{
+//   ion-list{  margin-bottom:60px;}
+
+// }
 // .awaitingResponse{text-align:center; padding:20px 15px 0px 15px;
 //   h1{font-size:1rem; font-weight:600;}
 //   p{font-size:0.8rem;}

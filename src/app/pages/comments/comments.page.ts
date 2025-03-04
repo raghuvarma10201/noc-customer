@@ -47,6 +47,7 @@ export class CommentsPage implements OnInit {
     if (navigation?.extras.state) {
       const nocData = navigation.extras.state['nocData'];
       this.nocDetails = nocData;
+      console.log(this.nocDetails, "nocDetails");
       const encryptedNocId = navigation.extras.state['encryptedNocId'];
       this.encryptedNocId = encryptedNocId;
       const customerActionId = navigation.extras.state['customerActionId'];
@@ -176,7 +177,8 @@ export class CommentsPage implements OnInit {
       longitude: this.longitude,
       customerActionId: formValue.customerActionId,
       nocId: formValue.nocId,
-      comments: formValue.comments
+      comments: formValue.comments,
+      trailPitOrRoadCuttingId: this.nocDetails.trailPitId
     }
     
     console.log("payload", payload);
@@ -185,6 +187,8 @@ export class CommentsPage implements OnInit {
     })).subscribe((res: any) => {
       console.log("Res", res);
       if (res.status == 201 && res.success == true) {
+        this.trailPitForm.reset();
+        this.imageFiles = [];
         this.toastService.showSuccess(res.message, "Scccess");
         if(this.customerActionId == 2){
           this.router.navigate(['/trial-pit-details'], { state: { nocData: this.nocDetails,encryptedNocId : this.encryptedNocId } });
