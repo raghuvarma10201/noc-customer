@@ -74,7 +74,7 @@
             <ion-text class="labelName">Inspection Date & Time: </ion-text>
             <ion-text class="labelStatus"> {{data.inspectionDate | date:'MMM d, y'}},{{formatTime(data.inspectionTime)}}</ion-text>
           </div>
-          <div class="ion-justify-content-start availabilityText">
+          <div class="ion-justify-content-start availabilityText" *ngIf="data.accepted || data.rescheduled">
             <ion-text class="labelName">Status: </ion-text>
             <ion-text class="labelStatus" *ngIf="data.accepted"> Accepted </ion-text>
             <ion-text class="labelStatus" *ngIf="!data.accepted && data.rescheduled"> Rescheduled </ion-text>
