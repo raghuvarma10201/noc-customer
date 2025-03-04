@@ -1,13 +1,47 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>asphalt-reschedule</ion-title>
+    <ion-title>Reschedule</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">asphalt-reschedule</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding requestDetails">
+  <div class="dashboardBg pageBg"></div>
+  <div class="ionForm">
+    <form [formGroup]="asphaltRescheduleForm" class="trailPitRescheduleForm">
+
+      <div class="ionInput">
+        <ion-textarea shape="round" fill="outline" formControlName="comments" rows="3" placeholder="Comments"
+          [ngClass]="{ 'is-invalid': (submitted && form['comments'].errors) || (form['comments'].touched && form['comments'].errors) }"></ion-textarea>
+        <div class="inputError" *ngIf="submitted||(form['comments'].touched && form['comments'].invalid)">
+          <small class="form-text error-message" *ngIf="form['comments'].errors">
+            Comments is required</small>
+        </div>
+      </div>
+      <h2 class="mb2">Time slot</h2>
+      <div class="ionInput">
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime" formControlName="date_time" presentation="date-time"
+              (ionChange)="onDateTimeChange($event)" [formatOptions]="{
+                    date: {
+                      weekday: 'short',
+                      month: 'short',
+                      day: '2-digit',
+                    },
+                    time: {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    },
+                  }"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+        <div class="inputError" *ngIf="submitted||(form['date_time'].touched && form['date_time'].invalid)">
+          <small class="form-text error-message" *ngIf="form['date_time'].errors">
+            Date & Time is required</small>
+        </div>
+      </div>
+      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round" expand="block">Submit</ion-button>
+    </form>
+  </div>
 </ion-content>

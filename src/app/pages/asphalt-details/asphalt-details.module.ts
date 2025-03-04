@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -13,8 +13,10 @@ import { AsphaltDetailsPage } from './asphalt-details.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AsphaltDetailsPageRoutingModule
+    AsphaltDetailsPageRoutingModule,
+    ReactiveFormsModule
   ],
-  declarations: [AsphaltDetailsPage]
+  declarations: [AsphaltDetailsPage],
+  providers: [DatePipe]
 })
 export class AsphaltDetailsPageModule {}

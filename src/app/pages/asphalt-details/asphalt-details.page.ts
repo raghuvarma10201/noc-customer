@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,6 +11,9 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { GeolocationService } from 'src/app/services/geolocation.service';
 import { finalize } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AlertController, IonModal } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-asphalt-details',
@@ -19,6 +22,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./asphalt-details.page.scss'],
 })
 export class AsphaltDetailsPage implements OnInit {
+  @ViewChild('rescheduleModal') rescheduleModal!: IonModal;
 
   submitted = false;
   errorMsg: any;
@@ -32,6 +36,9 @@ export class AsphaltDetailsPage implements OnInit {
   trialPitDetails: any[] = [];
   encryptedNocId: any;
   imgUrl: any = environment.imgUrl;
+  rescheduleForm: FormGroup;
+  selectedTrialPit: any;
+  isSubmitting = false;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -41,7 +48,10 @@ export class AsphaltDetailsPage implements OnInit {
     private sharedService: SharedService,
     private nocService: NocService,
     private activatedRouteService: ActivatedRoute,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+        private datePipe: DatePipe,
+    private commonService: CommonService,
+    private alertCtrl: AlertController
   ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
@@ -50,10 +60,18 @@ export class AsphaltDetailsPage implements OnInit {
       this.encryptedNocId = navigation.extras.state['encryptedNocId'];; 
       console.log(this.encryptedNocId);
     }
+    this.rescheduleForm = this.fb.group({
+      comments: [''],
+      datetime: ['', Validators.required]
+    });
 
   }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.fetchNOCDetails(this.encryptedNocId);
     this.fetchNOCList();
   }
   async fetchNOCList() {
@@ -89,8 +107,8 @@ export class AsphaltDetailsPage implements OnInit {
   }
   reschedule(nocData : any) {
     if (nocData) {
-      nocData.customerActionId = 2;
-      this.router.navigate(['/trialpit-reschedule'], { state: { nocData: nocData } });
+      nocData.customerActionId = 3;
+      this.router.navigate(['/asphalt-reschedule'], { state: { nocData: nocData } });
     } else {
       console.warn('Please select a date and time first!');
     }
@@ -101,5 +119,73 @@ export class AsphaltDetailsPage implements OnInit {
     } else {
       console.warn('Please select a date and time first!');
     }
+  }
+
+  formatTime(time: string | null | undefined): string {
+    if (!time) {
+      return ''; // Return an empty string if the time is null/undefined
+    }
+    return this.datePipe.transform(`1970-01-01T${time}`, 'h:mm a') || '';
+  }
+
+  async confirmAccept(data: any) {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmation',
+      message: 'Are you sure you want to accept this request?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, 
+        {
+          text: 'Yes, Accept',
+          handler: () => {
+            this.acceptRequest(data);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  acceptRequest(data: any) {
+    const requestBody = {
+      NocId: data.nocId,
+      TrailOrRoadCutId: this.nocDetails.roadCuttingId,
+      CustomerActionTypeid: 3,
+      IsAccepted: true
+    };
+    this.commonService.acceptTrailPitOrRoadCutting(requestBody).subscribe(
+      (res: any) => {
+        if (res.status === 200 && res.success) {
+          this.toastService.showSuccess('Request accepted successfully', 'Success');
+          this.fetchNOCList(); // Refresh the list after accepting
+        } else {
+          this.toastService.showError(res.message || 'Failed to accept request', 'Error');
+        }
+      }
+    );
+  }
+
+  async fetchNOCDetails(encryptedNocId : any) {
+    await this.loaderService.loadingPresent();
+    this.nocService.getNocDetails(encryptedNocId).pipe(finalize(() => {
+      this.loaderService.loadingDismiss();
+    })).subscribe((res: any) => {
+      console.log("Res", res);
+      if (res.status == 200 && res.success == true) {
+        this.nocDetails = res.data;
+      }
+      else {
+        this.loaderService.loadingDismiss();
+        this.toastService.showError(res.message, "Error");
+      }
+    }, error => {
+      this.loaderService.loadingDismiss();
+      this.errorMsg = error;
+      this.toastService.showError(this.errorMsg, "Error");
+    })
   }
 }
