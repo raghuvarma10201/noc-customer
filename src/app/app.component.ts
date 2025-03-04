@@ -60,6 +60,7 @@ export class AppComponent implements OnInit {
     })).subscribe((res: any) => {
       console.log("Res", res);
       if (res.status == 200 && res.success == true) {
+        localStorage.setItem('defaultSettings', JSON.stringify(res.data));
         this.loaderService.loadingDismiss();
       }
       else {

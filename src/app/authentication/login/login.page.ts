@@ -109,7 +109,7 @@ export class LoginPage implements OnInit {
       }
       else{     
         this.loaderService.loadingDismiss();
-        // this.toastr.showError(result.message, "Error");
+        this.toastService.showError(res.message, "Error");
       }
     }, error => {   
       this.loaderService.loadingDismiss();

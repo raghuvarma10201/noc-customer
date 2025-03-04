@@ -86,6 +86,7 @@ export class DetailsPage implements OnInit {
         if(res.data.nocStatusId == 4){
           if(arr.includes("2")){
             this.isTrailPitEnabled = true;
+            console.log(this.isTrailPitEnabled)
           }
           if(arr.includes("3")){
             this.isAsphaltEnabled = true;

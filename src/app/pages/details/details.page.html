@@ -19,7 +19,7 @@
   <div class="dashboardBg pageBg"></div>
   <h1>NOC Request Details</h1>
 
-  <h2> {{nocDetails.projectTitle}} </h2>
+  <h2> {{nocDetails?.projectTitle}} </h2>
   <ion-list *ngIf="nocDetails" lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
 
     <ion-item color="none">
@@ -126,11 +126,11 @@
   <div class="detailBts">
     <ion-button *ngIf="isTrailPitEnabled && nocDetails.trailPitId == 0" (click)="navigateToTraiPitForm(nocDetails)"
       fill="outline" class="warningBt" shape="round" expand="block">Apply Trial Pit</ion-button>
-    <ion-button *ngIf="isTrailPitEnabled && nocDetails.trailPitId !== 0" (click)="navigateToTraiPitDetails(nocDetails)"
+    <ion-button *ngIf="nocDetails?.trailPitId !== 0" (click)="navigateToTraiPitDetails(nocDetails)"
       fill="outline" class="warningBt" shape="round" expand="block">Trial Pit</ion-button>
     <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId == 0" (click)="navigateToAsphaltForm(nocDetails)"
       fill="outline" class="secondaryBt" shape="round" expand="block">Apply Asphalt / Road Cutting</ion-button>
-    <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId !== 0"
+    <ion-button *ngIf="nocDetails?.roadCuttingId !== 0"
       (click)="navigateToAsphaltDetails(nocDetails)" fill="outline" class="secondaryBt" shape="round"
       expand="block">Asphalt / Road Cutting</ion-button>
       <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId == 0" (click)="navigateToAsphaltForm(nocDetails)"

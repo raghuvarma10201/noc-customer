@@ -39,6 +39,8 @@ export class TrialPitDetailsPage implements OnInit {
   rescheduleForm: FormGroup;
   selectedTrialPit: any;
   isSubmitting = false;
+  rescheduleLimit: any;
+  rescheduledCount: any;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -64,6 +66,25 @@ export class TrialPitDetailsPage implements OnInit {
       comments: [''],
       datetime: ['', Validators.required]
     });
+    const defaultSettings = localStorage.getItem('defaultSettings');
+    if (defaultSettings) {
+      try {
+        const parsedSettings = JSON.parse(defaultSettings);
+        
+        // Find the setting with configKey 'limitForReschedule'
+        const rescheduleSetting = parsedSettings.find((item: any) => item.configKey === 'limitForReschedule');
+    
+        if (rescheduleSetting) {
+          this.rescheduleLimit = Number(rescheduleSetting.configValue); // Convert to number if needed
+        } else {
+          console.warn("Reschedule limit config not found");
+        }
+      } catch (error) {
+        console.error("Error parsing defaultSettings:", error);
+      }
+    } else {
+      console.warn("No defaultSettings found in localStorage");
+    }
 
   }
 
@@ -84,6 +105,8 @@ export class TrialPitDetailsPage implements OnInit {
       if(res.status == 200 && res.success == true){
         this.trialPitDetails = res.data;
         console.log("TrialPitDetails", this.trialPitDetails[0].activeStatusName);
+        this.rescheduledCount = this.trialPitDetails.filter(item => item.rescheduled === true).length;
+        console.log("RescheduledCount", this.rescheduledCount);
         this.loaderService.loadingDismiss(); 
       }else {
         this.loaderService.loadingDismiss();
@@ -106,6 +129,10 @@ export class TrialPitDetailsPage implements OnInit {
     }
   }
   reschedule(nocData : any) {
+    if(this.rescheduledCount >= this.rescheduleLimit){
+      this.toastService.showError('The maximum limit for rescheduling has been reached.', 'Error');
+      return;
+    }
     if (nocData) {
       nocData.customerActionId = 2;
       this.router.navigate(['/trialpit-reschedule'], { state: { nocData: nocData } });
