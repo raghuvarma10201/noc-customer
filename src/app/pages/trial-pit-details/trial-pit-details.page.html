@@ -52,19 +52,20 @@
     <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent trialpitCards">
       <ion-item color="none" lines="none" *ngFor="let data of trialPitDetails"  class="ionItemTPD"
       [ngClass]="{
-        'customerTDP': data.statusId === 4,
-        'inspectorTDP': data.statusId === 5
+        'customerTDP': data.nocStatus === 4,
+        'inspectorTDP': data.nocStatus === 5
       }">
         <div>
           <ion-text>
-            <h2>{{data.roleName}}</h2>
+            <!-- <h2>{{data.roleName}}</h2> -->
+            <h2>{{data.username}}</h2>
             <h6>{{data.transactionDate | date:'MMM d, y, h:mm a'}}</h6>
             <h5>{{data.comments}}</h5>
           </ion-text>
           <div class="ion-justify-content-start availabilityText">
             <ion-text class="labelName">CA Type Status: </ion-text>
             <!-- <ion-text> 16 Dec 2024, 3:00 PM | </ion-text> -->
-            <ion-text class="labelStatus"> {{data.subStatus}}</ion-text>
+            <ion-text class="labelStatus"> {{data.caStatusName}}</ion-text>
           </div>
           <div *ngIf="data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
             <ion-img *ngFor="let preview of data.documents; let i = index"  [src]="imgUrl + preview"></ion-img>

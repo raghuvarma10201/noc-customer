@@ -133,6 +133,11 @@
     <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId !== 0"
       (click)="navigateToAsphaltDetails(nocDetails)" fill="outline" class="secondaryBt" shape="round"
       expand="block">Asphalt / Road Cutting</ion-button>
+      <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId == 0" (click)="navigateToAsphaltForm(nocDetails)"
+      fill="outline" class="secondaryBt" shape="round" expand="block">Apply Building Inspection</ion-button>
+    <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId !== 0"
+      (click)="navigateToAsphaltDetails(nocDetails)" fill="outline" class="secondaryBt" shape="round"
+      expand="block">Building Inspection</ion-button>
   </div>
 </ion-content>
 <!-- <ion-footer>

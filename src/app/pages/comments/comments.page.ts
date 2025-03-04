@@ -79,10 +79,23 @@ export class CommentsPage implements OnInit {
         const response = await fetch(image.webPath);
         const blob = await response.blob();
         const file = new File([blob], `image_${Date.now()}.jpg`, { type: 'image/jpeg' });
-
-        this.imageFiles.push(file);
-        this.imagePreviews.push(image.webPath);
+        const compressedBlob = await this.nocService.compressImage(image.webPath, 0.6);
+        this.nocService.uploadImage(compressedBlob, this.nocDetails.nocId).pipe(finalize(() => {
+          this.loaderService.loadingDismiss();
+        })).subscribe((res: any) => {
+          console.log("Res", res);
+          if (res.status == 200 && res.success == true) {
+            this.imageFiles.push(res.data);
+            this.imagePreviews.push(environment.imgUrl + '' + res.data);
+          }
+        }, error => {
+          this.loaderService.loadingDismiss();
+          this.errorMsg = error;
+          this.toastService.showError(this.errorMsg, "Error");
+        })
       }
+        // this.imageFiles.push(file);
+        // this.imagePreviews.push(image.webPath);
     } catch (error) {
       console.error('Camera error:', error);
     }
@@ -127,11 +140,11 @@ export class CommentsPage implements OnInit {
       this.loaderService.loadingDismiss();
       return;
     }
-    if (this.imageFiles.length == 0) {
-      this.loaderService.loadingDismiss();
-      this.toastService.showError('Please upload the images', "Error");
-      return;
-    }
+    // if (this.imageFiles.length == 0) {
+    //   this.loaderService.loadingDismiss();
+    //   this.toastService.showError('Please upload the images', "Error");
+    //   return;
+    // }
     const location = await this.geolocationService.getCurrentLocation();
     if (location) {
       this.latitude = location.latitude;
@@ -156,8 +169,18 @@ export class CommentsPage implements OnInit {
     formData.append(`customerActionId`, formValue.customerActionId);
     formData.append(`nocId`, formValue.nocId);
     formData.append(`comments`, formValue.comments);
+
+    let payload = {
+      uploadFile: this.imageFiles,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      customerActionId: formValue.customerActionId,
+      nocId: formValue.nocId,
+      comments: formValue.comments
+    }
     
-    this.nocService.addComments(formData).pipe(finalize(() => {
+    console.log("payload", payload);
+    this.nocService.addComments(payload).pipe(finalize(() => {
       this.loaderService.loadingDismiss();
     })).subscribe((res: any) => {
       console.log("Res", res);

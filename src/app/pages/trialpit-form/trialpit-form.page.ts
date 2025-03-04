@@ -90,7 +90,7 @@ export class TrialpitFormPage implements OnInit {
           this.loaderService.loadingDismiss();
         })).subscribe((res: any) => {
           console.log("Res", res);
-          if (res.status == 200 && res.success == true) {
+          if (res.status == 201 && res.success == true) {
             this.imageFiles.push(res.data);
             this.imagePreviews.push(environment.imgUrl + '' + res.data);
           }
@@ -144,11 +144,11 @@ export class TrialpitFormPage implements OnInit {
       this.loaderService.loadingDismiss();
       return;
     }
-    if (this.imageFiles.length == 0) {
-      this.loaderService.loadingDismiss();
-      this.toastService.showError('Please upload the images', "Error");
-      return;
-    }
+    // if (this.imageFiles.length == 0) {
+    //   this.loaderService.loadingDismiss();
+    //   this.toastService.showError('Please upload the images', "Error");
+    //   return;
+    // }
     const location = await this.geolocationService.getCurrentLocation();
     if (location) {
       this.latitude = location.latitude;

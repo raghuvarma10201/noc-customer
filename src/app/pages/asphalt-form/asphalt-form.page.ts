@@ -147,11 +147,11 @@ export class AsphaltFormPage implements OnInit {
       this.loaderService.loadingDismiss();
       return;
     }
-    if (this.imageFiles.length == 0) {
-      this.loaderService.loadingDismiss();
-      this.toastService.showError('Please upload the images', "Error");
-      return;
-    }
+    // if (this.imageFiles.length == 0) {
+    //   this.loaderService.loadingDismiss();
+    //   this.toastService.showError('Please upload the images', "Error");
+    //   return;
+    // }
     const location = await this.geolocationService.getCurrentLocation();
     if (location) {
       this.latitude = location.latitude;
