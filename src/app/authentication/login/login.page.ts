@@ -104,7 +104,7 @@ export class LoginPage implements OnInit {
         this.toastService.showSuccess('Successfully Login', 'Success');
         this.authService.setUserInLocalStorage(userData,'userData');
         localStorage.setItem('accessToken', accessToken);
-        this.router.navigate(["dashboard"]);
+        this.router.navigate(["/dashboard"]);
         this.sharedService.isUserLogin.next({isUserLoggedIn:true});
       }
       else{     

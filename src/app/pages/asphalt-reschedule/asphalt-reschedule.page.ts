@@ -46,7 +46,7 @@ export class AsphaltReschedulePage implements OnInit {
       console.log(nocData);
     }
     this.asphaltRescheduleForm = this.fb.group({
-      id: [this.nocDetails.trailPitId, [Validators.required]],
+      id: [this.nocDetails.roadCuttingId, [Validators.required]],
       comments: [null, [Validators.required]],
       date_time: [null, [Validators.required]],
       inspectionDate: [null, [Validators.required]],
@@ -92,45 +92,57 @@ export class AsphaltReschedulePage implements OnInit {
 
   async onSubmit() {
     this.submitted = true;
-    console.log(this.asphaltRescheduleForm.value);
-    await this.loaderService.loadingPresent();
+  
+    // Validate form first
     if (this.asphaltRescheduleForm.invalid) {
-      this.loaderService.loadingDismiss();
+      this.toastService.showError('Please fill all required fields', 'Validation Error');
       return;
     }
-    const location = await this.geolocationService.getCurrentLocation();
-    if (location) {
-      this.latitude = location.latitude;
-      this.longitude = location.longitude;
-      console.log('Current position:', this.latitude, this.longitude);
-    } else {
-      console.warn('Could not retrieve location');
-    }
-    const formData = this.asphaltRescheduleForm.value;
-    // Append form fields to FormData
-
-    // Append location coordinates if available
-    if (this.latitude && this.longitude) {
-      formData.latitude = this.latitude.toString();
-      formData.longitude = this.longitude.toString();
-    }
-
-    this.nocService.rescheduleTrailPit(formData).pipe(finalize(() => {
-      this.loaderService.loadingDismiss();
-    })).subscribe((res: any) => {
-      console.log("Res", res);
-      if (res.status == 200 && res.success == true) {
-        this.toastService.showSuccess(res.message, "Scccess");
-        this.router.navigate(['/asphalt-details'], { state: { nocData: this.nocDetails } });
+  
+    try {
+      // Present loader
+      await this.loaderService.loadingPresent();
+  
+      // Get location (consider moving this before loader if location is critical)
+      const location = await this.geolocationService.getCurrentLocation();
+      if (location) {
+        this.latitude = location.latitude;
+        this.longitude = location.longitude;
       }
-      else {
-        this.loaderService.loadingDismiss();
-        // this.toastr.showError(result.message, "Error");
+  
+      const formData = this.asphaltRescheduleForm.value;
+      if (this.latitude && this.longitude) {
+        formData.latitude = this.latitude.toString();
+        formData.longitude = this.longitude.toString();
       }
-    }, (error: any) => {
+  
+      // Use RxJS operators to handle loader
+      this.nocService.rescheduleTrailPit(formData).pipe(
+        finalize(() => {
+          this.loaderService.loadingDismiss(); // Ensure loader is always dismissed
+        })
+      ).subscribe(
+        (res: any) => {
+          if (res.status === 200 && res.success === true) {
+            this.toastService.showSuccess(res.message, "Success");
+            this.router.navigate(['/asphalt-details'], { 
+              state: { 
+                nocData: this.nocDetails 
+              } 
+            });
+          } else {
+            this.toastService.showError(res.message || 'Rescheduling failed', 'Error');
+          }
+        }, 
+        (error: any) => {
+          this.errorMsg = error;
+          this.toastService.showError(this.errorMsg, "Error");
+        }
+      );
+    } catch (error) {
+      // Catch any unexpected errors
       this.loaderService.loadingDismiss();
-      this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
-    })
+      this.toastService.showError('An unexpected error occurred', 'Error');
+    }
   }
 }

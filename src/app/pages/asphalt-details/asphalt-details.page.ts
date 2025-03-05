@@ -83,16 +83,14 @@ export class AsphaltDetailsPage implements OnInit {
       console.log("Res", res);
       if(res.status == 200 && res.success == true){
         this.trialPitDetails = res.data;
-        this.loaderService.loadingDismiss(); 
       }
       else {
-        this.loaderService.loadingDismiss();
         this.toastService.showError(res.message, "Error");
       }
     }, error => {
-      this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      console.warn(this.errorMsg);
+      // this.toastService.showError(this.errorMsg, "Error");
     })
   }
   async getCurrentLocation() {
@@ -170,22 +168,20 @@ export class AsphaltDetailsPage implements OnInit {
   }
 
   async fetchNOCDetails(encryptedNocId : any) {
-    await this.loaderService.loadingPresent();
+    // await this.loaderService.loadingPresent();
     this.nocService.getNocDetails(encryptedNocId).pipe(finalize(() => {
-      this.loaderService.loadingDismiss();
+      // this.loaderService.loadingDismiss();
     })).subscribe((res: any) => {
       console.log("Res", res);
       if (res.status == 200 && res.success == true) {
         this.nocDetails = res.data;
       }
       else {
-        this.loaderService.loadingDismiss();
         this.toastService.showError(res.message, "Error");
       }
     }, error => {
-      this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      console.warn(this.errorMsg, "Error");
     })
   }
 }

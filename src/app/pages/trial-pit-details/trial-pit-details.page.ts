@@ -104,7 +104,7 @@ export class TrialPitDetailsPage implements OnInit {
       console.log("Res", res);
       if(res.status == 200 && res.success == true){
         this.trialPitDetails = res.data;
-        console.log("TrialPitDetails", this.trialPitDetails[0].activeStatusName);
+        console.log("TrialPitDetails", this.trialPitDetails);
         this.rescheduledCount = this.trialPitDetails.filter(item => item.rescheduled === true).length;
         console.log("RescheduledCount", this.rescheduledCount);
         this.loaderService.loadingDismiss(); 
@@ -155,60 +155,7 @@ export class TrialPitDetailsPage implements OnInit {
     return this.datePipe.transform(`1970-01-01T${time}`, 'h:mm a') || '';
   }
 
-  openRescheduleModal(data: any) {
-    console.log("data", data);
-    this.selectedTrialPit = data;
-    this.rescheduleForm.reset(); // Reset the form
-    this.rescheduleModal.present();
-  }
 
-  submitReschedule() {
-    if (this.rescheduleForm.invalid) {
-      this.toastService.showError('Please select a date and time', 'Error');
-      return;
-    }
-  
-    const formValue = this.rescheduleForm.value;
-    const selectedDate = new Date(formValue.datetime);
-    
-    // Format the date as YYYY-MM-DD
-    const inspectionDate = this.datePipe.transform(selectedDate, 'yyyy-MM-dd');
-    
-    // Format the time as HH:mm:ss
-    const inspectionTime = this.datePipe.transform(selectedDate, 'HH:mm:ss');
-  
-    const payload = {
-      id: this.nocDetails ? this.nocDetails.trailPitId || 0 : 0,
-      comments: formValue.comments || '',
-      inspectionDate: inspectionDate,
-      inspectionTime: inspectionTime
-    };
-  
-    this.isSubmitting = true;
-    this.loaderService.loadingPresent();
-  
-    // Call your reschedule API
-    this.commonService.changeScheduleForTrailPit(payload).pipe(
-      finalize(() => {
-        this.loaderService.loadingDismiss();
-        this.isSubmitting = false;
-      })
-    ).subscribe(
-      (res: any) => {
-        if (res.status === 200 && res.success) {
-          this.toastService.showSuccess('Inspection rescheduled successfully', 'Success');
-          this.rescheduleModal.dismiss();
-          this.fetchNOCList(); // Refresh the list after rescheduling
-        } else {
-          this.toastService.showError(res.message || 'Failed to reschedule inspection', 'Error');
-        }
-      },
-      error => {
-        this.errorMsg = error;
-        this.toastService.showError(this.errorMsg || 'Failed to reschedule inspection', 'Error');
-      }
-    );
-  }
 
   async confirmAccept(data: any) {
     const alert = await this.alertCtrl.create({
@@ -252,20 +199,16 @@ export class TrialPitDetailsPage implements OnInit {
   }
 
   async fetchNOCDetails(encryptedNocId : any) {
-    await this.loaderService.loadingPresent();
     this.nocService.getNocDetails(encryptedNocId).pipe(finalize(() => {
-      this.loaderService.loadingDismiss();
     })).subscribe((res: any) => {
       console.log("Res", res);
       if (res.status == 200 && res.success == true) {
         this.nocDetails = res.data;
       }
       else {
-        this.loaderService.loadingDismiss();
         this.toastService.showError(res.message, "Error");
       }
     }, error => {
-      this.loaderService.loadingDismiss();
       this.errorMsg = error;
       this.toastService.showError(this.errorMsg, "Error");
     })

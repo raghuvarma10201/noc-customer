@@ -123,13 +123,11 @@ export class TrialpitReschedulePage implements OnInit {
         this.router.navigate(['/trial-pit-details'], { state: { nocData: this.nocDetails } });
       }
       else {
-        this.loaderService.loadingDismiss();
-        // this.toastr.showError(result.message, "Error");
+        this.toastService.showError(res.message, "Error");
       }
     }, (error: any) => {
-      this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      // this.toastService.showError(this.errorMsg, "Error");
     })
   }
 }

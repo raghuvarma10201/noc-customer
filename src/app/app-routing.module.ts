@@ -3,10 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  {
-    path: 'dashboard',
-    loadChildren: () => import('./authentication/login/login.module').then( m => m.LoginPageModule)
-  },
+
   {
     path: '',
     redirectTo: 'dashboard',

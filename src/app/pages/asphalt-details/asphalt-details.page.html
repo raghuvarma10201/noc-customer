@@ -46,8 +46,8 @@
 
       <ion-item color="none" lines="none" *ngFor="let data of trialPitDetails"  class="ionItemTPD"
       [ngClass]="{
-        'customerTDP': data.roleId === 4,
-        'inspectorTDP': data.roleId === 2
+        'customerTDP': data.roleId === 2,
+        'inspectorTDP': data.roleId === 4 || data.roleId === 3,
       }">
         <div>
           <ion-text>

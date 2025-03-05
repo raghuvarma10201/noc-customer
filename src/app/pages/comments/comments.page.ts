@@ -139,6 +139,7 @@ export class CommentsPage implements OnInit {
     await this.loaderService.loadingPresent();
     if (this.trailPitForm.invalid) {
       this.loaderService.loadingDismiss();
+      this.toastService.showError('Please fill all the required fields', "Error");
       return;
     }
     // if (this.imageFiles.length == 0) {
@@ -155,21 +156,22 @@ export class CommentsPage implements OnInit {
       console.warn('Could not retrieve location');
     }
     const formValue = this.trailPitForm.value;
+    console.log("formvalue", formValue)
 
-    const formData = new FormData();
-    this.imageFiles.forEach((file, index) => {
-      formData.append(`uploadFile`, file, file.name);
-    });
-    // Append form fields to FormData
+    // const formData = new FormData();
+    // this.imageFiles.forEach((file, index) => {
+    //   formData.append(`uploadFile`, file, file.name);
+    // });
+    // // Append form fields to FormData
 
-    // Append location coordinates if available
-    if (this.latitude && this.longitude) {
-      formData.append(`latitude`, this.latitude.toString());
-      formData.append(`longitude`, this.longitude.toString());
-    }
-    formData.append(`customerActionId`, formValue.customerActionId);
-    formData.append(`nocId`, formValue.nocId);
-    formData.append(`comments`, formValue.comments);
+    // // Append location coordinates if available
+    // if (this.latitude && this.longitude) {
+    //   formData.append(`latitude`, this.latitude.toString());
+    //   formData.append(`longitude`, this.longitude.toString());
+    // }
+    // formData.append(`customerActionId`, formValue.customerActionId);
+    // formData.append(`nocId`, formValue.nocId);
+    // formData.append(`comments`, formValue.comments);
 
     let payload = {
       uploadFile: this.imageFiles,
@@ -179,6 +181,15 @@ export class CommentsPage implements OnInit {
       nocId: formValue.nocId,
       comments: formValue.comments,
       trailPitOrRoadCuttingId: this.nocDetails.trailPitId
+    }
+    if(formValue.customerActionId == 2){
+      payload.trailPitOrRoadCuttingId = this.nocDetails.trailPitId;
+    }
+    else if(formValue.customerActionId == 3){
+      payload.trailPitOrRoadCuttingId = this.nocDetails.roadCuttingId;
+    }
+    else{
+      payload.trailPitOrRoadCuttingId = 0
     }
     
     console.log("payload", payload);
@@ -197,11 +208,9 @@ export class CommentsPage implements OnInit {
         }
       }
       else {
-        this.loaderService.loadingDismiss();
-        // this.toastr.showError(result.message, "Error");
+        this.toastService.showError(res.message, "Error");
       }
     }, (error: any) => {
-      this.loaderService.loadingDismiss();
       this.errorMsg = error;
       this.toastService.showError(this.errorMsg, "Error");
     })

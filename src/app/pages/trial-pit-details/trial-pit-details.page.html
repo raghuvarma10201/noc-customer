@@ -52,8 +52,8 @@
     <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent trialpitCards">
       <ion-item color="none" lines="none" *ngFor="let data of trialPitDetails"  class="ionItemTPD"
       [ngClass]="{
-        'customerTDP': data.roleId === 4,
-        'inspectorTDP': data.roleId === 2
+        'customerTDP': data.roleId === 2,
+        'inspectorTDP': data.roleId === 4 || data.roleId === 3
       }">
         <div>
           <ion-text>
@@ -118,41 +118,5 @@
     <ion-button [disabled]="true" fill="outline" class="warningBt mb2" shape="round"
       expand="block">Rejected</ion-button>
   </ion-col>
-
-  <ng-template>
-    <ion-content class="ion-padding formModal ion-form">
-      <ion-text>
-        <h2>Reschedule</h2>
-      </ion-text>
-      <form [formGroup]="rescheduleForm" (ngSubmit)="submitReschedule()">
-        <ion-list class="ion-no-padding">
-          <ion-item class="ionFormItem">
-            <div class="width100">
-              <ion-label>Comments</ion-label>
-              <ion-textarea formControlName="comments" placeholder="Enter Comments"></ion-textarea>
-            </div>
-          </ion-item>
-
-          <ion-item lines="none">
-            <div class="width100">
-              <ion-label>Time slot</ion-label>
-              <ion-datetime-button datetime="datetime" formControlName="datetime"></ion-datetime-button>
-              <ion-modal [keepContentsMounted]="true">
-                <ng-template>
-                  <ion-datetime id="datetime" formControlName="datetime"></ion-datetime>
-                </ng-template>
-              </ion-modal>
-            </div>
-          </ion-item>
-
-          <ion-button [disabled]="rescheduleForm.invalid || isSubmitting" class="modalyellowBt" shape="round" expand="block" type="submit">
-            <ion-spinner *ngIf="isSubmitting" name="dots"></ion-spinner>
-            <span *ngIf="!isSubmitting">Submit</span>
-          </ion-button>
-          <ion-button fill="clear" expand="block" (click)="rescheduleModal.dismiss()">Cancel</ion-button>
-        </ion-list>
-      </form>
-    </ion-content>
-  </ng-template>
 
 </ion-content>
