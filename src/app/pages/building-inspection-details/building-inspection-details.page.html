@@ -1,0 +1,122 @@
+<ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-back-button default-href="#"></ion-back-button>
+    <ion-title>Building Inspection Details</ion-title>
+    <div class="ion-float-end headerBts" slot="end">
+      <ion-button shape="round" routerLink="/dashboard">
+        <ion-img src="assets/images/main-icon.svg"></ion-img>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding requestDetails">
+  <div class="dashboardBg pageBg"></div>
+  <h2> {{nocDetails?.projectTitle}} </h2>
+  <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
+
+    <ion-item color="none">
+      <ion-row class="ionNoPaddingLeft">
+        <ion-col size="4">
+          <ion-text>
+            <h6>NOC ID</h6>
+            <h5>{{nocDetails.nocRequestID}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-text>
+            <h6>Type Of NOC</h6>
+            <h5>{{nocDetails.typeOfNOCName}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-text>
+            <h6>NOC Type</h6>
+            <h5>{{nocDetails.nocTypeName}}</h5>
+          </ion-text>
+        </ion-col>
+
+        <!-- <ion-col size="12">
+          <ion-text>
+            <h6>Inspection Time</h6>
+            <h5>{{trialPitDetails[0]?.inspectionDate | date:'MMM d, y'}},{{formatTime(trialPitDetails[0]?.inspectionTime)}}</h5>
+          </ion-text>
+        </ion-col> -->
+      </ion-row>
+    </ion-item>
+  </ion-list>
+
+  <div class="trialpitDetails">
+    <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent trialpitCards">
+      <ion-item color="none" lines="none" *ngFor="let data of trialPitDetails"  class="ionItemTPD"
+      [ngClass]="{
+        'customerTDP': data.roleId === 2,
+        'inspectorTDP': data.roleId === 4 || data.roleId === 3
+      }">
+        <div>
+          <ion-text>
+            <!-- <h2>{{data.roleName}}</h2> -->
+            <h2>{{data.username}}</h2>
+            <h6>{{data.transactionDate | date:'MMM d, y, h:mm a'}}</h6>
+            <h5>{{data.comments}}</h5>
+          </ion-text>
+          <div class="ion-justify-content-start availabilityText">
+            <ion-text class="labelName">CA Type Status: </ion-text>
+            <!-- <ion-text> 16 Dec 2024, 3:00 PM | </ion-text> -->
+            <ion-text class="labelStatus"> {{data.caStatusName}}</ion-text>
+          </div>
+          <div *ngIf="data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
+            <ion-img *ngFor="let preview of data.documents; let i = index"  [src]="imgUrl + preview"></ion-img>
+          </div>
+          <div class="ion-justify-content-start availabilityText">
+            <ion-text class="labelName">Inspection Date & Time: </ion-text>
+            <ion-text class="labelStatus"> {{data.inspectionDate | date:'MMM d, y'}},{{formatTime(data.inspectionTime)}}</ion-text>
+          </div>
+          <div class="ion-justify-content-start availabilityText" *ngIf="data.accepted || data.rescheduled">
+            <ion-text class="labelName">Status: </ion-text>
+            <ion-text class="labelStatus" *ngIf="data.accepted"> Accepted </ion-text>
+            <ion-text class="labelStatus" *ngIf="!data.accepted && data.rescheduled"> Rescheduled </ion-text>
+          </div>
+          <ion-row *ngIf="data.rescheduled == false && data.accepted == false && data.roleId != 2 && data.isActive">
+            <ion-col size="6">
+              <ion-button fill="outline" class="warningBt" size="small" shape="round" expand="block" (click)="reschedule(nocDetails)" >
+                Reschedule
+              </ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button fill="outline" class="secondaryBt" size="small" shape="round" expand="block" (click)="confirmAccept(data)"> 
+                Accept
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+  <ion-row *ngIf="trialPitDetails[0]?.caStatusName == 'In Progress' || trialPitDetails[0]?.caStatusName == 'Customer Action'">
+    <ion-col size="6">
+      <ion-button (click)="addComments(nocDetails)" fill="outline" class="warningBt mb2" shape="round"
+        expand="block">Comments</ion-button>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-button (click)="reschedule(nocDetails)" fill="outline" class="secondaryBt" shape="round"
+        expand="block">Reschedule</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-col size="6" *ngIf="trialPitDetails[0]?.caStatusName == 'Approved'">
+    <ion-button [disabled]="true" fill="outline" class="warningBt mb2" shape="round"
+      expand="block">Accepted</ion-button>
+  </ion-col>
+
+  <ion-col size="6" *ngIf="trialPitDetails[0]?.caStatusName == 'Reject'">
+    <ion-button [disabled]="true" fill="outline" class="warningBt mb2" shape="round"
+      expand="block">Rejected</ion-button>
+  </ion-col>
+
+</ion-content>

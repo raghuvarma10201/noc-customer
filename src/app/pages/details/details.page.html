@@ -133,10 +133,10 @@
     <ion-button *ngIf="nocDetails?.roadCuttingId !== 0"
       (click)="navigateToAsphaltDetails(nocDetails)" fill="outline" class="secondaryBt" shape="round"
       expand="block">Asphalt / Road Cutting</ion-button>
-      <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId == 0" (click)="navigateToAsphaltForm(nocDetails)"
+      <ion-button *ngIf="isBuildingInspectionEnabled && nocDetails.buildingInspectionId == 0" (click)="navigateToBuildingInspectionForm(nocDetails)"
       fill="outline" class="secondaryBt" shape="round" expand="block">Apply Building Inspection</ion-button>
-    <ion-button *ngIf="isAsphaltEnabled && nocDetails.roadCuttingId !== 0"
-      (click)="navigateToAsphaltDetails(nocDetails)" fill="outline" class="secondaryBt" shape="round"
+    <ion-button *ngIf="isBuildingInspectionEnabled && nocDetails.buildingInspectionId !== 0"
+      (click)="navigateToBuildingInspection(nocDetails)" fill="outline" class="secondaryBt" shape="round"
       expand="block">Building Inspection</ion-button>
   </div>
 </ion-content>

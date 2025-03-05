@@ -40,6 +40,13 @@ export class NocService {
   saveAsphaltForm(payload : any): Observable<any> {
     return this.http.post<any>(environment.apiUrl + "Customer/SaveRoadCuttingDetails", payload).pipe(catchError(this.handleError));
   }
+  SaveBuildingInspectionDetails(payload : any): Observable<any>{
+    return this.http.post<any>(environment.apiUrl + "Customer/SaveBuildingInspectionDetails", payload).pipe(catchError(this.handleError));
+  }
+  rescheduleBuildingInspection(payload:any): Observable<any>{
+    return this.http.post<any>(environment.apiUrl + "Customer/ChangeScheduleForBuildingInspection", payload).pipe(catchError(this.handleError));
+
+  }
   async compressImage(imagePath: string, quality: number): Promise<Blob> {
     return new Promise((resolve, reject) => {
       const img = new Image();

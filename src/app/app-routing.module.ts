@@ -77,6 +77,18 @@ const routes: Routes = [
     path: 'customer-action-noc',
     loadChildren: () => import('./pages/customer-action-noc/customer-action-noc.module').then( m => m.CustomerActionNocPageModule)
   },
+  {
+    path: 'building-inspection-details',
+    loadChildren: () => import('./pages/building-inspection-details/building-inspection-details.module').then( m => m.BuildingInspectionDetailsPageModule)
+  },
+  {
+    path: 'building-inspection-form',
+    loadChildren: () => import('./pages/building-inspection-form/building-inspection-form.module').then( m => m.BuildingInspectionFormPageModule)
+  },
+  {
+    path: 'building-inspection-reschedule',
+    loadChildren: () => import('./pages/building-inspection-reschedule/building-inspection-reschedule.module').then( m => m.BuildingInspectionReschedulePageModule)
+  },
 
 
 ];

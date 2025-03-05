@@ -27,6 +27,7 @@ export class DetailsPage implements OnInit {
   errorMsg: any;
   isTrailPitEnabled: boolean = false;
   isAsphaltEnabled: boolean = false;
+  isBuildingInspectionEnabled: boolean = false;
   nocStatus: string = '';
   documentslist: any;
   baseUrl = environment.imgUrl;
@@ -91,6 +92,9 @@ export class DetailsPage implements OnInit {
           if(arr.includes("3")){
             this.isAsphaltEnabled = true;
           }
+          if(arr.includes("5")){
+            this.isBuildingInspectionEnabled = true;
+          }
         }
         this.loaderService.loadingDismiss();
       }
@@ -121,8 +125,12 @@ export class DetailsPage implements OnInit {
     }
   }
   navigateToAsphaltForm(nocData : any) {
+    console.log(nocData)
     if (nocData) {
       nocData.customerActionId = 3;
+      console.log(nocData)
+      console.log(this.encryptedNocId)
+
       this.router.navigate(['/asphalt-form'], { state: { nocData: nocData, encryptedNocId : this.encryptedNocId } });
     } else {
       console.warn('Please select a date and time first!');
@@ -130,13 +138,30 @@ export class DetailsPage implements OnInit {
   }
   navigateToAsphaltDetails(nocData : any) {
     if (nocData) {
-      nocData.customerActionId = 2;
+      nocData.customerActionId = 3;
       this.router.navigate(['/asphalt-details'], { state: { nocData: nocData, encryptedNocId : this.encryptedNocId } });
     } else {
       console.warn('Please select a date and time first!');
     }
   }
-
+  navigateToBuildingInspectionForm(nocData : any){  
+    console.log(nocData)
+    if (nocData) {
+      nocData.customerActionId = 5;
+      this.router.navigate(['/building-inspection-form'], { state: { nocData: nocData, encryptedNocId : this.encryptedNocId } });
+    } else {
+      console.warn('Please select a date and time first!');
+    }
+  }
+  navigateToBuildingInspection(nocData : any) {
+    console.log(nocData)
+    if (nocData) {
+      nocData.customerActionId = 5;
+      this.router.navigate(['/building-inspection-details'], { state: { nocData: nocData, encryptedNocId : this.encryptedNocId } });
+    } else {
+      console.warn('Please select a date and time first!');
+    }
+  }
   getDocumentList(encryptedNocId: any) {
     this.commonService.getDocumentslist(encryptedNocId).subscribe((res: any) => {
       console.log("ResDoc", res);
