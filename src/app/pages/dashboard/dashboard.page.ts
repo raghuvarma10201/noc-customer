@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { register } from 'swiper/element/bundle';
+import {jwtDecode} from 'jwt-decode';
 register();
 @Component({
   selector: 'app-dashboard',
@@ -11,6 +12,7 @@ register();
 })
 export class DashboardPage implements OnInit {
   dashboardCounts: any;
+  username: any;
 
   constructor(
     private router: Router,
@@ -18,6 +20,7 @@ export class DashboardPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getNameIdentifier();
     this.getDashboardCounts();
   }
 
@@ -37,6 +40,19 @@ export class DashboardPage implements OnInit {
 
   navigateToNocList(userType: string){
     this.router.navigate(['/list-noc', { userType: userType }]);
+  }
+
+  getNameIdentifier(): any {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return null;
+    try {
+      const decodedToken: any = jwtDecode(token);
+      this.username = decodedToken?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || null;
+      console.log("username", this.username);
+    } catch (error) {
+      console.error("Invalid token", error);
+      return null;
+    }
   }
 
 }

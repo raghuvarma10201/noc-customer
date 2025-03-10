@@ -51,7 +51,7 @@
       }">
         <div>
           <ion-text>
-            <h2>{{data.roleName}}</h2>
+            <h2>{{data.username}}</h2>
             <h6>{{data.transactionDate | date:'MMM d, y, h:mm a'}}</h6>
             <h5>{{data.comments}}</h5>
           </ion-text>
@@ -67,9 +67,9 @@
           <div *ngIf="data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
             <ion-img *ngFor="let preview of data.documents; let i = index"  [src]="imgUrl + preview"></ion-img>
           </div>
-          <div *ngIf="data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
+          <!-- <div *ngIf="data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
             <ion-img *ngFor="let preview of data.documents; let i = index"  [src]="imgUrl + preview"></ion-img>
-          </div>
+          </div> -->
           <div class="ion-justify-content-start availabilityText">
             <ion-text class="labelName">Inspection Date & Time: </ion-text>
             <ion-text class="labelStatus"> {{data.inspectionDate | date:'MMM d, y'}},{{formatTime(data.inspectionTime)}}</ion-text>

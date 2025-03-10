@@ -14,15 +14,15 @@
         <ion-img src="assets/images/user-icon.svg"></ion-img>
       </ion-thumbnail>
       <ion-text>
-        <h5>Abdulla</h5>
+        <h5> {{username}} </h5>
       </ion-text>
     </ion-item>
 
     <div class="ion-float-end headerBts" slot="end">
-      <ion-button routerLink="/Notification" class="notificationsIcon " shape="round">
+      <!-- <ion-button routerLink="/Notification" class="notificationsIcon " shape="round">
         <ion-img src="assets/images/notifications-icon.svg"></ion-img>
         <ion-icon class="alertNotifi " icon={ellipse}></ion-icon>
-      </ion-button>
+      </ion-button> -->
       <ion-button shape="round" (click)="logout()">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>

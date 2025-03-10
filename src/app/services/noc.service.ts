@@ -45,8 +45,11 @@ export class NocService {
   }
   rescheduleBuildingInspection(payload:any): Observable<any>{
     return this.http.post<any>(environment.apiUrl + "Customer/ChangeScheduleForBuildingInspection", payload).pipe(catchError(this.handleError));
-
   }
+  rescheduleRoadcut(payload : any): Observable<any> {
+    return this.http.post<any>(environment.apiUrl + "Customer/ChangeScheduleForRoadCutting", payload).pipe(catchError(this.handleError));
+  }
+
   async compressImage(imagePath: string, quality: number): Promise<Blob> {
     return new Promise((resolve, reject) => {
       const img = new Image();

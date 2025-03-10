@@ -117,7 +117,7 @@ export class AsphaltReschedulePage implements OnInit {
       }
   
       // Use RxJS operators to handle loader
-      this.nocService.rescheduleTrailPit(formData).pipe(
+      this.nocService.rescheduleRoadcut(formData).pipe(
         finalize(() => {
           this.loaderService.loadingDismiss(); // Ensure loader is always dismissed
         })

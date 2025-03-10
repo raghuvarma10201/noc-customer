@@ -96,6 +96,7 @@ export class AsphaltFormPage implements OnInit {
           if (res.status == 201 && res.success == true) {
             this.imageFiles.push(res.data);
             this.imagePreviews.push(environment.imgUrl + '' + res.data);
+            console.log('image preview', this.imagePreviews);
           }
         }, error => {
           this.loaderService.loadingDismiss();

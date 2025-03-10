@@ -82,7 +82,7 @@ export class ListNocPage implements OnInit {
     // Simulate async data fetching
     setTimeout(() => {
       // Add new item or refresh your data
-      this.fetchNOCList('UnderProcess');
+      this.fetchNOCList(this.encryptedUserType);
 
       // Complete the refresher animation
       event.target.complete();
