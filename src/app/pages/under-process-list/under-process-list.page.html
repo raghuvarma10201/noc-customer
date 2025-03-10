@@ -4,11 +4,17 @@
     <ion-title>Under Process List</ion-title>
 
     <div class="ion-float-end headerBts" slot="end">
-      <ion-button  routerLink="/Notification" shape="round">
+      <!-- <ion-button  routerLink="/Notification" shape="round">
         <ion-icon name="filter-outline"></ion-icon>
       </ion-button>
       <ion-button shape="round" id="open-modal">
         <ion-icon name="information-outline"></ion-icon>
+      </ion-button> -->
+      <ion-button shape="round" routerLink="/dashboard">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </div>
 
@@ -25,7 +31,7 @@
       refreshingText="Refreshing..."
     ></ion-refresher-content>
   </ion-refresher>
-  <ion-searchbar shape="round" placeholder="Search by ID, Type, Project Name ... " class="ion-no-padding"></ion-searchbar>
+  <!-- <ion-searchbar shape="round" placeholder="Search by ID, Type, Project Name ... " class="ion-no-padding"></ion-searchbar> -->
 
   <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
    

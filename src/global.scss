@@ -141,6 +141,19 @@ body {
     border-radius: 40px;
   }
 
+  .resetBt {
+    --background: #4b3f97;
+    --border-color: var(--formControlBorderColor);
+    --border-width: 2px;
+    height: 42px;
+    font-weight: 600;
+    font-family: var(--ion-font-family-secondary) !important;
+    --color: var(--lightblueText);
+    --box-shadow: none;
+    border: solid 2px var(--formControlBorderColor);
+    border-radius: 40px;
+  }
+
   .textLinkLogin {
     color: var(--yellowText);
     font-size: 0.8rem;

@@ -184,4 +184,9 @@ export class AsphaltDetailsPage implements OnInit {
       console.warn(this.errorMsg, "Error");
     })
   }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 }

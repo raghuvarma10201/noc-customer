@@ -11,6 +11,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { GeolocationService } from 'src/app/services/geolocation.service';
 import { finalize } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-trialpit-form',
@@ -40,7 +41,8 @@ export class TrialpitFormPage implements OnInit {
     private sharedService: SharedService,
     private nocService: NocService,
     private activatedRouteService: ActivatedRoute,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private authService: AuthService
   ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
@@ -186,4 +188,9 @@ export class TrialpitFormPage implements OnInit {
       this.toastService.showError(this.errorMsg, "Error");
     })
   }
+
+  logout(){
+    this.authService.logout();
+  }
+
 }

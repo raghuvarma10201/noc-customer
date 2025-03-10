@@ -58,7 +58,7 @@ export class AuthService {
     localStorage.clear();
     // this.userData['ipscUser']="";
     // localStorage.setItem('userData', JSON.stringify(this.userData));
-    this.router.navigate(["home"]);
+    this.router.navigate(["/login"]);
     this.sharedService.isUserLogin.next({isUserLoggedIn:false});
   }
 

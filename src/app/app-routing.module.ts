@@ -51,43 +51,62 @@ const routes: Routes = [
   },
   {
     path: 'trialpit-reschedule',
-    loadChildren: () => import('./pages/trialpit-reschedule/trialpit-reschedule.module').then( m => m.TrialpitReschedulePageModule)
+    loadChildren: () => import('./pages/trialpit-reschedule/trialpit-reschedule.module').then( m => m.TrialpitReschedulePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'asphalt-details',
-    loadChildren: () => import('./pages/asphalt-details/asphalt-details.module').then( m => m.AsphaltDetailsPageModule)
+    loadChildren: () => import('./pages/asphalt-details/asphalt-details.module').then( m => m.AsphaltDetailsPageModule),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'asphalt-reschedule',
-    loadChildren: () => import('./pages/asphalt-reschedule/asphalt-reschedule.module').then( m => m.AsphaltReschedulePageModule)
+    loadChildren: () => import('./pages/asphalt-reschedule/asphalt-reschedule.module').then( m => m.AsphaltReschedulePageModule),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'comments',
-    loadChildren: () => import('./pages/comments/comments.module').then( m => m.CommentsPageModule)
+    loadChildren: () => import('./pages/comments/comments.module').then( m => m.CommentsPageModule),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'under-process-list',
-    loadChildren: () => import('./pages/under-process-list/under-process-list.module').then( m => m.UnderProcessListPageModule)
+    loadChildren: () => import('./pages/under-process-list/under-process-list.module').then( m => m.UnderProcessListPageModule),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'completed-noc',
-    loadChildren: () => import('./pages/completed-noc/completed-noc.module').then( m => m.CompletedNocPageModule)
+    loadChildren: () => import('./pages/completed-noc/completed-noc.module').then( m => m.CompletedNocPageModule),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'customer-action-noc',
-    loadChildren: () => import('./pages/customer-action-noc/customer-action-noc.module').then( m => m.CustomerActionNocPageModule)
+    loadChildren: () => import('./pages/customer-action-noc/customer-action-noc.module').then( m => m.CustomerActionNocPageModule),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'building-inspection-details',
-    loadChildren: () => import('./pages/building-inspection-details/building-inspection-details.module').then( m => m.BuildingInspectionDetailsPageModule)
+    loadChildren: () => import('./pages/building-inspection-details/building-inspection-details.module').then( m => m.BuildingInspectionDetailsPageModule),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'building-inspection-form',
-    loadChildren: () => import('./pages/building-inspection-form/building-inspection-form.module').then( m => m.BuildingInspectionFormPageModule)
+    loadChildren: () => import('./pages/building-inspection-form/building-inspection-form.module').then( m => m.BuildingInspectionFormPageModule),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'building-inspection-reschedule',
-    loadChildren: () => import('./pages/building-inspection-reschedule/building-inspection-reschedule.module').then( m => m.BuildingInspectionReschedulePageModule)
+    loadChildren: () => import('./pages/building-inspection-reschedule/building-inspection-reschedule.module').then( m => m.BuildingInspectionReschedulePageModule),
+    canActivate: [AuthGuard]
+
   },
 
 

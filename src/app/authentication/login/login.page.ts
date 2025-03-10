@@ -98,21 +98,24 @@ export class LoginPage implements OnInit {
      })).subscribe((res: any) => {
       console.log("Res", res);
       if(res.status == 200 && res.success == true){
+        this.submitted = false;
         const accessToken = res.data;
         const userData = this.authService.decodeToken(accessToken);
         console.log("accessToken---->",accessToken);
-        this.toastService.showSuccess('Successfully Login', 'Success');
+        // this.toastService.showSuccess('Successfully Login', 'Success');
         this.authService.setUserInLocalStorage(userData,'userData');
         localStorage.setItem('accessToken', accessToken);
+        this.loginForm.reset();
+        this.captcha = '';
+        this.generateCaptcha();
         this.router.navigate(["/dashboard"]);
         this.sharedService.isUserLogin.next({isUserLoggedIn:true});
       }
       else{     
-        this.loaderService.loadingDismiss();
         this.toastService.showError(res.message, "Error");
+        this.generateCaptcha();
       }
     }, error => {   
-      this.loaderService.loadingDismiss();
       this.errorMsg = error;
       this.toastService.showError(this.errorMsg, "Error");
      })
@@ -127,5 +130,10 @@ export class LoginPage implements OnInit {
       this.isClicked=true
       this.initailType="password"
     }
+  }
+
+  reset(){
+    this.loginForm.reset();
+    this.generateCaptcha();
   }
 }

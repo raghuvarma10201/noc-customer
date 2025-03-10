@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { NocService } from 'src/app/services/noc.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -25,7 +26,8 @@ export class CompletedNocPage implements OnInit {
     private toastService: ToastService,
     private sharedService: SharedService,
     private nocService: NocService,
-    private activatedRouteService: ActivatedRoute
+    private activatedRouteService: ActivatedRoute,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -86,4 +88,7 @@ export class CompletedNocPage implements OnInit {
     }, 2000); // Simulate 2 seconds refresh time
   }
 
+  logout(){
+    this.authService.logout();
+  }
 }

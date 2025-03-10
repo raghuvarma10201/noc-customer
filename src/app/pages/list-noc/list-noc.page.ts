@@ -26,7 +26,10 @@ export class ListNocPage implements OnInit {
     private toastService: ToastService,
     private sharedService: SharedService,
     private nocService: NocService,
-    private activatedRouteService: ActivatedRoute
+    private activatedRouteService: ActivatedRoute,
+    
+    private authService: AuthService
+
   ) { 
     this.userType = this.activatedRouteService.snapshot.paramMap.get('userType');
     console.log('User Type:', this.userType);
@@ -96,4 +99,10 @@ export class ListNocPage implements OnInit {
       console.warn('Please select a date and time first!');
     }
   }
+
+  
+  logout(){
+    this.authService.logout();
+  }
+
 }

@@ -3,9 +3,16 @@
     <ion-back-button default-href="#"></ion-back-button>
     <ion-title>Trial Pit Details</ion-title>
     <div class="ion-float-end headerBts" slot="end">
-      <ion-button shape="round" routerLink="/dashboard">
+      <!-- <ion-button shape="round" routerLink="/dashboard">
         <ion-img src="assets/images/main-icon.svg"></ion-img>
+      </ion-button> -->
+      <ion-button shape="round" routerLink="/dashboard">
+        <ion-icon name="home-outline"></ion-icon>
       </ion-button>
+      <ion-button shape="round" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+
     </div>
   </ion-toolbar>
 </ion-header>

@@ -55,4 +55,19 @@ export class DashboardPage implements OnInit {
     }
   }
 
+  doRefresh(event: any) {
+    console.log('Refreshing data...');
+
+    // Simulate async data fetching
+    setTimeout(() => {
+      // Add new item or refresh your data
+      this.getDashboardCounts();
+      this.getNameIdentifier();
+
+      // Complete the refresher animation
+      event.target.complete();
+      console.log('Refresh complete');
+    }, 2000); // Simulate 2 seconds refresh time
+  }
+
 }

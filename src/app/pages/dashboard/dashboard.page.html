@@ -6,7 +6,14 @@
 
 <ion-content [fullscreen]="true">
   <div class="dashboardBg"></div>
-
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      refreshingSpinner="circles"
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing..."
+    ></ion-refresher-content>
+  </ion-refresher>
   <ion-item lines="none" color="none" class="dashboardHeader  ion-padding-horizontal no-ion-color-item ion-padding-top">
 
     <ion-item class="userNameDash" lines="none" color="none">

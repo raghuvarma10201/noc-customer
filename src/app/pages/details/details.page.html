@@ -6,8 +6,11 @@
     </ion-title>
 
     <div class="ion-float-end headerBts" slot="end" routerLink="/dashboard">
-      <ion-button shape="round" routerLink="">
-        <ion-img src="assets/images/main-icon.svg"></ion-img>
+      <ion-button shape="round" routerLink="/dashboard">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </div>
 
@@ -56,12 +59,12 @@
           </ion-text>
         </ion-col>
 
-        <ion-col size="6">
+        <!-- <ion-col size="6">
           <ion-text>
             <h6>Location</h6>
             <h5>Al Jazirah Al Hamra</h5>
           </ion-text>
-        </ion-col>
+        </ion-col> -->
 
         <ion-col size="6">
           <ion-text>
@@ -70,12 +73,12 @@
           </ion-text>
         </ion-col>
 
-        <ion-col size="6">
+        <!-- <ion-col size="6">
           <ion-text>
             <h6>Mobile Number</h6>
             <h5>+912 123456789</h5>
           </ion-text>
-        </ion-col>
+        </ion-col> -->
 
         <ion-col size="12">
           <ion-text>
@@ -92,7 +95,7 @@
           <ion-text>
             <h2>Comments</h2>
             <h3>NOC Office</h3>
-            <h6>14/12/2024, 10:50 AM</h6>
+            <h6> {{nocDetails.updatedOn | date:'MMM d, y, h:mm a'}} </h6>
             <h5>{{nocDetails.comments}}</h5>
           </ion-text>
         </ion-col>

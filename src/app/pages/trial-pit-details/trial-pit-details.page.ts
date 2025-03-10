@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { AlertController, IonModal } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-trial-pit-details',
@@ -53,7 +54,8 @@ export class TrialPitDetailsPage implements OnInit {
     private geolocationService: GeolocationService,
     private datePipe: DatePipe,
     private commonService: CommonService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private authService: AuthService
   ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
@@ -212,6 +214,11 @@ export class TrialPitDetailsPage implements OnInit {
       this.errorMsg = error;
       this.toastService.showError(this.errorMsg, "Error");
     })
+  }
+
+  
+  logout(){
+    this.authService.logout();
   }
 
   

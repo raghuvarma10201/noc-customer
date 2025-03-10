@@ -11,6 +11,7 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-details',
@@ -41,7 +42,8 @@ export class DetailsPage implements OnInit {
     private route: ActivatedRoute,
     private commonService: CommonService,
     private http: HttpClient,
-    private platform: Platform
+    private platform: Platform,
+    private authService: AuthService
   ) {
     
   }
@@ -217,4 +219,8 @@ export class DetailsPage implements OnInit {
       reader.onerror = reject;
     });
   };
+
+  logout(){
+    this.authService.logout();
+  }
 }

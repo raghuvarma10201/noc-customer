@@ -42,7 +42,8 @@ export class AsphaltFormPage implements OnInit {
     private sharedService: SharedService,
     private nocService: NocService,
     private activatedRouteService: ActivatedRoute,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private authService: AuthService
   ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
@@ -193,5 +194,9 @@ export class AsphaltFormPage implements OnInit {
       this.errorMsg = error;
       this.toastService.showError(this.errorMsg, "Error");
     })
+  }
+
+  logout(){
+    this.authService.logout();
   }
 }
