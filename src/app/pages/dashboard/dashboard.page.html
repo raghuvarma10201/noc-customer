@@ -18,7 +18,7 @@
 
     <ion-item class="userNameDash" lines="none" color="none">
       <ion-thumbnail>
-        <ion-img src="assets/images/user-icon.svg"></ion-img>
+        <ion-img src="assets/images/user-icon.svg" routerLink="/account"></ion-img>
       </ion-thumbnail>
       <ion-text>
         <h5> {{username}} </h5>
@@ -37,7 +37,7 @@
   </ion-item>
 
   <ion-text class="headingdash text-center">
-    <h1>Hi, Welcome back!</h1>
+    <h1>{{'WELCOME' | translate}}</h1>
     <p> Here's your details of dashboard.</p>
   </ion-text>
 

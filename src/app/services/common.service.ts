@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CommonService {
   apiUrl: string = environment.apiUrl;
+  languageEvent: Subject<object> = new Subject<object>();
   constructor(private http: HttpClient) { }
 
   getDefaultSettings(): Observable<any> {

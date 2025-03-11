@@ -1,0 +1,38 @@
+<ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-back-button default-href="#"></ion-back-button>
+    <ion-title>My Account
+    </ion-title>
+
+    <div class="ion-float-end headerBts" slot="end" routerLink="/dashboard">
+      <ion-button shape="round" routerLink="/dashboard">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+      <!-- <ion-button shape="round" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button> -->
+    </div>
+
+
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="changeLanguageRadio">
+    <h4>{{'CHANGE_LANGUAGE' | translate }}</h4>    
+<ion-radio-group [value]="selectedLang">             
+   <div class="selectedLangRadio">
+      <ion-item lines="none" class="no-ripple">
+        <ion-label>{{'ENGLISH' | translate }}</ion-label>
+        <ion-radio value="en" (click)="onSelectLanguage('en')"></ion-radio>
+      </ion-item>
+ </div>
+
+ <div class="selectedLangRadio"> 
+      <ion-item lines="none" class="no-ripple">
+        <ion-label>{{'ARABIC' | translate }}</ion-label>
+        <ion-radio value="ar" (click)="onSelectLanguage('ar')"></ion-radio>
+      </ion-item>
+   </div>
+</ion-radio-group>
+</div>
+</ion-content>

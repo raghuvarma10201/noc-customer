@@ -62,7 +62,7 @@
             <h5>{{data.comments}}</h5>
           </ion-text>
           <div class="ion-justify-content-start availabilityText">
-            <ion-text class="labelName">CA Type Status: </ion-text>
+            <ion-text class="labelName">Status: </ion-text>
             <!-- <ion-text> 16 Dec 2024, 3:00 PM | </ion-text> -->
             <ion-text class="labelStatus"> {{data.caStatusName}}</ion-text>
           </div>
@@ -81,7 +81,7 @@
             <ion-text class="labelStatus"> {{data.inspectionDate | date:'MMM d, y'}},{{formatTime(data.inspectionTime)}}</ion-text>
           </div>
           <div class="ion-justify-content-start availabilityText" *ngIf="data.accepted || data.rescheduled">
-            <ion-text class="labelName">Status: </ion-text>
+            <ion-text class="labelName">Requested Status: </ion-text>
             <ion-text class="labelStatus" *ngIf="data.accepted"> Accepted </ion-text>
             <ion-text class="labelStatus" *ngIf="!data.accepted && data.rescheduled"> Rescheduled </ion-text>
           </div>

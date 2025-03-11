@@ -6,6 +6,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { environment } from 'src/environments/environment';
+import { Browser } from '@capacitor/browser';
+
 
 @Component({
   selector: 'app-login',
@@ -24,6 +28,7 @@ export class LoginPage implements OnInit {
   userInput: string = '';
   validationMessage: string = '';
   isCaptchaValid: boolean = false;
+  intervalId: any;
   constructor(
     private fb: FormBuilder,
     public router: Router,
@@ -31,7 +36,7 @@ export class LoginPage implements OnInit {
     private toastService: ToastService,
     private sharedService: SharedService,
     private authService: AuthService,
-    private activatedRouteService: ActivatedRoute
+    private activatedRouteService: ActivatedRoute,
   ) { 
     this.refreshCaptcha();
     this.loginForm = this.fb.group({
@@ -135,5 +140,144 @@ export class LoginPage implements OnInit {
   reset(){
     this.loginForm.reset();
     this.generateCaptcha();
+  }
+
+  // async navigateToUae() {
+  //   const authUrl =
+  //     'https://stg-id.uaepass.ae/idshub/authorize?response_type=code&client_id=rakpsd_mobile_stage&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&redirect_uri=http://localhost/uaepassverification&acr_values=urn:safelayer:tws:policies:authentication:level:low';
+
+  //   await Browser.open({ url: authUrl });
+
+  //   // Listen for when the browser is closed
+  //   Browser.addListener('browserFinished', async () => {
+  //     console.log('Browser closed.');
+
+  //     // Simulate fetching the last visited URL (use an actual backend/session if needed)
+  //     const lastVisitedUrl = sessionStorage.getItem('lastVisitedUrl');
+  //     if (lastVisitedUrl) {
+  //       this.handleAuthResponse(lastVisitedUrl);
+  //       sessionStorage.removeItem('lastVisitedUrl'); // Clean up stored URL
+  //     } else {
+  //       console.log('No captured URL found.');
+  //       this.toastService.showError('Authentication failed', '');
+  //       this.router.navigate(['/login']);
+  //     }
+  //   });
+  // }
+
+  // private handleAuthResponse(url: string) {
+  //   console.log('Processing authentication response:', url);
+
+  //   if (url.includes('uaepassverification')) {
+  //     const urlParams = new URLSearchParams(new URL(url).search);
+  //     const code = urlParams.get('code');
+
+  //     if (code) {
+  //       console.log('Authorization code:', code);
+  //       this.router.navigate(['/uaepassverification'], {
+  //         state: { authorization_code: code },
+  //       });
+  //     } else {
+  //       this.toastService.showError('Authentication error', '');
+  //       this.router.navigate(['/login']);
+  //     }
+  //   } else {
+  //     console.log('Unknown authentication response URL:', url);
+  //   }
+  // }
+  navigatetoUae(){
+    const browser = InAppBrowser.create(
+      'https://stg-id.uaepass.ae/idshub/authorize?response_type=code&client_id=rakpsd_mobile_stage&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&redirect_uri=http://localhost/uaepassverification&acr_values=urn:safelayer:tws:policies:authentication:level:low', // URL to open
+      '_self',             // Target ('_self', '_blank', '_system')
+      'location=yes,toolbarcolor=#ffffff' // Additional options
+    );
+
+    browser.on('loadstart').subscribe(async (event) => {
+      // Check for authentication URL
+      if (event.url.includes('authenticationendpoint/login.do')) {
+        // This is the login URL
+        if (event.url.includes('error=access_denied')) {
+          console.log('User canceled the authentication.');
+          // Handle the access denied error (e.g., show a message to the user)
+        } else {
+          console.log('Login URL with possible params:', event.url);
+          // Handle the login redirection (e.g., start authentication process)
+        }
+      }
+      // Check for polling URL
+      else if (event.url.includes('authenticationendpoint/polling.jsp')) {
+        // This is the polling URL
+        console.log('Polling URL:', event.url);
+        // Handle the polling response (e.g., check for successful authentication)
+      }
+      // Check for retry URL
+      else if (event.url.includes('authenticationendpoint/retry.do')) {
+        // This is the retry URL
+        this.toastService.showError('Please try again','');
+        //await browser.close();
+        this.router.navigate(['/login'])
+        console.log('Retry URL:', event.url);
+        // Handle retry logic (e.g., show retry message or re-trigger authentication)
+      }
+      // Check for redirect URL with error
+      else if (event.url.includes('uaepassverification')) {
+        if (event.url.includes('localhost/uaepassverification')) {
+
+          const urlParams = new URLSearchParams(event.url.split('?')[1]);
+          const code = urlParams.get('code');
+
+          if (code) {
+            console.log('Authorization code:', code);
+
+            // Retrieve credentials
+            const username = environment.username;
+            const password = environment.password;
+
+            // Close the browser
+            await browser.close();
+
+            // Navigate to the verification page
+            this.router.navigate(['/uaepassverification'],
+              {
+                state : {
+                  from: 'uaepassverification',
+                  authorization_code: code,
+                  user_name: username,
+                  password: password,
+                }
+              });
+          } else {
+            // This is the redirection URL after authentication
+            const urlParams = new URLSearchParams(new URL(event.url).search);
+            const error = urlParams.get('error');
+            const errorDescription = urlParams.get('error_description');
+            if (error === 'access_denied') {
+              console.log('Authentication was canceled by user on UAE PASS app.');
+              this.toastService.showError(errorDescription,'');
+              await browser.close();
+              this.router.navigate(['/login']);
+              // Handle error (e.g., show an appropriate message to the user)
+            } else if (error) {
+              console.log('Error:', error, 'Description:', errorDescription);
+              this.toastService.showError(errorDescription,'');
+              await browser.close();
+              this.router.navigate(['/login']);
+              // Handle other error cases (e.g., display error message)
+            } else {
+              this.toastService.showError(errorDescription,'');
+              await browser.close();
+              this.router.navigate(['/login']);
+            }
+          }
+        }
+
+      }
+      else {
+        console.log('Unknown URL:', event.url);
+      }
+
+      console.log('Page loading started:', event.url);
+    });
+
   }
 }
