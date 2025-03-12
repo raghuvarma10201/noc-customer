@@ -1,10 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, catchError, of, throwError } from 'rxjs';
+import { Observable, catchError, from, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SharedService } from './shared.service';
 import {jwtDecode} from 'jwt-decode';
+import { Http, } from '@capacitor-community/http';
+import { CapacitorHttp, HttpOptions } from '@capacitor/core';
+
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +40,86 @@ export class AuthService {
   }
   changePassword(body: any):Observable<any>{
     return this.http.post<any>(environment.apiUrl + "resetpassword", body).pipe(catchError(this.handleError));
-
   }
+
+  // getAccessToken(authorizationCode: any, creds: any){
+  //   const formData = new URLSearchParams();
+  //   formData.append('grant_type', 'authorization_code');
+  //   formData.append('redirect_uri', 'http://localhost/uaepassverification');
+  //   formData.append('code', authorizationCode);
+
+  //   const headers = {
+  //     'Authorization': `Basic cmFrcHNkX21vYmlsZV9zdGFnZTpRNWl1WHdKR0hjbU5zY29E`,
+  //     'Content-Type': 'application/x-www-form-urlencoded', // Correct content type for URLSearchParams
+  //   }
+  //   return this.http.post<any>('https://stg-id.uaepass.ae/idshub/token',formData.toString(),{headers})
+  // }
+
+  getaccesstoken(authorizationCode: any, creds: any): Observable<any> {
+    return from(this.performCapacitorHttpRequest(authorizationCode, creds));
+  }
+  
+  private async performCapacitorHttpRequest(authorizationCode: any, creds: any): Promise<any> {
+    try {
+      const url = 'https://stg-id.uaepass.ae/idshub/token';
+      
+      // Create form data
+      const formData = new URLSearchParams();
+      formData.append('grant_type', 'authorization_code');
+      formData.append('redirect_uri', 'http://localhost/uaepassverification');
+      formData.append('code', authorizationCode);
+  
+      // Create HTTP POST request options
+      const options: HttpOptions = {
+        url: url,
+        headers: {
+          'Authorization': `Basic cmFrcHNkX21vYmlsZV9zdGFnZTpRNWl1WHdKR0hjbU5zY29E`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: formData.toString(),
+      };
+  
+      // Send HTTP request using Capacitor Http plugin
+      const response = await CapacitorHttp.post(options);
+      
+      // Return the data
+      return response.data;
+    } catch (error) {
+      console.error('Error sending form data:', error);
+      throw error;
+    }
+  }
+
+  uaeuserInfo(token: any): Observable<any> {
+    return from(this.performUserInfoRequest(token));
+  }
+  
+  private async performUserInfoRequest(token: any): Promise<any> {
+    try {
+      const url = 'https://stg-id.uaepass.ae/idshub/userinfo';
+      
+      // Create HTTP GET request options
+      const options: HttpOptions = {
+        url: url,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      };
+      
+      // Send HTTP request using Capacitor Http plugin
+      const response = await CapacitorHttp.get(options);
+      
+      // Return the data
+      return response.data;
+    } catch (error) {
+      console.error('Error getting user info:', error);
+      throw error;
+    }
+  }
+
+  validateuaeUser(body: any):Observable<any> {
+    return this.http.post<any>(environment.apiUrl + "Login/LoginWithUAEPass", body).pipe(catchError(this.handleError));
+  };
 
   decodeToken(token: string): any {
     try {

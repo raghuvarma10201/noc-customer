@@ -49,7 +49,7 @@ export class AsphaltDetailsPage implements OnInit {
     private nocService: NocService,
     private activatedRouteService: ActivatedRoute,
     private geolocationService: GeolocationService,
-        private datePipe: DatePipe,
+    private datePipe: DatePipe,
     private commonService: CommonService,
     private alertCtrl: AlertController
   ) {

@@ -238,6 +238,24 @@ ion-item.userNameDash {
   }
 }
 
+.profileBt {
+  margin-top: 0px;
+  ion-button {
+    margin-left: 10px;
+    --background: #393c63;
+    --box-shadow: 0px 2px 5px #3b3b3b66;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    min-height: 26px;
+    --padding-start: 0px;
+    --padding-end: 0px;
+    ion-img {
+      width: 20px;
+    }
+  }
+}
+
 ion-text.headingdash {
   text-align: center;
   padding-top: 10px;

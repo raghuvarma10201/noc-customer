@@ -1,0 +1,109 @@
+/* Header Buttons */
+.headerBts {
+    margin-top: 0px;
+  }
+  
+  .headerBts ion-button {
+    margin-left: 10px;
+    --background: #393c63;
+    --box-shadow: 0px 2px 5px #3b3b3b66;
+    border-radius: 100%;
+    width: 32px;
+    height: 32px;
+    min-height: 26px;
+    --padding-start: 0px;
+    --padding-end: 0px;
+  }
+  
+  .headerBts ion-img {
+    width: 20px;
+  }
+  
+  /* Profile Button */
+  .profileBt {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .profileBt ion-button {
+    --background: #393c63;
+    --box-shadow: 0px 2px 5px #3b3b3b66;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    min-height: 40px;
+  }
+  
+  .profileBt ion-icon {
+    font-size: 28px;
+    color: white;
+    ion-button{
+      --background: #8a6dea52;
+    }
+  }
+  
+  /* User Details */
+  .user-details {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  /* Change Language Section */
+  .changeLanguageRadio {
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    margin: 20px;
+  }
+  
+  .changeLanguageRadio h4 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #393c63;
+    margin-bottom: 12px;
+  }
+  
+  .selectedLangRadio {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  }
+  
+  .selectedLangRadio ion-item {
+    --background: transparent;
+    --inner-border-width: 0px;
+  }
+  
+  .selectedLangRadio ion-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #393c63;
+  }
+  
+  .selectedLangRadio ion-radio {
+    --color: #393c63;
+    --border-color: #393c63;
+    --radio-background-checked: #393c63;
+  }
+
+  .logout-button {
+    margin: 20px;
+    text-align: center;
+    ion-button{
+        --background: #8a6dea52;
+    }   
+  }
+  
+  .logout-button ion-button {
+    font-size: 16px;
+    font-weight: bold;
+    --border-radius: 8px;
+  }
+  
+  

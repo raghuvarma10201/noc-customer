@@ -6,9 +6,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { environment } from 'src/environments/environment';
 import { Browser } from '@capacitor/browser';
+import { InAppBrowserOptions } from '@ionic-native/in-app-browser';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -37,6 +39,8 @@ export class LoginPage implements OnInit {
     private sharedService: SharedService,
     private authService: AuthService,
     private activatedRouteService: ActivatedRoute,
+    private inAppBrowser: InAppBrowser,
+    private cdRef: ChangeDetectorRef 
   ) { 
     this.refreshCaptcha();
     this.loginForm = this.fb.group({
@@ -111,16 +115,15 @@ export class LoginPage implements OnInit {
         this.authService.setUserInLocalStorage(userData,'userData');
         localStorage.setItem('accessToken', accessToken);
         this.loginForm.reset();
-        this.captcha = '';
-        this.generateCaptcha();
+        this.refreshCaptcha();
         this.router.navigate(["/dashboard"]);
         this.sharedService.isUserLogin.next({isUserLoggedIn:true});
       }
-      else{     
+      else{    
+        this.refreshCaptcha();
         this.toastService.showError(res.message, "Error");
-        this.generateCaptcha();
       }
-    }, error => {   
+    }, error => {
       this.errorMsg = error;
       this.toastService.showError(this.errorMsg, "Error");
      })
@@ -142,54 +145,22 @@ export class LoginPage implements OnInit {
     this.generateCaptcha();
   }
 
-  // async navigateToUae() {
-  //   const authUrl =
-  //     'https://stg-id.uaepass.ae/idshub/authorize?response_type=code&client_id=rakpsd_mobile_stage&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&redirect_uri=http://localhost/uaepassverification&acr_values=urn:safelayer:tws:policies:authentication:level:low';
-
-  //   await Browser.open({ url: authUrl });
-
-  //   // Listen for when the browser is closed
-  //   Browser.addListener('browserFinished', async () => {
-  //     console.log('Browser closed.');
-
-  //     // Simulate fetching the last visited URL (use an actual backend/session if needed)
-  //     const lastVisitedUrl = sessionStorage.getItem('lastVisitedUrl');
-  //     if (lastVisitedUrl) {
-  //       this.handleAuthResponse(lastVisitedUrl);
-  //       sessionStorage.removeItem('lastVisitedUrl'); // Clean up stored URL
-  //     } else {
-  //       console.log('No captured URL found.');
-  //       this.toastService.showError('Authentication failed', '');
-  //       this.router.navigate(['/login']);
-  //     }
-  //   });
-  // }
-
-  // private handleAuthResponse(url: string) {
-  //   console.log('Processing authentication response:', url);
-
-  //   if (url.includes('uaepassverification')) {
-  //     const urlParams = new URLSearchParams(new URL(url).search);
-  //     const code = urlParams.get('code');
-
-  //     if (code) {
-  //       console.log('Authorization code:', code);
-  //       this.router.navigate(['/uaepassverification'], {
-  //         state: { authorization_code: code },
-  //       });
-  //     } else {
-  //       this.toastService.showError('Authentication error', '');
-  //       this.router.navigate(['/login']);
-  //     }
-  //   } else {
-  //     console.log('Unknown authentication response URL:', url);
-  //   }
-  // }
   navigatetoUae(){
-    const browser = InAppBrowser.create(
-      'https://stg-id.uaepass.ae/idshub/authorize?response_type=code&client_id=rakpsd_mobile_stage&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&redirect_uri=http://localhost/uaepassverification&acr_values=urn:safelayer:tws:policies:authentication:level:low', // URL to open
-      '_self',             // Target ('_self', '_blank', '_system')
-      'location=yes,toolbarcolor=#ffffff' // Additional options
+    const options: InAppBrowserOptions = {
+      location: 'yes',
+      clearcache: 'yes' as 'yes',
+      zoom: 'yes' as 'yes',
+      toolbarposition: 'top',
+      clearsessioncache: 'yes' as 'yes',
+      hideurlbar: 'no' as 'no',
+      closebuttoncaption: 'Close',
+      hidenavigationbuttons: 'no' as 'no',
+      hardwareback: 'yes' as 'yes'
+    };
+    const browser = this.inAppBrowser.create(
+      'https://stg-id.uaepass.ae/idshub/authorize?response_type=code&client_id=rakpsd_mobile_stage&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&redirect_uri=http://localhost/uaepassverification&acr_values=urn:safelayer:tws:policies:authentication:level:low',
+      '_self',  // Change this from '_self' to '_blank'
+        options
     );
 
     browser.on('loadstart').subscribe(async (event) => {
