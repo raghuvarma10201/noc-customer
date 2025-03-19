@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { jwtDecode } from 'jwt-decode';
 import { CommonService } from 'src/app/services/common.service';
 
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',
@@ -50,7 +51,14 @@ export class AccountPage implements OnInit {
     }
 
     logout(){
+      const keysToKeep = ['device_token', 'username', 'password','rememberMe','app_name','app_version'];
+      const savedValues = keysToKeep.map(key => ({ key, value: localStorage.getItem(key) }));
       localStorage.clear();
+      savedValues.forEach(({ key, value }) => {
+        if (value !== null) {
+          localStorage.setItem(key, value);
+        }
+      });
       this.router.navigate(['/login']);
     }
 

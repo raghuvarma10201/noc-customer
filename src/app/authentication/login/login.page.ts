@@ -30,6 +30,7 @@ export class LoginPage implements OnInit {
   userInput: string = '';
   validationMessage: string = '';
   isCaptchaValid: boolean = false;
+  rememberMe : boolean = false;
   intervalId: any;
   constructor(
     private fb: FormBuilder,
@@ -55,9 +56,22 @@ export class LoginPage implements OnInit {
     if(token && userData){
       this.router.navigate(['/dashboard']);
     }
+    
   }
   get form() { return this.loginForm.controls; }
-  
+
+  ionViewDidEnter() {
+    const storedUsername = localStorage.getItem("username");
+    const storedPassword = localStorage.getItem("password");
+    const storedRememberMe = localStorage.getItem("rememberMe") === "true";
+
+    if (storedRememberMe && storedUsername && storedPassword) {
+      this.loginForm.patchValue({ username: storedUsername });
+      this.loginForm.patchValue({ password: storedPassword });
+      this.rememberMe = true;
+    }
+    // Your logic here
+  }
   // Generate new CAPTCHA
   refreshCaptcha() {
     this.captcha = this.generateCaptcha();
@@ -99,7 +113,17 @@ export class LoginPage implements OnInit {
       this.loaderService.loadingDismiss();
       return;
     }
+    
     let formData = this.loginForm.value;
+    if (this.rememberMe) {
+      localStorage.setItem("username", formData.username);
+      localStorage.setItem("password", formData.password);
+      localStorage.setItem("rememberMe", "true");
+    } else {
+      localStorage.removeItem("username");
+      localStorage.removeItem("password");
+      localStorage.removeItem("rememberMe");
+    }
     formData.isAdminPortal= false;
     formData.Type = "CUST";
     this.authService.validateUser(formData).pipe(finalize(() => {
@@ -128,7 +152,9 @@ export class LoginPage implements OnInit {
       this.toastService.showError(this.errorMsg, "Error");
      })
   }
-
+  forgotPassword(){
+    this.router.navigate(['/forgot-password']);
+  }
   showOrHidePassword(){
     if(this.isClicked===true){
       this.isClicked=false

@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
     border: 1px solid var(--ion-color-step-300, var(--ion-background-color-step-300, #b3b3b3));
     padding-left: 30px;
     //background-color: #f0f4f8; // Light gray-blue background
@@ -19,4 +19,10 @@
         font-size: 20px;
         padding-right: 15px;
     }
+  }
+  .ionCheckbox{
+    float: left !important;
+    color: var(--whiteTextColor);
+    font-size: 14px;
+    margin-left: 5px;
   }

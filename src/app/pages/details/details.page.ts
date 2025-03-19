@@ -185,7 +185,7 @@ export class DetailsPage implements OnInit {
     try {
       // Fetch file as blob
       const response: any = await this.http.get(fileUrl, { responseType: 'blob' }).toPromise();
-
+      console.log(response);
       if (this.platform.is('android') || this.platform.is('ios')) {
         // Mobile: Save file to device storage
         const base64Data = await this.convertBlobToBase64(response);

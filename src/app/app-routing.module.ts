@@ -107,13 +107,24 @@ const routes: Routes = [
     loadChildren: () => import('./pages/building-inspection-reschedule/building-inspection-reschedule.module').then( m => m.BuildingInspectionReschedulePageModule),
     canActivate: [AuthGuard]
 
-  },  {
+  },
+  {
     path: 'account',
-    loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
+    loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'uaepassverification',
     loadChildren: () => import('./authentication/uaepassverification/uaepassverification.module').then( m => m.UaepassverificationPageModule)
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./authentication/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule),
+    canActivate: [AuthGuard]
   },
 
 

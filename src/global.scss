@@ -156,13 +156,15 @@ body {
 
   .textLinkLogin {
     color: var(--yellowText);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 500;
     font-family: var(--ion-font-family-secondary) !important;
     display: block;
     padding-left: 10px;
     margin-top: 30px;
-  }
+    text-align: center;
+    text-decoration: underline;
+ }
 }
 
 ion-item.userNameDash {

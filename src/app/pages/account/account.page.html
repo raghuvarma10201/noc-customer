@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
   <ion-toolbar>
     <ion-back-button default-href="#"></ion-back-button>
-    <ion-title>My Account</ion-title>
+    <ion-title>{{ 'my_account' | translate:{ default: 'My Account' } }}</ion-title>
     <div class="ion-float-end headerBts" slot="end">
       <ion-button shape="round" routerLink="/dashboard">
         <ion-icon name="home-outline"></ion-icon>
@@ -45,7 +45,12 @@
       </div>
     </ion-radio-group>
   </div>
-
+  <div class="logout-button">
+    <ion-button expand="full"  routerLink="/change-password">
+      <ion-icon name="swap-horizontal-outline" slot="start"></ion-icon>
+      {{ 'CHANGE PASSWORD' | translate }}
+    </ion-button>
+  </div>
   <div class="logout-button">
     <ion-button expand="full" (click)="logout()">
       <ion-icon name="log-out-outline" slot="start"></ion-icon>

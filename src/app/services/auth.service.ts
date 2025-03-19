@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, from, of, throwError } from 'rxjs';
@@ -30,6 +30,12 @@ export class AuthService {
   validateUser(body: any): Observable<any> {
     return this.http.post<any>(environment.apiUrl + "Login/UserAuthentication", body).pipe(catchError(this.handleError));
   }
+
+  verifyEmail(email: any): Observable<any> {
+    const params = new HttpParams().set('emailId', email);
+    return this.http.get<any>(environment.apiUrl + "UserManagement/GenerateResetPasswordLink",{params}).pipe(catchError(this.handleError));
+  }
+
   getConferenceSettings(body: any): Observable<any> {
     return this.http.post<any>(environment.apiUrl + "getConferenceSettings", body).pipe(catchError(this.handleError));
   }
