@@ -58,17 +58,21 @@
         </div>
       </div>
       <div class="ionInput">
-        <ion-input shape="round" fill="outline" formControlName="totalAreaToCutInSquareMeters" placeholder="Enter Total Area *"
+        <ion-input shape="round" fill="outline" formControlName="totalAreaToCutInSquareMeters"
+          placeholder="Enter Total Area *"
           [ngClass]="{ 'is-invalid': (submitted && form['totalAreaToCutInSquareMeters'].errors) || (form['totalAreaToCutInSquareMeters'].touched && form['totalAreaToCutInSquareMeters'].errors) }"></ion-input>
-        <div class="inputError" *ngIf="submitted||(form['totalAreaToCutInSquareMeters'].touched && form['totalAreaToCutInSquareMeters'].invalid)">
+        <div class="inputError"
+          *ngIf="submitted||(form['totalAreaToCutInSquareMeters'].touched && form['totalAreaToCutInSquareMeters'].invalid)">
           <small class="form-text error-message" *ngIf="form['totalAreaToCutInSquareMeters'].errors">
             Total Area is required</small>
         </div>
       </div>
       <div class="ionInput">
-        <ion-input shape="round" fill="outline" formControlName="roadCutLengthInMeters" placeholder="Enter roadcut length in meters *"
+        <ion-input shape="round" fill="outline" formControlName="roadCutLengthInMeters"
+          placeholder="Enter roadcut length in meters *"
           [ngClass]="{ 'is-invalid': (submitted && form['roadCutLengthInMeters'].errors) || (form['roadCutLengthInMeters'].touched && form['roadCutLengthInMeters'].errors) }"></ion-input>
-        <div class="inputError" *ngIf="submitted||(form['roadCutLengthInMeters'].touched && form['roadCutLengthInMeters'].invalid)">
+        <div class="inputError"
+          *ngIf="submitted||(form['roadCutLengthInMeters'].touched && form['roadCutLengthInMeters'].invalid)">
           <small class="form-text error-message" *ngIf="form['roadCutLengthInMeters'].errors">
             Length is required</small>
         </div>
@@ -76,7 +80,8 @@
       <div class="ionInput">
         <ion-input shape="round" fill="outline" formControlName="roadCutWidthInMeters" placeholder="Enter Width *"
           [ngClass]="{ 'is-invalid': (submitted && form['roadCutWidthInMeters'].errors) || (form['roadCutWidthInMeters'].touched && form['roadCutWidthInMeters'].errors) }"></ion-input>
-        <div class="inputError" *ngIf="submitted||(form['roadCutWidthInMeters'].touched && form['roadCutWidthInMeters'].invalid)">
+        <div class="inputError"
+          *ngIf="submitted||(form['roadCutWidthInMeters'].touched && form['roadCutWidthInMeters'].invalid)">
           <small class="form-text error-message" *ngIf="form['roadCutWidthInMeters'].errors">
             Width is required</small>
         </div>
@@ -87,7 +92,8 @@
           <ion-radio value="true" label-placement="end">Yes</ion-radio>
           <ion-radio value="false" label-placement="end">No</ion-radio>
         </ion-radio-group>
-        <div class="inputError" *ngIf="submitted||(form['isTrafficAffected'].touched && form['isTrafficAffected'].invalid)">
+        <div class="inputError"
+          *ngIf="submitted||(form['isTrafficAffected'].touched && form['isTrafficAffected'].invalid)">
           <small class="form-text error-message" *ngIf="form['isTrafficAffected'].errors">
             Field is required</small>
         </div>
@@ -121,29 +127,41 @@
         </ion-grid>
       </div>
       <h2 class="mb2 mt2">Inspection Request Time *</h2>
-      <div class="ionInput">
-        <ion-datetime-button datetime="datetime"></ion-datetime-button>
-            <ion-modal [keepContentsMounted]="true">
-              <ng-template>
-                <ion-datetime id="datetime" formControlName="date_time" presentation="date-time"
-                  (ionChange)="onDateTimeChange($event)" [formatOptions]="{
-                  date: {
-                    weekday: 'short',
-                    month: 'short',
-                    day: '2-digit',
-                  },
-                  time: {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  },
-                }"></ion-datetime>
-              </ng-template>
-            </ion-modal>
-            <div class="inputError" *ngIf="submitted||(form['date_time'].touched && form['date_time'].invalid)">
-              <small class="form-text error-message" *ngIf="form['date_time'].errors">
-                Date & Time is required</small>
-            </div>
-      </div>
+
+      <ion-row>
+        <ion-col size="12">
+          <!-- Use a custom placeholder display when no value is selected -->
+          <div *ngIf="!form['date_time'].value" class="datetime-placeholder" (click)="openDateTimePicker()">
+            <ion-text color="light">Select Date & Time</ion-text>
+          </div>
+
+          <!-- Only show the datetime button when a value exists -->
+          <ion-datetime-button *ngIf="form['date_time'].value" datetime="datetime"></ion-datetime-button>
+
+          <ion-modal [keepContentsMounted]="true" #dateTimeModal class="no-border-radius">
+            <ng-template>
+              <ion-datetime id="datetime" formControlName="date_time" presentation="date-time" [min]="minDateTime"
+                [showDefaultTitle]="true" [showDefaultButtons]="true" (ionChange)="onDateTimeChange($event)"
+                (ionCancel)="dateTimeModal.dismiss()" [formatOptions]="{
+                date: {
+                  weekday: 'short',
+                  month: 'short',
+                  day: '2-digit',
+                },
+                time: {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                },
+              }"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+          <div class="inputError" *ngIf="submitted||(form['date_time'].touched && form['date_time'].invalid)">
+            <small class="form-text error-message" *ngIf="form['date_time'].errors">
+              Date & Time is required</small>
+          </div>
+        </ion-col>
+      </ion-row>
       <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round" expand="block">Submit</ion-button>
     </form>
   </div>

@@ -42,6 +42,7 @@ export class TrialPitDetailsPage implements OnInit {
   isSubmitting = false;
   rescheduleLimit: any;
   rescheduledCount: any;
+  imageLimit : any;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -75,11 +76,17 @@ export class TrialPitDetailsPage implements OnInit {
         
         // Find the setting with configKey 'limitForReschedule'
         const rescheduleSetting = parsedSettings.find((item: any) => item.configKey === 'limitForReschedule');
+        const imagesSetting = parsedSettings.find((item: any) => item.configKey === 'limitForUploadPictures');
     
         if (rescheduleSetting) {
           this.rescheduleLimit = Number(rescheduleSetting.configValue); // Convert to number if needed
         } else {
           console.warn("Reschedule limit config not found");
+        }
+        if (imagesSetting) {
+          this.imageLimit = Number(rescheduleSetting.configValue); // Convert to number if needed
+        } else {
+          console.warn("Image limit config not found");
         }
       } catch (error) {
         console.error("Error parsing defaultSettings:", error);
@@ -107,7 +114,7 @@ export class TrialPitDetailsPage implements OnInit {
       if(res.status == 200 && res.success == true){
         this.trialPitDetails = res.data;
         console.log("TrialPitDetails", this.trialPitDetails);
-        this.rescheduledCount = this.trialPitDetails.filter(item => item.rescheduled === true).length;
+        this.rescheduledCount = this.trialPitDetails.filter(item => item.rescheduled === true && item.roleId == 2).length;
         console.log("RescheduledCount", this.rescheduledCount);
         this.loaderService.loadingDismiss(); 
       }else {
@@ -117,8 +124,25 @@ export class TrialPitDetailsPage implements OnInit {
     }, error => {
       this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError( 'Something went wrong', "Error");
     })
+  }
+
+  
+  isImage(filePath: string): boolean {
+    return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(filePath);
+  }
+  
+  isPDF(filePath: string): boolean {
+    return /\.pdf$/i.test(filePath);
+  }
+  
+  getFileName(filePath: string): string {
+    return filePath.split('\\').pop() || filePath.split('/').pop() || filePath; 
+  }
+  
+  getFileUrl(filePath: string): string {
+    return this.imgUrl + filePath.replace(/\\/g, '/'); // Convert backslashes to forward slashes
   }
   async getCurrentLocation() {
     const location = await this.geolocationService.getCurrentLocation();
@@ -212,14 +236,26 @@ export class TrialPitDetailsPage implements OnInit {
       }
     }, error => {
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
     })
+  }
+
+  doRefresh(event: any) {
+    console.log("Refreshing data...");
+
+    setTimeout(() => {
+      this.fetchNOCDetails(this.encryptedNocId);
+      this.fetchNOCList();
+      event.target.complete();
+      console.log("Refresh complete");
+    }, 2000);
   }
 
   
   logout(){
     this.authService.logout();
   }
+
 
   
 }

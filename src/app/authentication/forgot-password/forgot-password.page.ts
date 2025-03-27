@@ -87,7 +87,7 @@ export class ForgotPasswordPage implements OnInit {
       }
     }, error => {
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
      })
   }
   login(){

@@ -39,6 +39,9 @@ export class AsphaltDetailsPage implements OnInit {
   rescheduleForm: FormGroup;
   selectedTrialPit: any;
   isSubmitting = false;
+  rescheduleLimit: any;
+  rescheduledCount: any;
+  imageLimit: any;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -64,7 +67,31 @@ export class AsphaltDetailsPage implements OnInit {
       comments: [''],
       datetime: ['', Validators.required]
     });
-
+    const defaultSettings = localStorage.getItem('defaultSettings');
+    if (defaultSettings) {
+      try {
+        const parsedSettings = JSON.parse(defaultSettings);
+        
+        // Find the setting with configKey 'limitForReschedule'
+        const rescheduleSetting = parsedSettings.find((item: any) => item.configKey === 'limitForReschedule');
+        const imagesSetting = parsedSettings.find((item: any) => item.configKey === 'limitForUploadPictures');
+        
+        if (rescheduleSetting) {
+          this.rescheduleLimit = Number(rescheduleSetting.configValue); // Convert to number if needed
+        } else {
+          console.warn("Reschedule limit config not found");
+        }
+        if (imagesSetting) {
+          this.imageLimit = Number(rescheduleSetting.configValue); // Convert to number if needed
+        } else {
+          console.warn("Image limit config not found");
+        }
+      } catch (error) {
+        console.error("Error parsing defaultSettings:", error);
+      }
+    } else {
+      console.warn("No defaultSettings found in localStorage");
+    }
   }
 
   ngOnInit() {
@@ -83,6 +110,8 @@ export class AsphaltDetailsPage implements OnInit {
       console.log("Res", res);
       if(res.status == 200 && res.success == true){
         this.trialPitDetails = res.data;
+        this.rescheduledCount = this.trialPitDetails.filter(item => item.rescheduled === true && item.roleId == 2).length;
+        console.log("RescheduledCount", this.rescheduledCount);
       }
       else {
         this.toastService.showError(res.message, "Error");
@@ -90,9 +119,26 @@ export class AsphaltDetailsPage implements OnInit {
     }, error => {
       this.errorMsg = error;
       console.warn(this.errorMsg);
-      // this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
     })
+  };
+
+  isImage(filePath: string): boolean {
+    return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(filePath);
   }
+  
+  isPDF(filePath: string): boolean {
+    return /\.pdf$/i.test(filePath);
+  }
+  
+  getFileName(filePath: string): string {
+    return filePath.split('\\').pop() || filePath.split('/').pop() || filePath; 
+  }
+  
+  getFileUrl(filePath: string): string {
+    return this.imgUrl + filePath.replace(/\\/g, '/'); // Convert backslashes to forward slashes
+  }
+  
   async getCurrentLocation() {
     const location = await this.geolocationService.getCurrentLocation();
     if (location) {
@@ -104,6 +150,10 @@ export class AsphaltDetailsPage implements OnInit {
     }
   }
   reschedule(nocData : any) {
+    if(this.rescheduledCount >= this.rescheduleLimit){
+      this.toastService.showError('The maximum limit for rescheduling has been reached.', 'Error');
+      return;
+    }
     if (nocData) {
       nocData.customerActionId = 3;
       this.router.navigate(['/asphalt-reschedule'], { state: { nocData: nocData } });
@@ -181,8 +231,19 @@ export class AsphaltDetailsPage implements OnInit {
       }
     }, error => {
       this.errorMsg = error;
-      console.warn(this.errorMsg, "Error");
+      console.warn('Something went wrong', "Error");
     })
+  }
+
+  doRefresh(event: any) {
+    console.log("Refreshing data...");
+
+    setTimeout(() => {
+      this.fetchNOCDetails(this.encryptedNocId);
+      this.fetchNOCList();
+      event.target.complete();
+      console.log("Refresh complete");
+    }, 2000);
   }
 
   logout(){

@@ -149,7 +149,7 @@ export class LoginPage implements OnInit {
       }
     }, error => {
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError( 'Something went wrong', "Error");
      })
   }
   forgotPassword(){
@@ -168,7 +168,7 @@ export class LoginPage implements OnInit {
 
   reset(){
     this.loginForm.reset();
-    this.generateCaptcha();
+    this.refreshCaptcha();
   }
 
   navigatetoUae(){

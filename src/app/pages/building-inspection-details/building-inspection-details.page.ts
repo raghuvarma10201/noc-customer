@@ -41,6 +41,7 @@ rescheduleForm: FormGroup;
 isSubmitting = false;
 rescheduleLimit: any;
 rescheduledCount: any;
+imageLimit : any;
 constructor(
   private translate: TranslateService,
   private fb: FormBuilder,
@@ -74,11 +75,17 @@ constructor(
       
       // Find the setting with configKey 'limitForReschedule'
       const rescheduleSetting = parsedSettings.find((item: any) => item.configKey === 'limitForReschedule');
-  
+      const imagesSetting = parsedSettings.find((item: any) => item.configKey === 'limitForUploadPictures');
+      
       if (rescheduleSetting) {
         this.rescheduleLimit = Number(rescheduleSetting.configValue); // Convert to number if needed
       } else {
         console.warn("Reschedule limit config not found");
+      }
+      if (imagesSetting) {
+        this.imageLimit = Number(rescheduleSetting.configValue); // Convert to number if needed
+      } else {
+        console.warn("Image limit config not found");
       }
     } catch (error) {
       console.error("Error parsing defaultSettings:", error);
@@ -106,7 +113,7 @@ async fetchNOCList() {
     if(res.status == 200 && res.success == true){
       this.trialPitDetails = res.data;
       console.log("TrialPitDetails", this.trialPitDetails);
-      this.rescheduledCount = this.trialPitDetails.filter(item => item.rescheduled === true).length;
+      this.rescheduledCount = this.trialPitDetails.filter(item => item.rescheduled === true && item.roleId == 2).length;
       console.log("RescheduledCount", this.rescheduledCount);
       this.loaderService.loadingDismiss(); 
     }else {
@@ -116,7 +123,7 @@ async fetchNOCList() {
   }, error => {
     this.loaderService.loadingDismiss();
     this.errorMsg = error;
-    this.toastService.showError(this.errorMsg, "Error");
+    this.toastService.showError('Something went wrong', "Error");
   })
 }
 async getCurrentLocation() {
@@ -212,7 +219,7 @@ async fetchNOCDetails(encryptedNocId : any) {
     }
   }, error => {
     this.errorMsg = error;
-    this.toastService.showError(this.errorMsg, "Error");
+    this.toastService.showError('Something went wrong', "Error");
   })
 }
 logout(){

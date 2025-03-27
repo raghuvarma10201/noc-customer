@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,6 +20,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./trialpit-form.page.scss'],
 })
 export class TrialpitFormPage implements OnInit {
+  @ViewChild('dateTimeModal') dateTimeModal: any;
 
   trailPitForm: FormGroup;
   submitted = false;
@@ -32,6 +33,7 @@ export class TrialpitFormPage implements OnInit {
   longitude: any;
   nocDetails: any;
   encryptedNocId: any;
+  minDateTime: any;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -52,6 +54,7 @@ export class TrialpitFormPage implements OnInit {
       console.log(this.encryptedNocId, "encryptedNocId");
       console.log(nocData);
     }
+    this.minDateTime = new Date().toISOString();
     this.trailPitForm = this.fb.group({
       customerActionTypeId: [this.nocDetails.customerActionId, [Validators.required]],
       nocId: [this.nocDetails.nocId, [Validators.required]],
@@ -99,7 +102,7 @@ export class TrialpitFormPage implements OnInit {
         }, (error: any) => {
           this.loaderService.loadingDismiss();
           this.errorMsg = error;
-          this.toastService.showError(this.errorMsg, "Error");
+          this.toastService.showError('Something went wrong', "Error");
         })
       }
     } catch (error) {
@@ -175,18 +178,25 @@ export class TrialpitFormPage implements OnInit {
     })).subscribe((res: any) => {
       console.log("Res", res);
       if (res.status == 201 && res.success == true) {
-        this.toastService.showSuccess(res.message, "Scccess");
+        this.toastService.showSuccess('', "Scccess");
+        this.trailPitForm.reset();
+        this.imageFiles = [];
+        this.imagePreviews = [];
         this.router.navigate(['/trial-pit-details'], { state: { nocData: this.nocDetails, encryptedNocId: this.encryptedNocId } });
       }
       else {
         this.loaderService.loadingDismiss();
-        // this.toastr.showError(result.message, "Error");
+        this.toastService.showError(res.message, "Error");
       }
     }, (error: any) => {
       this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
     })
+  }
+
+  openDateTimePicker() {
+    this.dateTimeModal.present();
   }
 
   logout(){

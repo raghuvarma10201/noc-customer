@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./building-inspection-reschedule.page.scss'],
 })
 export class BuildingInspectionReschedulePage implements OnInit {
-
+  @ViewChild('dateTimeModal') dateTimeModal: any;
+  
   trailPitRescheduleForm: FormGroup;
   submitted = false;
   errorMsg: any;
@@ -27,6 +28,7 @@ export class BuildingInspectionReschedulePage implements OnInit {
   latitude: any;
   longitude: any;
   nocDetails: any;
+  minDateTime: string;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -44,6 +46,7 @@ export class BuildingInspectionReschedulePage implements OnInit {
       this.nocDetails = nocData;
       console.log(nocData);
     }
+    this.minDateTime = new Date().toISOString();
     this.trailPitRescheduleForm = this.fb.group({
       id: [this.nocDetails.trailPitId, [Validators.required]],
       comments: [null, [Validators.required]],
@@ -126,7 +129,11 @@ export class BuildingInspectionReschedulePage implements OnInit {
       }
     }, (error: any) => {
       this.errorMsg = error;
-      // this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
     })
+  }
+
+  openDateTimePicker() {
+    this.dateTimeModal.present();
   }
 }

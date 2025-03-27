@@ -94,7 +94,7 @@ export class CommentsPage implements OnInit {
         }, error => {
           this.loaderService.loadingDismiss();
           this.errorMsg = error;
-          this.toastService.showError(this.errorMsg, "Error");
+          this.toastService.showError('Something went wrong', "Error");
         })
       }
         // this.imageFiles.push(file);
@@ -214,7 +214,7 @@ export class CommentsPage implements OnInit {
       }
     }, (error: any) => {
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
     })
   }
 

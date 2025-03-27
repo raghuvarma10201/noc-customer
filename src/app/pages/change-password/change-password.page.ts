@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 import { Browser } from '@capacitor/browser';
 import { InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { ChangeDetectorRef } from '@angular/core';
+import { passwordMatchValidator } from './password.validator';
+import { jwtDecode } from 'jwt-decode';
 
 
 @Component({
@@ -32,6 +34,9 @@ export class ChangePasswordPage implements OnInit {
   isCaptchaValid: boolean = false;
   rememberMe : boolean = false;
   intervalId: any;
+  username: any;
+  email: any;
+  role: any;
   constructor(
     private fb: FormBuilder,
     public router: Router,
@@ -46,13 +51,35 @@ export class ChangePasswordPage implements OnInit {
       currentPassword: [null, [Validators.required]],
       newPassword: [null, [Validators.required]],
       confirmPassword: [null, [Validators.required]]
-    },{ validators: this.passwordsMatchValidator });
+    },{ validators: passwordMatchValidator('newPassword', 'confirmPassword') });
+    this.getNameIdentifier();
   }
-  passwordsMatchValidator(form: FormGroup) {
-    const newPassword = form.get('newPassword')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-    return newPassword === confirmPassword ? null : { passwordsMismatch: true };
+   // Getters for easy access to form controls in the template
+   get password() {
+    return this.passwordForm.get('newPassword');
   }
+
+  get confirmPassword() {
+    return this.passwordForm.get('confirmPassword');
+  }
+
+  get passwordMismatch() {
+    return this.passwordForm.hasError('passwordMismatch');
+  }
+  getNameIdentifier(): any {
+        const token = localStorage.getItem("accessToken");
+        if (!token) return null;
+        try {
+          const decodedToken: any = jwtDecode(token);
+          this.username = decodedToken?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || null;
+          this.email = decodedToken?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || null;
+          this.role = decodedToken?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || null;
+          console.log("username", this.username);
+        } catch (error) {
+          console.error("Invalid token", error);
+          return null;
+        }
+      }
   ngOnInit() {
     const token = localStorage.getItem('accessToken');
     const userData = localStorage.getItem('userData');
@@ -96,26 +123,14 @@ export class ChangePasswordPage implements OnInit {
       this.loaderService.loadingDismiss();
       return;
     }
-    console.log(this.validateCaptcha());
-    if(!this.validateCaptcha()){
-      this.toastService.showError(this.validationMessage, "Error");
-      this.loaderService.loadingDismiss();
-      return;
-    }
-    
+
     let formData = this.passwordForm.value;
-    if (this.rememberMe) {
-      localStorage.setItem("username", formData.username);
-      localStorage.setItem("password", formData.password);
-      localStorage.setItem("rememberMe", "true");
-    } else {
-      localStorage.removeItem("username");
-      localStorage.removeItem("password");
-      localStorage.removeItem("rememberMe");
+    let payload ={
+      // userId : this.email,
+      // oldPassword : formData.currentPassword,
+      // newPassword : formData.newPassword
     }
-    formData.isAdminPortal= false;
-    formData.Type = "CUST";
-    this.authService.validateUser(formData).pipe(finalize(() => {
+    this.authService.changePassword(payload, this.email, formData.currentPassword, formData.newPassword).pipe(finalize(() => {
       this.loaderService.loadingDismiss();
      })).subscribe((res: any) => {
       console.log("Res", res);
@@ -138,7 +153,7 @@ export class ChangePasswordPage implements OnInit {
       }
     }, error => {
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
      })
   }
   forgotPassword(){

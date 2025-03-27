@@ -44,8 +44,9 @@ export class AuthService {
     return this.http.post<any>(environment.apiUrl + "forgotpassword", body).pipe(catchError(this.handleError));
 
   }
-  changePassword(body: any):Observable<any>{
-    return this.http.post<any>(environment.apiUrl + "resetpassword", body).pipe(catchError(this.handleError));
+  changePassword(body: any, email : any, oldPassword: any, newPassword: any):Observable<any>{
+    const params = new HttpParams().set('userId', email).set('oldPassword', oldPassword).set('newPassword', newPassword);
+    return this.http.post<any>(environment.apiUrl + "UserManagement/ChangePassword", body, {params}).pipe(catchError(this.handleError));
   }
 
   // getAccessToken(authorizationCode: any, creds: any){

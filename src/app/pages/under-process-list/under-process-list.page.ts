@@ -50,7 +50,7 @@ export class UnderProcessListPage implements OnInit {
     }, error => {
       this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
     })
   }
 
@@ -71,7 +71,7 @@ export class UnderProcessListPage implements OnInit {
     }, error => {
       this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
     })
   }
   doRefresh(event: any) {

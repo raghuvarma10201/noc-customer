@@ -66,7 +66,8 @@
         </div>
       </div>
       <div class="ionInput">
-        <ion-input shape="round" fill="outline" formControlName="soilStraightGraph" placeholder="Enter Soil Stratigraph *"
+        <ion-input shape="round" fill="outline" formControlName="soilStraightGraph"
+          placeholder="Enter Soil Stratigraph *"
           [ngClass]="{ 'is-invalid': (submitted && form['soilStraightGraph'].errors) || (form['soilStraightGraph'].touched && form['soilStraightGraph'].errors) }"></ion-input>
         <div class="inputError"
           *ngIf="submitted||(form['soilStraightGraph'].touched && form['soilStraightGraph'].invalid)">
@@ -89,7 +90,7 @@
             <div class="camBox">
               <div class="capturebutton" (click)="captureImage()">
                 <ion-icon name="camera-outline"></ion-icon>
-                <ion-text >Capture Image</ion-text>
+                <ion-text>Capture Image</ion-text>
               </div>
             </div>
           </ion-col>
@@ -105,31 +106,33 @@
             </ion-row>
           </ion-grid>
         </div>
-      <h2 class="mb2 mt2"> Inspection Request Time*</h2>
+        <h2 class="mb2 mt2"> Inspection Request Time*</h2>
         <ion-row>
           <ion-col size="12">
-            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            <!-- Use a custom placeholder display when no value is selected -->
+            <div *ngIf="!form['date_time'].value" class="datetime-placeholder" (click)="openDateTimePicker()">
+              <ion-text color="light">Select Date & Time</ion-text>
+            </div>
 
-            <ion-modal [keepContentsMounted]="true">
+            <!-- Only show the datetime button when a value exists -->
+            <ion-datetime-button *ngIf="form['date_time'].value" datetime="datetime"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true" #dateTimeModal class="no-border-radius">
               <ng-template>
-                <ion-datetime
-                  id="datetime"
-                  formControlName="date_time"
-                  presentation="date-time"
-                  (ionChange)="onDateTimeChange($event)"
-                  [formatOptions]="{
-                    date: {
-                      weekday: 'short',
-                      month: 'short',
-                      day: '2-digit',
-                    },
-                    time: {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                    },
-                  }"
-                ></ion-datetime>
+                <ion-datetime id="datetime" formControlName="date_time" presentation="date-time" [min]="minDateTime"
+                  [showDefaultTitle]="true" [showDefaultButtons]="true" (ionChange)="onDateTimeChange($event)"
+                  (ionCancel)="dateTimeModal.dismiss()" [formatOptions]="{
+                  date: {
+                    weekday: 'short',
+                    month: 'short',
+                    day: '2-digit',
+                  },
+                  time: {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                  },
+                }"></ion-datetime>
               </ng-template>
             </ion-modal>
             <div class="inputError" *ngIf="submitted||(form['date_time'].touched && form['date_time'].invalid)">
@@ -139,8 +142,7 @@
           </ion-col>
         </ion-row>
       </div>
-      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round"
-      expand="block">Submit</ion-button>
+      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round" expand="block">Submit</ion-button>
     </form>
   </div>
 

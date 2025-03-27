@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./asphalt-form.page.scss'],
 })
 export class AsphaltFormPage implements OnInit {
-
+  @ViewChild('dateTimeModal') dateTimeModal: any;
   asphaltForm: FormGroup;
   submitted = false;
   errorMsg: any;
@@ -32,6 +32,7 @@ export class AsphaltFormPage implements OnInit {
   longitude: any;
   nocDetails: any;
   encryptedNocId: any;
+  minDateTime: any;
 
   constructor(
     private translate: TranslateService,
@@ -53,6 +54,7 @@ export class AsphaltFormPage implements OnInit {
       this.nocDetails = nocData;
       console.log(nocData);
     }
+    this.minDateTime = new Date().toISOString();
     this.asphaltForm = this.fb.group({
       customerActionTypeId: [this.nocDetails.customerActionId, [Validators.required]],
       nocId: [this.nocDetails.nocId, [Validators.required]],
@@ -87,7 +89,6 @@ export class AsphaltFormPage implements OnInit {
         const response = await fetch(image.webPath);
         const blob = await response.blob();
         const file = new File([blob], `image_${Date.now()}.jpg`, { type: 'image/jpeg' });
-
         const compressedBlob = await this.nocService.compressImage(image.webPath, 0.6); // Adjust quality
         console.log('compressedBlob', compressedBlob);
         this.nocService.uploadImage(compressedBlob, this.nocDetails.nocId).pipe(finalize(() => {
@@ -102,35 +103,34 @@ export class AsphaltFormPage implements OnInit {
         }, error => {
           this.loaderService.loadingDismiss();
           this.errorMsg = error;
-          this.toastService.showError(this.errorMsg, "Error");
+          this.toastService.showError('Something went wrong', "Error");
         })
       }
     } catch (error) {
       console.error('Camera error:', error);
     }
   }
+
   deleteImage(index: number) {
     this.imageFiles.splice(index, 1);
     this.imagePreviews.splice(index, 1);
   }
+
   onDateTimeChange(event: any) {
     const fullDateTime = event.detail.value; // Example: "2023-11-02T01:22:00"
-
     if (fullDateTime) {
       const dateTime = new Date(fullDateTime);
-
       this.selectedDate = dateTime.toISOString().split('T')[0]; // "2023-11-02"
       this.selectedTime = dateTime.toTimeString().split(' ')[0].substring(0, 8); // "01:22"
-
       console.log('Selected Date:', this.selectedDate);
       console.log('Selected Time:', this.selectedTime);
-
       this.asphaltForm.patchValue({
         inspectionDate: this.selectedDate, // Must match all form controls
         inspectionTime: this.selectedTime,
       });
     }
   }
+
   async getCurrentLocation() {
     const location = await this.geolocationService.getCurrentLocation();
     if (location) {
@@ -149,11 +149,6 @@ export class AsphaltFormPage implements OnInit {
       this.loaderService.loadingDismiss();
       return;
     }
-    // if (this.imageFiles.length == 0) {
-    //   this.loaderService.loadingDismiss();
-    //   this.toastService.showError('Please upload the images', "Error");
-    //   return;
-    // }
     const location = await this.geolocationService.getCurrentLocation();
     if (location) {
       this.latitude = location.latitude;
@@ -163,12 +158,14 @@ export class AsphaltFormPage implements OnInit {
       console.warn('Could not retrieve location');
     }
     const formData = this.asphaltForm.value;
+
     // Append form fields to FormData
-    if(formData.isTrafficAffected === 'true'){
+    if (formData.isTrafficAffected === 'true') {
       formData.isTrafficAffected = true;
-    }else{
+    } else {
       formData.isTrafficAffected = false;
     }
+
     // Append location coordinates if available
     if (this.latitude && this.longitude) {
       formData.latitude = this.latitude.toString();
@@ -176,27 +173,32 @@ export class AsphaltFormPage implements OnInit {
     }
     formData.filePaths = this.imageFiles;
     formData.comments = "";
-
     this.nocService.saveAsphaltForm(formData).pipe(finalize(() => {
       this.loaderService.loadingDismiss();
     })).subscribe((res: any) => {
       console.log("Res", res);
       if (res.status == 201 && res.success == true) {
-        this.toastService.showSuccess(res.message, "Scccess");
-        this.router.navigate(['/asphalt-details'], { state: { nocData: this.nocDetails,encryptedNocId : this.encryptedNocId } });
+        this.asphaltForm.reset();
+        this.imageFiles = [];
+        this.imagePreviews = [];
+        this.toastService.showSuccess('', "Scccess");
+        this.router.navigate(['/asphalt-details'], { state: { nocData: this.nocDetails, encryptedNocId: this.encryptedNocId } });
       }
       else {
         this.loaderService.loadingDismiss();
-        // this.toastr.showError(result.message, "Error");
       }
     }, (error: any) => {
       this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError( 'Something went wrong', "Error");
     })
   }
 
-  logout(){
+  openDateTimePicker() {
+    this.dateTimeModal.present();
+  }
+
+  logout() {
     this.authService.logout();
   }
 }

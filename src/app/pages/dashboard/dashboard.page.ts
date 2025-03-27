@@ -2,72 +2,80 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { register } from 'swiper/element/bundle';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+import { BehaviorSubject } from 'rxjs';
+
 register();
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
-  standalone: false,
   styleUrls: ['./dashboard.page.scss'],
+  standalone: false
 })
 export class DashboardPage implements OnInit {
-  dashboardCounts: any;
-  username: any;
+  dashboardCounts = new BehaviorSubject<any>(null); // Reactive state management
+  username: string | null = null;
 
   constructor(
     private router: Router,
     private commonService: CommonService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.getNameIdentifier();
-    this.getDashboardCounts();
+    // this.loadDashboardData();
   }
 
-  logout(){
+  ionViewWillEnter(){
+    this.loadDashboardData();
+  }
+
+  async loadDashboardData() {
+    this.getNameIdentifier();
+    await this.getDashboardCounts();
+  }
+
+  logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
   }
 
-  getDashboardCounts(){
-    this.commonService.getDadhboardCounts().subscribe((res: any) => {
-      this.dashboardCounts = res.data;
-      console.log('dashboard counts', this.dashboardCounts);
-    }, error => {
-      console.log("Error", error);
-    })
+  async getDashboardCounts() {
+    try {
+      const res = await this.commonService.getDadhboardCounts().toPromise();
+      this.dashboardCounts.next(res.data);
+      console.log('Dashboard counts:', res.data);
+    } catch (error) {
+      console.error('Error fetching dashboard counts:', error);
+    }
   }
 
-  navigateToNocList(userType: string){
-    this.router.navigate(['/list-noc', { userType: userType }]);
+  navigateToNocList(userType: string) {
+    this.router.navigate(['/list-noc', { userType }]);
   }
 
-  getNameIdentifier(): any {
+  getNameIdentifier() {
     const token = localStorage.getItem("accessToken");
-    if (!token) return null;
+    if (!token) return;
+    
     try {
       const decodedToken: any = jwtDecode(token);
-      this.username = decodedToken?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || null;
-      console.log("username", this.username);
+      this.username =
+        decodedToken?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || null;
+      console.log("Username:", this.username);
     } catch (error) {
       console.error("Invalid token", error);
-      return null;
+      this.username = null;
     }
   }
 
   doRefresh(event: any) {
-    console.log('Refreshing data...');
+    console.log("Refreshing data...");
 
-    // Simulate async data fetching
     setTimeout(() => {
-      // Add new item or refresh your data
-      this.getDashboardCounts();
-      this.getNameIdentifier();
-
-      // Complete the refresher animation
+      this.loadDashboardData();
       event.target.complete();
-      console.log('Refresh complete');
-    }, 2000); // Simulate 2 seconds refresh time
+      console.log("Refresh complete");
+    }, 2000);
   }
-
 }

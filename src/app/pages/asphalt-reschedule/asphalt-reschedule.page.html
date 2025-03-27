@@ -19,27 +19,40 @@
       </div>
       <h2 class="mb2">Time slot</h2>
       <div class="ionInput">
-        <ion-datetime-button datetime="datetime"></ion-datetime-button>
-        <ion-modal [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime id="datetime" formControlName="date_time" presentation="date-time"
-              (ionChange)="onDateTimeChange($event)" [formatOptions]="{
-                    date: {
-                      weekday: 'short',
-                      month: 'short',
-                      day: '2-digit',
-                    },
-                    time: {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    },
-                  }"></ion-datetime>
-          </ng-template>
-        </ion-modal>
-        <div class="inputError" *ngIf="submitted||(form['date_time'].touched && form['date_time'].invalid)">
-          <small class="form-text error-message" *ngIf="form['date_time'].errors">
-            Date & Time is required</small>
-        </div>
+        <ion-row>
+          <ion-col size="12">
+            <!-- Use a custom placeholder display when no value is selected -->
+            <div *ngIf="!form['date_time'].value" class="datetime-placeholder" (click)="openDateTimePicker()">
+              <ion-text color="light">Select Date & Time</ion-text>
+            </div>
+
+            <!-- Only show the datetime button when a value exists -->
+            <ion-datetime-button *ngIf="form['date_time'].value" datetime="datetime"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true" #dateTimeModal class="no-border-radius">
+              <ng-template>
+                <ion-datetime id="datetime" formControlName="date_time" presentation="date-time" [min]="minDateTime"
+                  [showDefaultTitle]="true" [showDefaultButtons]="true" (ionChange)="onDateTimeChange($event)"
+                  (ionCancel)="dateTimeModal.dismiss()" [formatOptions]="{
+                      date: {
+                        weekday: 'short',
+                        month: 'short',
+                        day: '2-digit',
+                      },
+                      time: {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                      },
+                    }"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+            <div class="inputError" *ngIf="submitted||(form['date_time'].touched && form['date_time'].invalid)">
+              <small class="form-text error-message" *ngIf="form['date_time'].errors">
+                Date & Time is required</small>
+            </div>
+          </ion-col>
+        </ion-row>
       </div>
       <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round" expand="block">Submit</ion-button>
     </form>

@@ -802,6 +802,42 @@ ion-modal {
 //   h6{font-size:2rem; font-weight:600;}
 // }
 
+.imagesTrialPit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.imagesTrialPit ion-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  border: solid 2px #fff;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.pdf-file {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1); /* Light transparent background */
+  border: solid 2px #fff;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  word-break: break-word; /* Break long filenames */
+}
+
 
 
 

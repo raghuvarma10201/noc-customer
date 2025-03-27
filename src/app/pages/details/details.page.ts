@@ -70,7 +70,7 @@ export class DetailsPage implements OnInit {
       }, error => {
         this.loaderService.loadingDismiss();
         this.errorMsg = error;
-        this.toastService.showError(this.errorMsg, "Error");
+        this.toastService.showError('Something went wrong', "Error");
       })
       //this.fetchNOCDetails();
     });
@@ -107,7 +107,7 @@ export class DetailsPage implements OnInit {
     }, error => {
       this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
     })
   }
   navigateToTraiPitForm(nocData : any) {

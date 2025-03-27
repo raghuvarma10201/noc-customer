@@ -21,3 +21,14 @@
     }
   }
   
+  .datetime-placeholder {
+    padding: 10px 15px;
+    border: 1px solid var(--ion-color-light);
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .no-border-radius::part(content) {
+    border-radius: 0 !important;
+  }

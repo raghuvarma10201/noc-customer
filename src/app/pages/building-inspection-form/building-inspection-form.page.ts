@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./building-inspection-form.page.scss'],
 })
 export class BuildingInspectionFormPage implements OnInit {
-
+  @ViewChild('dateTimeModal') dateTimeModal: any;
   buildingInspectionForm: FormGroup;
   submitted = false;
   errorMsg: any;
@@ -32,6 +32,7 @@ export class BuildingInspectionFormPage implements OnInit {
   longitude: any;
   nocDetails: any;
   encryptedNocId: any;
+  minDateTime: string;
   constructor(
     private translate: TranslateService,
     private fb: FormBuilder,
@@ -52,6 +53,8 @@ export class BuildingInspectionFormPage implements OnInit {
       console.log(this.encryptedNocId, "encryptedNocId");
       console.log(nocData);
     }
+    this.minDateTime = new Date().toISOString();
+
     this.buildingInspectionForm = this.fb.group({
       customerActionTypeId: [this.nocDetails.customerActionId, [Validators.required]],
       nocId: [this.nocDetails.nocId, [Validators.required]],
@@ -99,7 +102,7 @@ export class BuildingInspectionFormPage implements OnInit {
         }, (error: any) => {
           this.loaderService.loadingDismiss();
           this.errorMsg = error;
-          this.toastService.showError(this.errorMsg, "Error");
+          this.toastService.showError('Something went wrong', "Error");
         })
       }
     } catch (error) {
@@ -175,7 +178,10 @@ export class BuildingInspectionFormPage implements OnInit {
     })).subscribe((res: any) => {
       console.log("Res", res);
       if (res.status == 201 && res.success == true) {
-        this.toastService.showSuccess(res.message, "Scccess");
+        this.buildingInspectionForm.reset();
+        this.imageFiles = [];
+        this.imagePreviews = [];
+        this.toastService.showSuccess('', "Scccess");
         this.router.navigate(['/building-inspection-details'], { state: { nocData: this.nocDetails, encryptedNocId: this.encryptedNocId } });
       }
       else {
@@ -185,8 +191,12 @@ export class BuildingInspectionFormPage implements OnInit {
     }, (error: any) => {
       this.loaderService.loadingDismiss();
       this.errorMsg = error;
-      this.toastService.showError(this.errorMsg, "Error");
+      this.toastService.showError('Something went wrong', "Error");
     })
+  }
+
+  openDateTimePicker() {
+    this.dateTimeModal.present();
   }
 
   logout(){

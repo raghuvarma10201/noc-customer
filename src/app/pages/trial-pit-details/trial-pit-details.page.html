@@ -18,6 +18,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding requestDetails">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      refreshingSpinner="circles"
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing..."
+    ></ion-refresher-content>
+  </ion-refresher>
   <div class="dashboardBg pageBg"></div>
   <h2> {{nocDetails?.projectTitle}} </h2>
   <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
@@ -71,22 +79,32 @@
           </ion-text>
           <div class="ion-justify-content-start availabilityText">
             <ion-text class="labelName">CA Type Status: </ion-text>
-            <!-- <ion-text> 16 Dec 2024, 3:00 PM | </ion-text> -->
             <ion-text class="labelStatus"> {{data.caStatusName}}</ion-text>
           </div>
-          <div *ngIf="data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
+          <!-- <div *ngIf="data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
             <ion-img *ngFor="let preview of data.documents; let i = index"  [src]="imgUrl + preview"></ion-img>
+          </div> -->
+          <div *ngIf="data.documents && data.documents.length > 0" class="ion-justify-content-start imagesTrialPit">
+            <div *ngFor="let preview of data.documents">
+              <!-- Show image for image files -->
+              <ion-img *ngIf="isImage(preview)" [src]="getFileUrl(preview)"></ion-img>
+          
+              <!-- Show file name for PDF files -->
+              <p style="color: white;" *ngIf="isPDF(preview)" class="pdf-file">
+                {{ getFileName(preview) }}
+              </p>
+            </div>
           </div>
           <div class="ion-justify-content-start availabilityText">
             <ion-text class="labelName">Inspection Date & Time: </ion-text>
             <ion-text class="labelStatus"> {{data.inspectionDate | date:'MMM d, y'}},{{formatTime(data.inspectionTime)}}</ion-text>
           </div>
           <div class="ion-justify-content-start availabilityText" *ngIf="data.accepted || data.rescheduled">
-            <ion-text class="labelName">Status: </ion-text>
+            <ion-text class="labelName">Scheduled Status: </ion-text>
             <ion-text class="labelStatus" *ngIf="data.accepted"> Accepted </ion-text>
             <ion-text class="labelStatus" *ngIf="!data.accepted && data.rescheduled"> Rescheduled </ion-text>
           </div>
-          <ion-row *ngIf="data.rescheduled == false && data.accepted == false && data.roleId != 2 && data.isActive">
+          <ion-row *ngIf="data.rescheduled == false && data.accepted == false && data.roleId != 2 && data.isActive && data.subStatusID!= 4 && data.subStatusID!= 5">
             <ion-col size="6">
               <ion-button fill="outline" class="warningBt" size="small" shape="round" expand="block" (click)="reschedule(nocDetails)" >
                 Reschedule
@@ -101,27 +119,26 @@
         </div>
       </ion-item>
     </ion-list>
-
   </div>
 
-  <ion-row *ngIf="trialPitDetails[0]?.caStatusName == 'In Progress' || trialPitDetails[0]?.caStatusName == 'Customer Action'">
-    <ion-col size="6">
+  <ion-row *ngIf="trialPitDetails && (trialPitDetails[0]?.caStatusName == 'In Progress' || trialPitDetails[0]?.caStatusName == 'Customer Action')">
+    <ion-col size="12">
       <ion-button (click)="addComments(nocDetails)" fill="outline" class="warningBt mb2" shape="round"
         expand="block">Comments</ion-button>
     </ion-col>
 
-    <ion-col size="6">
+    <!-- <ion-col size="6">
       <ion-button (click)="reschedule(nocDetails)" fill="outline" class="secondaryBt" shape="round"
         expand="block">Reschedule</ion-button>
-    </ion-col>
+    </ion-col> -->
   </ion-row>
 
-  <ion-col size="6" *ngIf="trialPitDetails[0]?.caStatusName == 'Approved'">
+  <ion-col size="6" *ngIf="trialPitDetails && trialPitDetails[0]?.caStatusName == 'Approved'">
     <ion-button [disabled]="true" fill="outline" class="warningBt mb2" shape="round"
       expand="block">Accepted</ion-button>
   </ion-col>
 
-  <ion-col size="6" *ngIf="trialPitDetails[0]?.caStatusName == 'Reject'">
+  <ion-col size="6" *ngIf="trialPitDetails && trialPitDetails[0]?.caStatusName == 'Reject'">
     <ion-button [disabled]="true" fill="outline" class="warningBt mb2" shape="round"
       expand="block">Rejected</ion-button>
   </ion-col>

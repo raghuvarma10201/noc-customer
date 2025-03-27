@@ -11,6 +11,7 @@ import { HttpInterceptorService } from './interceptors/http.interceptor';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
 // Factory function for loading translation files
 export function HttpLoaderFactory(http: HttpClient) {
@@ -59,7 +60,8 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
       useClass: HttpInterceptorService,
       multi: true, // Allow multiple interceptors
     },
-    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }, // 👈 Use Custom Strategy
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }, 
+    Diagnostic// 👈 Use Custom Strategy
   ],
   bootstrap: [AppComponent],
 })
