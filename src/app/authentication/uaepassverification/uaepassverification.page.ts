@@ -29,14 +29,14 @@ export class UaepassverificationPage implements OnInit {
    }
 
   ngOnInit() {
-    const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras?.state;
+    // const navigation = this.router.getCurrentNavigation();
+    // const state = navigation?.extras?.state;
     
-    if (state && state['authorization_code']) {
-      this.getAccessToken(state['authorization_code']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    // if (state && state['authorization_code']) {
+    //   this.getAccessToken(state['authorization_code']);
+    // } else {
+    //   this.router.navigate(['/login']);
+    // }
   }
 
   async getAccessToken(authorizationCode: string) {
@@ -113,10 +113,9 @@ export class UaepassverificationPage implements OnInit {
       (res: any) => {
         if (res.status == 200 && res.success == true) {
           // User exists, proceed with login
-          const accessToken = res.data.api_token;
-          const userData = res.data;
-          
-          localStorage.setItem('accessToken', accessToken);
+  
+          const userData = res;
+          console.log("user data", userData);
           this.authService.setUserInLocalStorage(userData, 'userData');
           
           this.toastService.showSuccess('Successfully authenticated with UAE Pass', 'Success');

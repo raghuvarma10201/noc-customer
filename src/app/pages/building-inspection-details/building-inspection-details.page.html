@@ -105,13 +105,8 @@
 
   <ion-row *ngIf="trialPitDetails[0]?.caStatusName == 'In Progress' || trialPitDetails[0]?.caStatusName == 'Customer Action'">
     <ion-col size="6">
-      <ion-button (click)="addComments(nocDetails)" fill="outline" class="warningBt mb2" shape="round"
+      <ion-button *ngIf="isAccepted" (click)="addComments(nocDetails)" fill="outline" class="warningBt mb2" shape="round"
         expand="block">Comments</ion-button>
-    </ion-col>
-
-    <ion-col size="6">
-      <ion-button (click)="reschedule(nocDetails)" fill="outline" class="secondaryBt" shape="round"
-        expand="block">Reschedule</ion-button>
     </ion-col>
   </ion-row>
 

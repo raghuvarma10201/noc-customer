@@ -50,15 +50,15 @@
   <div class="ionForm">
     <form [formGroup]="buildingInspectionForm" class="trailPitForm">
       <div class="ionInput">
-        <ion-input shape="round" fill="outline" formControlName="location" placeholder="Enter Area Name *"
+        <ion-input label="Area *" labelPlacement="floating" shape="round" fill="outline" formControlName="location" placeholder="Enter Area Name *"
           [ngClass]="{ 'is-invalid': (submitted && form['location'].errors) || (form['location'].touched && form['location'].errors) }"></ion-input>
         <div class="inputError" *ngIf="submitted||(form['location'].touched && form['location'].invalid)">
           <small class="form-text error-message" *ngIf="form['location'].errors">
-            Location is required</small>
+            Area is required</small>
         </div>
       </div>
       <div class="ionInput">
-        <ion-input shape="round" fill="outline" formControlName="pitDimensions" placeholder="Enter Pit Dimensions *"
+        <ion-input label="Pit Dimensions *" labelPlacement="floating" shape="round" fill="outline" formControlName="pitDimensions" placeholder="Enter Pit Dimensions *"
           [ngClass]="{ 'is-invalid': (submitted && form['pitDimensions'].errors) || (form['pitDimensions'].touched && form['pitDimensions'].errors) }"></ion-input>
         <div class="inputError" *ngIf="submitted||(form['pitDimensions'].touched && form['pitDimensions'].invalid)">
           <small class="form-text error-message" *ngIf="form['pitDimensions'].errors">
@@ -66,7 +66,7 @@
         </div>
       </div>
       <div class="ionInput">
-        <ion-input shape="round" fill="outline" formControlName="soilStraightGraph"
+        <ion-input  label="Soil Stratigraph *" labelPlacement="floating" shape="round" fill="outline" formControlName="soilStraightGraph"
           placeholder="Enter Soil Stratigraph *"
           [ngClass]="{ 'is-invalid': (submitted && form['soilStraightGraph'].errors) || (form['soilStraightGraph'].touched && form['soilStraightGraph'].errors) }"></ion-input>
         <div class="inputError"
@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="ionInput">
-        <ion-textarea shape="round" fill="outline" formControlName="description" rows="3"
+        <ion-textarea label="Description *" labelPlacement="floating" shape="round" fill="outline" formControlName="description" rows="3"
           placeholder="Enter Description *"
           [ngClass]="{ 'is-invalid': (submitted && form['description'].errors) || (form['description'].touched && form['description'].errors) }"></ion-textarea>
         <div class="inputError" *ngIf="submitted||(form['description'].touched && form['description'].invalid)">

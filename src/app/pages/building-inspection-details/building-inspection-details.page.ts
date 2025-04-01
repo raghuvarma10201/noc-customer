@@ -42,6 +42,7 @@ isSubmitting = false;
 rescheduleLimit: any;
 rescheduledCount: any;
 imageLimit : any;
+isAccepted: boolean = false;
 constructor(
   private translate: TranslateService,
   private fb: FormBuilder,
@@ -106,13 +107,14 @@ ionViewWillEnter() {
 async fetchNOCList() {
   await this.loaderService.loadingPresent();
 
-  this.nocService.getComments(this.encryptedNocId, 5).pipe(finalize(() => {
+  this.nocService.getComments(this.encryptedNocId, 5, this.nocDetails.BuildingInspectionId).pipe(finalize(() => {
     this.loaderService.loadingDismiss();
   })).subscribe((res: any) => {
     console.log("Res", res);
     if(res.status == 200 && res.success == true){
       this.trialPitDetails = res.data;
       console.log("TrialPitDetails", this.trialPitDetails);
+      this.isAccepted = this.trialPitDetails[0].accepted;
       this.rescheduledCount = this.trialPitDetails.filter(item => item.rescheduled === true && item.roleId == 2).length;
       console.log("RescheduledCount", this.rescheduledCount);
       this.loaderService.loadingDismiss(); 
@@ -191,7 +193,7 @@ async confirmAccept(data: any) {
 acceptRequest(data: any) {
   const requestBody = {
     NocId: data.nocId,
-    TrailOrRoadCutId: this.nocDetails.trailPitId,
+    TrailOrRoadCutId: this.nocDetails.BuildingInspectionId,
     CustomerActionTypeid: 5,
     IsAccepted: true
   };

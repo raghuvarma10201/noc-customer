@@ -139,13 +139,19 @@ export class AuthService {
   setUserInLocalStorage(user: any,name : any) {
       this.userData=user
       localStorage.setItem(name, JSON.stringify(this.userData));
+      localStorage.setItem('accessToken', user.data);
+      if (user && user.data) {
+        const decodedToken = this.decodeToken(user.data);
+        if (decodedToken) {
+          // Store the decoded token information
+          localStorage.setItem('decodedUserData', JSON.stringify(decodedToken));
+        }
+      }
   }
 
   logout() {
     // localStorage.removeItem('userData');
     localStorage.clear();
-    // this.userData['ipscUser']="";
-    // localStorage.setItem('userData', JSON.stringify(this.userData));
     this.router.navigate(["/login"]);
     this.sharedService.isUserLogin.next({isUserLoggedIn:false});
   }

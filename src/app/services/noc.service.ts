@@ -14,10 +14,11 @@ export class NocService {
     const params = new HttpParams().set('usertype', userType);
     return this.http.get<any>(environment.apiUrl + "NOC/GetRequestNocDetails",{params}).pipe(catchError(this.handleError));
   }
-  getComments(encryptedNocId : any, customerActionId : any): Observable<any> {
+  getComments(encryptedNocId : any, customerActionId : any, TrailPitOrRoadId : any): Observable<any> {
     let params = new HttpParams()
     .set('nocid', encryptedNocId)
-    .set('CustomerActionId', customerActionId);
+    .set('CustomerActionId', customerActionId)
+    .set('TrailPitOrRoadId', TrailPitOrRoadId);
     return this.http.get<any>(environment.apiUrl + "Manager/GetCATypeCommments",{ params }).pipe(catchError(this.handleError));
   }
   getNocDetails(encryptedNocId : any): Observable<any> {
