@@ -66,7 +66,7 @@ export class ListNocPage implements OnInit {
     })).subscribe((res: any) => {
       console.log("Res", res);
       if(res.status == 200 && res.success == true){
-        this.nocList = res.data;
+        this.nocList = res.data.items;
         this.loaderService.loadingDismiss(); 
       }
       else {

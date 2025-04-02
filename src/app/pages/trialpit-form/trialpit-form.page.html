@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
   <ion-toolbar>
     <ion-back-button default-href="#"></ion-back-button>
-    <ion-title>Trial Pit Form</ion-title>
+    <ion-title>{{ 'trialpit_form' | translate }}</ion-title>
     <div class="ion-float-end headerBts" slot="end">
       <!-- <ion-button shape="round" routerLink="/dashboard">
         <ion-img src="assets/images/main-icon.svg"></ion-img>
@@ -18,28 +18,28 @@
 
 <ion-content [fullscreen]="true" class="ion-padding requestDetails">
   <div class="dashboardBg pageBg"></div>
-  <h2>Project Details</h2>
+  <h2>{{ 'project_details' | translate }}</h2>
   <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
 
     <ion-item color="none">
       <ion-row class="ionNoPaddingLeft">
         <ion-col size="4">
           <ion-text>
-            <h6>NOC ID</h6>
+            <h6>{{ 'noc_id' | translate }}</h6>
             <h5>{{nocDetails.nocRequestID}}</h5>
           </ion-text>
         </ion-col>
 
         <ion-col size="4">
           <ion-text>
-            <h6>Type Of NOC</h6>
+            <h6>{{ 'type_of_noc' | translate }}</h6>
             <h5>{{nocDetails.typeOfNOCName}}</h5>
           </ion-text>
         </ion-col>
 
         <ion-col size="4">
           <ion-text>
-            <h6>NOC Type</h6>
+            <h6>{{ 'noc_type' | translate }}</h6>
             <h5>{{nocDetails.nocTypeName}}</h5>
           </ion-text>
         </ion-col>
@@ -50,7 +50,8 @@
   <div class="ionForm">
     <form [formGroup]="trailPitForm" class="trailPitForm">
       <div class="ionInput">
-        <ion-input label="Area Name *" labelPlacement="floating" shape="round" fill="outline" formControlName="location" placeholder="Enter Area Name *"
+        <ion-input label="Area Name *" labelPlacement="floating" shape="round" fill="outline" formControlName="location"
+          placeholder="Enter Area Name *"
           [ngClass]="{ 'is-invalid': (submitted && form['location'].errors) || (form['location'].touched && form['location'].errors) }"></ion-input>
         <div class="inputError" *ngIf="submitted||(form['location'].touched && form['location'].invalid)">
           <small class="form-text error-message" *ngIf="form['location'].errors">
@@ -58,7 +59,8 @@
         </div>
       </div>
       <div class="ionInput">
-        <ion-input label="Pit Dimension *" labelPlacement="floating" shape="round" fill="outline" formControlName="pitDimensions" placeholder="Enter Pit Dimensions *"
+        <ion-input label="Pit Dimension *" labelPlacement="floating" shape="round" fill="outline"
+          formControlName="pitDimensions" placeholder="Enter Pit Dimensions *"
           [ngClass]="{ 'is-invalid': (submitted && form['pitDimensions'].errors) || (form['pitDimensions'].touched && form['pitDimensions'].errors) }"></ion-input>
         <div class="inputError" *ngIf="submitted||(form['pitDimensions'].touched && form['pitDimensions'].invalid)">
           <small class="form-text error-message" *ngIf="form['pitDimensions'].errors">
@@ -66,8 +68,8 @@
         </div>
       </div>
       <div class="ionInput">
-        <ion-input label="Soil Stratigraph *" labelPlacement="floating" shape="round" fill="outline" formControlName="soilStraightGraph"
-          placeholder="Enter Soil Stratigraph *"
+        <ion-input label="Soil Stratigraph *" labelPlacement="floating" shape="round" fill="outline"
+          formControlName="soilStraightGraph" placeholder="Enter Soil Stratigraph *"
           [ngClass]="{ 'is-invalid': (submitted && form['soilStraightGraph'].errors) || (form['soilStraightGraph'].touched && form['soilStraightGraph'].errors) }"></ion-input>
         <div class="inputError"
           *ngIf="submitted||(form['soilStraightGraph'].touched && form['soilStraightGraph'].invalid)">
@@ -76,8 +78,8 @@
         </div>
       </div>
       <div class="ionInput">
-        <ion-textarea label="Description *" labelPlacement="floating" shape="round" fill="outline" formControlName="description" rows="3"
-          placeholder="Enter Description *"
+        <ion-textarea label="Description *" labelPlacement="floating" shape="round" fill="outline"
+          formControlName="description" rows="3" placeholder="Enter Description *"
           [ngClass]="{ 'is-invalid': (submitted && form['description'].errors) || (form['description'].touched && form['description'].errors) }"></ion-textarea>
         <div class="inputError" *ngIf="submitted||(form['description'].touched && form['description'].invalid)">
           <small class="form-text error-message" *ngIf="form['description'].errors">
@@ -91,7 +93,7 @@
             <div class="camBox">
               <div class="capturebutton" (click)="captureImage()">
                 <ion-icon name="camera-outline"></ion-icon>
-                <ion-text>Capture Image</ion-text>
+                <ion-text>{{ 'capture_image' | translate }}</ion-text>
               </div>
             </div>
           </ion-col>
@@ -107,12 +109,12 @@
             </ion-row>
           </ion-grid>
         </div>
-        <h2 class="mb2 mt2"> Inspection Request Time*</h2>
+        <h2 class="mb2 mt2"> {{ 'inspection_request_time' | translate }}*</h2>
         <ion-row>
           <ion-col size="12">
             <!-- Use a custom placeholder display when no value is selected -->
             <div *ngIf="!form['date_time'].value" class="datetime-placeholder" (click)="openDateTimePicker()">
-              <ion-text color="light">Select Date & Time</ion-text>
+              <ion-text color="light">{{ 'select_date_time' | translate }}</ion-text>
             </div>
 
             <!-- Only show the datetime button when a value exists -->
@@ -143,7 +145,7 @@
           </ion-col>
         </ion-row>
       </div>
-      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round" expand="block">Submit</ion-button>
+      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round" expand="block">{{ 'submit' | translate }}</ion-button>
     </form>
   </div>
 

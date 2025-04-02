@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { UaepassverificationPageRoutingModule } from './uaepassverification-routing.module';
 
 import { UaepassverificationPage } from './uaepassverification.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    UaepassverificationPageRoutingModule
+    UaepassverificationPageRoutingModule,
+    TranslateModule
   ],
   declarations: [UaepassverificationPage]
 })

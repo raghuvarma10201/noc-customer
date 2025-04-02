@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AsphaltDetailsPageRoutingModule } from './asphalt-details-routing.module';
 
 import { AsphaltDetailsPage } from './asphalt-details.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { AsphaltDetailsPage } from './asphalt-details.page';
     FormsModule,
     IonicModule,
     AsphaltDetailsPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   declarations: [AsphaltDetailsPage],
   providers: [DatePipe]

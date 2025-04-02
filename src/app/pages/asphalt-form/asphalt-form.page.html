@@ -25,21 +25,21 @@
       <ion-row class="ionNoPaddingLeft">
         <ion-col size="4">
           <ion-text>
-            <h6>NOC ID</h6>
+            <h6>{{ 'noc_id' | translate }}</h6>
             <h5>{{nocDetails.nocRequestID}}</h5>
           </ion-text>
         </ion-col>
 
         <ion-col size="4">
           <ion-text>
-            <h6>Type Of NOC</h6>
+            <h6>{{ 'type_of_noc' | translate }}</h6>
             <h5>{{nocDetails.typeOfNOCName}}</h5>
           </ion-text>
         </ion-col>
 
         <ion-col size="4">
           <ion-text>
-            <h6>NOC Type</h6>
+            <h6>{{ 'noc_type' | translate }}</h6>
             <h5>{{nocDetails.nocTypeName}}</h5>
           </ion-text>
         </ion-col>
@@ -112,7 +112,7 @@
       <div class="camBox">
         <div class="capturebutton" (click)="captureImage()">
           <ion-icon name="camera-outline"></ion-icon>
-          <ion-text>Capture Image</ion-text>
+          <ion-text>{{ 'capture_image' | translate }}</ion-text>
         </div>
       </div>
       <div *ngIf="imagePreviews.length > 0">
@@ -126,13 +126,13 @@
           </ion-row>
         </ion-grid>
       </div>
-      <h2 class="mb2 mt2">Inspection Request Time *</h2>
+      <h2 class="mb2 mt2">{{ 'inspection_request_time' | translate }} *</h2>
 
       <ion-row>
         <ion-col size="12">
           <!-- Use a custom placeholder display when no value is selected -->
           <div *ngIf="!form['date_time'].value" class="datetime-placeholder" (click)="openDateTimePicker()">
-            <ion-text color="light">Select Date & Time</ion-text>
+            <ion-text color="light">{{ 'select_date_time' | translate }}</ion-text>
           </div>
 
           <!-- Only show the datetime button when a value exists -->
@@ -162,7 +162,7 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round" expand="block">Submit</ion-button>
+      <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round" expand="block">{{ 'submit' | translate }}</ion-button>
     </form>
   </div>
 

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TrialPitDetailsPageRoutingModule } from './trial-pit-details-routing.module';
 
 import { TrialPitDetailsPage } from './trial-pit-details.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { TrialPitDetailsPage } from './trial-pit-details.page';
     FormsModule,
     IonicModule,
     TrialPitDetailsPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   declarations: [TrialPitDetailsPage],
   providers: [DatePipe]

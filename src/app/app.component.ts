@@ -14,6 +14,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { Camera } from '@capacitor/camera';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Capacitor } from "@capacitor/core";
+import { TranslationService } from './services/translation.service';
 
 @Component({
   selector: 'app-root',
@@ -37,11 +38,10 @@ export class AppComponent implements OnInit {
     private route: ActivatedRoute,
     private platform: Platform,
     private alertController: AlertController,
-    private diagnostic: Diagnostic
+    private diagnostic: Diagnostic,
+    private translationService: TranslationService
   ) {
-    this.translate.setDefaultLang('en'); // Default language
-    const browserLang = this.translate.getBrowserLang();
-    this.translate.use(browserLang?.match(/en|es/) ? browserLang : 'en');
+    this.translationService.loadTranslationsFromAPI(localStorage.getItem('language') || 1); // Load English translations
   }
 
   switchLanguage(lang: string) {
@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
       this.getDefaultSettings();
       const savedLang = localStorage.getItem('language');
       if (savedLang) {
-        this.translate.use(savedLang);
+        //this.translate.use(savedLang);
       }
       this.checkAndRequestPermissions();
     });

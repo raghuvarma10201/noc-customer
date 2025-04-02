@@ -14,7 +14,9 @@ export class CommonService {
   getDefaultSettings(): Observable<any> {
     return this.http.get<any>(environment.apiUrl + "Customer/GetConfigSettings").pipe(catchError(this.handleError));
   }
-
+  getLanguages(): Observable<any> {
+    return this.http.get<any>(environment.apiUrl + "Customer/GetLanguages").pipe(catchError(this.handleError));
+  }
   getDadhboardCounts(): Observable<any> {
     return this.http.get<any>(environment.apiUrl + "Manager/GetDashBoardDetails").pipe(catchError(this.handleError));
   }

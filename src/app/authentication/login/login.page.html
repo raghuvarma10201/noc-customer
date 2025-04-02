@@ -4,7 +4,7 @@
     <ion-img src="../../../assets/images/noc-logo.svg"></ion-img>
 
     <ion-text>
-      <h1>Login</h1>
+      <h1>{{ 'login' | translate }}</h1>
     </ion-text>
 
 
@@ -14,7 +14,7 @@
           [ngClass]="{ 'is-invalid': (submitted && form['username'].errors) || (form['username'].touched && form['username'].errors) }"></ion-input>
         <div class="inputError" *ngIf="submitted||(form['username'].touched && form['username'].invalid)">
           <small class="form-text error-message" *ngIf="form['username'].errors">
-            Username is required</small>
+            {{ 'username' | translate }} {{ 'is_required' | translate }}</small>
         </div>
       </div>
       <div class="ionInput">
@@ -27,7 +27,7 @@
             formControlName="password"
             [ngClass]="{ 'is-invalid': (submitted && form['password'].errors) || (form['password'].touched && form['password'].errors) }"></ion-input>
           <div class="inputError" *ngIf="submitted||(form['password'].touched && form['password'].invalid)">
-            <small class="form-text error-message" *ngIf="form['password'].errors"> Password is required</small>
+            <small class="form-text error-message" *ngIf="form['password'].errors"> {{ 'password' | translate }} {{ 'is_required' | translate }}</small>
           </div>
         </div>
       </div>
@@ -43,21 +43,21 @@
         <ion-col size="12">
           <ion-checkbox class="ionCheckbox ion-float-left" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="rememberMe" (ionChange)="rememberMe = $event.detail.checked" labelPlacement="end">
-            Remember Me
+            {{ 'remember_me' | translate }}
           </ion-checkbox>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-button class="resetBt" size="small" expand="block" shape="round" (click)="reset()">Reset</ion-button>
+          <ion-button class="resetBt" size="small" expand="block" shape="round" (click)="reset()">{{ 'reset' | translate }}</ion-button>
         </ion-col>
         <ion-col size="6">
-          <ion-button (click)="onSubmit()" class="loginBt" shape="round" size="small" expand="block">Login</ion-button>
+          <ion-button (click)="onSubmit()" class="loginBt" shape="round" size="small" expand="block">{{ 'login' | translate }}</ion-button>
         </ion-col>
       </ion-row>
     </form>
-    <ion-text class="textLinkLogin" (click)="forgotPassword()">Forgot Password?</ion-text>
-    <ion-text class="textLinkLogin" (click)="navigatetoUae()">Login with UAE Pass</ion-text>
+    <ion-text class="textLinkLogin" (click)="forgotPassword()">{{ 'forgot_password' | translate }}?</ion-text>
+    <ion-text class="textLinkLogin" (click)="navigatetoUae()">{{ 'login_with_uaepass' | translate }}</ion-text>
 
     <!-- <ion-text class="textLinkLogin">Forgot password?</ion-text> -->
 

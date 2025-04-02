@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
   <ion-toolbar>
     <ion-back-button default-href="#"></ion-back-button>
-    <ion-title>Asphalt Details</ion-title>
+    <ion-title>{{ 'asphalt_details' | translate }}</ion-title>
     <div class="ion-float-end headerBts" slot="end">
       <!-- <ion-button shape="round" routerLink="/dashboard">
         <ion-img src="assets/images/main-icon.svg"></ion-img>
@@ -33,21 +33,19 @@
       <ion-row class="ionNoPaddingLeft">
         <ion-col size="4">
           <ion-text>
-            <h6>NOC ID</h6>
+            <h6>{{ 'noc_id' | translate }}</h6>
             <h5>{{nocDetails.nocRequestID}}</h5>
           </ion-text>
         </ion-col>
-
         <ion-col size="4">
           <ion-text>
-            <h6>Type Of NOC</h6>
+            <h6>{{ 'type_of_noc' | translate }}</h6>
             <h5>{{nocDetails.typeOfNOCName}}</h5>
           </ion-text>
         </ion-col>
-
         <ion-col size="4">
           <ion-text>
-            <h6>NOC Type</h6>
+            <h6>{{ 'noc_type' | translate }}</h6>
             <h5>{{nocDetails.nocTypeName}}</h5>
           </ion-text>
         </ion-col>
@@ -69,7 +67,7 @@
             <h5>{{data.comments}}</h5>
           </ion-text>
           <div class="ion-justify-content-start availabilityText">
-            <ion-text class="labelName">CA Type Status: </ion-text>
+            <ion-text class="labelName">{{ 'ca_type_status' | translate }}: </ion-text>
             <ion-text class="labelStatus"> {{data.caStatusName}}</ion-text>
           </div>
 
@@ -89,11 +87,10 @@
           </div>
           <div class="ion-justify-content-start availabilityText">
             <ion-text class="labelName">Inspection Date & Time: </ion-text>
-            <ion-text class="labelStatus"> {{data.inspectionDate | date:'MMM d,
-              y'}},{{formatTime(data.inspectionTime)}}</ion-text>
+            <ion-text class="labelStatus"> {{data.inspectionDate | date:'MMM d,y'}},{{formatTime(data.inspectionTime)}}</ion-text>
           </div>
           <div class="ion-justify-content-start availabilityText" *ngIf="data.accepted || data.rescheduled">
-            <ion-text class="labelName">Scheduled Status: </ion-text>
+            <ion-text class="labelName">{{ 'scheduled_status' | translate }}: </ion-text>
             <ion-text class="labelStatus" *ngIf="data.accepted"> Accepted </ion-text>
             <ion-text class="labelStatus" *ngIf="!data.accepted && data.rescheduled"> Rescheduled </ion-text>
           </div>
@@ -101,13 +98,13 @@
             <ion-col size="6">
               <ion-button fill="outline" class="warningBt" size="small" shape="round" expand="block"
                 (click)="reschedule(nocDetails)">
-                Reschedule
+                {{ 'reschedule' | translate }}
               </ion-button>
             </ion-col>
             <ion-col size="6">
               <ion-button fill="outline" class="secondaryBt" size="small" shape="round" expand="block"
                 (click)="confirmAccept(data)">
-                Accept
+                {{ 'accept' | translate }}
               </ion-button>
             </ion-col>
           </ion-row>

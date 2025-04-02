@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ListNocPageRoutingModule } from './list-noc-routing.module';
 
 import { ListNocPage } from './list-noc.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ListNocPageRoutingModule
+    ListNocPageRoutingModule,
+    TranslateModule
   ],
   declarations: [ListNocPage]
 })

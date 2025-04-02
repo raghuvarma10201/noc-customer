@@ -3,6 +3,13 @@
     <ion-back-button default-href="#"></ion-back-button>
     <ion-title>{{ 'my_account' | translate:{ default: 'My Account' } }}</ion-title>
     <div class="ion-float-end headerBts" slot="end">
+      <ion-buttons>
+        <ion-select [(ngModel)]="selectedLanguageId" placeholder="Select Language" (ionChange)="handleLanguageChange($event)" style="font-size: 12px;color: #fff;">
+          <ion-select-option *ngFor="let option of languages" [value]="option.id">
+            {{ option.languageName }}
+          </ion-select-option>
+        </ion-select>
+      </ion-buttons>
       <ion-button shape="round" routerLink="/dashboard">
         <ion-icon name="home-outline"></ion-icon>
       </ion-button>

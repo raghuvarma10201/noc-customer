@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
   <ion-toolbar>
     <ion-back-button default-href="#"></ion-back-button>
-    <ion-title class="lineByLineText">NOC Request
+    <ion-title class="lineByLineText">{{ 'noc_request' | translate }}
       <ion-text class="requestStatus">{{nocStatus}}</ion-text>
     </ion-title>
 
@@ -20,7 +20,7 @@
 
 <ion-content [fullscreen]="true" class="ion-padding requestDetails">
   <div class="dashboardBg pageBg"></div>
-  <h1>NOC Request Details</h1>
+  <h1>{{ 'noc_request_details' | translate }}</h1>
 
   <h2> {{nocDetails?.projectTitle}} </h2>
   <ion-list *ngIf="nocDetails" lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
@@ -29,21 +29,21 @@
       <ion-row class="ionNoPaddingLeft">
         <ion-col size="4">
           <ion-text>
-            <h6>NOC ID</h6>
+            <h6>{{ 'noc_id' | translate }}</h6>
             <h5>{{nocDetails.nocRequestID}}</h5>
           </ion-text>
         </ion-col>
 
         <ion-col size="4">
           <ion-text>
-            <h6>Type Of NOC</h6>
+            <h6>{{ 'type_of_noc' | translate }}</h6>
             <h5>{{nocDetails.typeOfNOCName}}</h5>
           </ion-text>
         </ion-col>
 
         <ion-col size="4">
           <ion-text>
-            <h6>NOC Type</h6>
+            <h6>{{ 'noc_type' | translate }}</h6>
             <h5>{{nocDetails.nocTypeName}}</h5>
           </ion-text>
         </ion-col>
@@ -54,7 +54,7 @@
       <ion-row class="ionNoPaddingLeft">
         <ion-col size="6">
           <ion-text>
-            <h6>NOC Request Sub Types</h6>
+            <h6>{{ 'noc_request_subtypes' | translate }}</h6>
             <h5>{{nocDetails.nocRequestSubTypeName}}</h5>
           </ion-text>
         </ion-col>
@@ -68,7 +68,7 @@
 
         <ion-col size="6">
           <ion-text>
-            <h6>Create Date</h6>
+            <h6>{{ 'create_date' | translate }}</h6>
             <h5>{{nocDetails.createdOn | date:'MMM d, y, h:mm a'}}</h5>
           </ion-text>
         </ion-col>
@@ -82,7 +82,7 @@
 
         <ion-col size="12">
           <ion-text>
-            <h6>NOC Description</h6>
+            <h6>{{ 'noc_description' | translate }}</h6>
             <h5>{{nocDetails.description}}</h5>
           </ion-text>
         </ion-col>
@@ -93,7 +93,7 @@
       <ion-row class="ionNoPaddingLeft">
         <ion-col size="12">
           <ion-text>
-            <h2>Comments</h2>
+            <h2>{{ 'comments' | translate }}</h2>
             <h3>NOC Office</h3>
             <h6> {{nocDetails.updatedOn | date:'MMM d, y, h:mm a'}} </h6>
             <h5>{{nocDetails.comments}}</h5>
@@ -106,7 +106,7 @@
       <ion-row class="ionNoPaddingLeft">
         <ion-col size="12">
           <ion-text>
-            <h2>Documents</h2>
+            <h2>{{ 'documents' | translate }}</h2>
             <ion-item lines="none" color="none" *ngFor="let doc of documentslist">
               <ion-icon class="leftIcon" slot="start" name="document-text-outline"></ion-icon>
                <ion-text>

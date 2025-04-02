@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="ion-no-border ion-padding-horizontal">
   <ion-toolbar>
     <ion-back-button default-href="#"></ion-back-button>
-    <ion-title class="lineByLineText">Comments
+    <ion-title class="lineByLineText">{{ 'comments' | translate }}
       <ion-text class="requestStatus">{{nocDetails.nocRequestID}}</ion-text>
     </ion-title>
     <div class="ion-float-end headerBts" slot="end">
@@ -39,7 +39,7 @@
             <div class="camBox">
               <div class="capturebutton" (click)="captureImage()">
                 <ion-icon name="camera-outline"></ion-icon>
-                <ion-text >Capture Image</ion-text>
+                <ion-text >{{ 'capture_image' | translate }}</ion-text>
               </div>
             </div>
           </ion-col>
@@ -57,7 +57,7 @@
         </div>
       </div>
       <ion-button (click)="onSubmit()" fill="outline" class="warningBt" shape="round"
-      expand="block">Submit</ion-button>
+      expand="block">{{ 'submit' | translate }}</ion-button>
     </form>
   </div>
 

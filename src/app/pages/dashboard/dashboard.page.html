@@ -38,8 +38,8 @@
   </ion-item>
 
   <ion-text class="headingdash text-center">
-    <h1>{{ 'WELCOME' | translate }}</h1>
-    <p>Here's your dashboard details.</p>
+    <h1>{{ 'welcome_heading' | translate }}</h1>
+    <p>{{ 'welcome_subheading' | translate }}</p>
   </ion-text>
 
   <div class="ion-padding-horizontal cardDash">
@@ -48,7 +48,7 @@
         <ion-button class="cardColor1" (click)="navigateToNocList('dashboard')">
           <ion-text>
             <h2>{{ counts?.totalCases || 0 }}</h2>
-            <h6>Total NOC's</h6>
+            <h6>{{ 'total_noc' | translate }}</h6>
           </ion-text>
         </ion-button>
       </ion-col>
@@ -57,7 +57,7 @@
         <ion-button class="cardColor2" (click)="navigateToNocList('UnderProcess')">
           <ion-text>
             <h2>{{ counts?.underProcess || 0 }}</h2>
-            <h6>Under Process</h6>
+            <h6>{{ 'under_process' | translate }}</h6>
           </ion-text>
         </ion-button>
       </ion-col>
@@ -66,7 +66,7 @@
         <ion-button class="cardColor3" (click)="navigateToNocList('Completed')">
           <ion-text>
             <h2>{{ counts?.completed || 0 }}</h2>
-            <h6>Completed</h6>
+            <h6>{{ 'completed' | translate }}</h6>
           </ion-text>
         </ion-button>
       </ion-col>
@@ -75,7 +75,7 @@
         <ion-button class="cardColor4" (click)="navigateToNocList('CustomerActions')">
           <ion-text>
             <h2>{{ counts?.customerAction || 0 }}</h2>
-            <h6>Customer Action</h6>
+            <h6>{{ 'customer_action' | translate }}</h6>
           </ion-text>
         </ion-button>
       </ion-col>
