@@ -143,4 +143,14 @@ export class TrialpitReschedulePage implements OnInit {
   openDateTimePicker() {
     this.dateTimeModal.present();
   }
+
+  goBack() {
+    // Navigate back to trial-pit-details
+    // Optional: You can pass any data needed when returning
+    this.router.navigate(['/trial-pit-details'], { 
+      state: { 
+        nocData: this.nocDetails,
+      } 
+    });
+  }
 }

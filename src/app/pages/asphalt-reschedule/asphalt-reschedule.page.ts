@@ -145,4 +145,14 @@ export class AsphaltReschedulePage implements OnInit {
   openDateTimePicker() {
     this.dateTimeModal.present();
   }
+
+  goBack() {
+    // Navigate back to asphalt-details
+    // Optional: You can pass any data needed when returning
+    this.router.navigate(['/asphalt-details'], { 
+      state: { 
+        nocData: this.nocDetails,
+      } 
+    });
+  }
 }

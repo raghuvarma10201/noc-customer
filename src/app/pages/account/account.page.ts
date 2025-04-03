@@ -27,7 +27,7 @@ export class AccountPage implements OnInit {
   role: any;
   languages: any;
   errorMsg: any;
-  selectedLanguageId: string = '';
+  selectedLanguageId: number;
   constructor(
     private commonService: CommonService,
     private translateService: TranslateService,
@@ -41,11 +41,11 @@ export class AccountPage implements OnInit {
     private authService: AuthService,
     private translationService: TranslationService,
   ) { 
-    
+    let languageId = localStorage.getItem('language');
+    this.selectedLanguageId =  parseInt(languageId!);
   }
 
   ngOnInit() {
-    this.selectedLanguageId =  JSON.stringify(localStorage.getItem('language')) || '1';
     this.getLanguages();
     this.getNameIdentifier();
   }
