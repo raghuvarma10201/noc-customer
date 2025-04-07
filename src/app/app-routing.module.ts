@@ -73,24 +73,6 @@ const routes: Routes = [
 
   },
   {
-    path: 'under-process-list',
-    loadChildren: () => import('./pages/under-process-list/under-process-list.module').then( m => m.UnderProcessListPageModule),
-    canActivate: [AuthGuard]
-
-  },
-  {
-    path: 'completed-noc',
-    loadChildren: () => import('./pages/completed-noc/completed-noc.module').then( m => m.CompletedNocPageModule),
-    canActivate: [AuthGuard]
-
-  },
-  {
-    path: 'customer-action-noc',
-    loadChildren: () => import('./pages/customer-action-noc/customer-action-noc.module').then( m => m.CustomerActionNocPageModule),
-    canActivate: [AuthGuard]
-
-  },
-  {
     path: 'building-inspection-details',
     loadChildren: () => import('./pages/building-inspection-details/building-inspection-details.module').then( m => m.BuildingInspectionDetailsPageModule),
     canActivate: [AuthGuard]
