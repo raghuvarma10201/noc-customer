@@ -140,7 +140,7 @@
 
           <ion-modal [keepContentsMounted]="true" #dateTimeModal class="no-border-radius">
             <ng-template>
-              <ion-datetime id="datetime" formControlName="date_time" presentation="date-time" [min]="minDateTime"
+              <ion-datetime class="date-time" id="datetime" formControlName="date_time" presentation="date-time" [min]="minDateTime"
                 [showDefaultTitle]="true" [showDefaultButtons]="true" (ionChange)="onDateTimeChange($event)"
                 (ionCancel)="dateTimeModal.dismiss()" [formatOptions]="{
                 date: {

@@ -838,6 +838,20 @@ ion-modal {
   word-break: break-word; /* Break long filenames */
 }
 
+.date-time{
+  --ion-color-base: #1b1e46 !important;
+    --ion-color-base-rgb: var(--ion-color-primary-rgb, 0, 84, 233) !important;
+    --ion-color-contrast: var(--ion-color-primary-contrast, #fff) !important;
+    --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, 255, 255, 255) !important;
+    --ion-color-shade: #3a3f80 !important;
+    --ion-color-tint: var(--ion-color-primary-tint, #1a65eb) !important;
+}
+
+ion-datetime.datetime-size-fixed:not(.datetime-prefer-wheel) {
+  max-width: 100% !important;
+}
+
+
 
 
 

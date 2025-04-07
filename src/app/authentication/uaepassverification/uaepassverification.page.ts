@@ -29,14 +29,14 @@ export class UaepassverificationPage implements OnInit {
    }
 
   ngOnInit() {
-    // const navigation = this.router.getCurrentNavigation();
-    // const state = navigation?.extras?.state;
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras?.state;
     
-    // if (state && state['authorization_code']) {
-    //   this.getAccessToken(state['authorization_code']);
-    // } else {
-    //   this.router.navigate(['/login']);
-    // }
+    if (state && state['authorization_code']) {
+      this.getAccessToken(state['authorization_code']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   async getAccessToken(authorizationCode: string) {

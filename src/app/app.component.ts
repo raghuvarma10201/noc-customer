@@ -15,6 +15,12 @@ import { Camera } from '@capacitor/camera';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Capacitor } from "@capacitor/core";
 import { TranslationService } from './services/translation.service';
+import {
+  ActionPerformed,
+  PushNotificationSchema,
+  PushNotifications,
+  Token,
+} from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-root',
@@ -59,6 +65,43 @@ export class AppComponent implements OnInit {
       }
       this.checkAndRequestPermissions();
     });
+    console.log('Initializing HomePage');
+    PushNotifications.requestPermissions().then(result => {
+      if (result.receive === 'granted') {
+        // Register with Apple / Google to receive push via APNS/FCM
+        PushNotifications.register();
+      } else {
+        // Show some error
+      }
+    });
+
+    // On success, we should be able to receive notifications
+    PushNotifications.addListener('registration',
+      (token: Token) => {
+        console.log('Push registration success, token: ' + token.value);
+      }
+    );
+
+    // Some issue with our setup and push will not work
+    PushNotifications.addListener('registrationError',
+      (error: any) => {
+        console.log('Error on registration: ' + JSON.stringify(error));
+      }
+    );
+
+    // Show us the notification payload if the app is open on our device
+    PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        console.log('Push received: ' + JSON.stringify(notification));
+      }
+    );
+
+    // Method called when tapping on a notification
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        console.log('Push action performed: ' + JSON.stringify(notification));
+      }
+    );
   }
 
   async getDeviceInfo() {
@@ -88,32 +131,32 @@ export class AppComponent implements OnInit {
 
   async checkAndRequestPermissions() {
     try {
-      if(Capacitor.getPlatform() === 'android'){
-      // Check location permission
-      const locationPerm = await Geolocation.checkPermissions();
+      if (Capacitor.getPlatform() === 'android') {
+        // Check location permission
+        const locationPerm = await Geolocation.checkPermissions();
 
-      // Check camera permission
-      const cameraPerm = await Camera.checkPermissions();
+        // Check camera permission
+        const cameraPerm = await Camera.checkPermissions();
 
-      // If either permission is not granted, show persistent alert
-      if (locationPerm.coarseLocation !== 'granted' || cameraPerm.camera !== 'granted') {
-        Geolocation.requestPermissions();
-        Camera.requestPermissions();
+        // If either permission is not granted, show persistent alert
+        if (locationPerm.coarseLocation !== 'granted' || cameraPerm.camera !== 'granted') {
+          Geolocation.requestPermissions();
+          Camera.requestPermissions();
+        }
       }
-    }
     } catch (error) {
       // Check location permission
-      if(Capacitor.getPlatform() === 'android'){
-      const locationPerm = await Geolocation.checkPermissions();
+      if (Capacitor.getPlatform() === 'android') {
+        const locationPerm = await Geolocation.checkPermissions();
 
-      // Check camera permission
-      const cameraPerm = await Camera.checkPermissions();
-      await this.showPermissionAlert(locationPerm.coarseLocation, cameraPerm.camera);
-      console.error('Permission check failed:', error);
-      this.toastService.showError('Failed to check permissions', 'Error');
+        // Check camera permission
+        const cameraPerm = await Camera.checkPermissions();
+        await this.showPermissionAlert(locationPerm.coarseLocation, cameraPerm.camera);
+        console.error('Permission check failed:', error);
+        this.toastService.showError('Failed to check permissions', 'Error');
+      }
     }
-  }
-    
+
 
   }
 
