@@ -31,7 +31,19 @@
       refreshingText="Refreshing..."
     ></ion-refresher-content>
   </ion-refresher>
-  <!-- <ion-searchbar shape="round" placeholder="Search by ID, Type, Project Name ... " class="ion-no-padding"></ion-searchbar> -->
+  <div class="searchContainer">
+    <ion-searchbar shape="round" placeholder="Search by ID, Type, Project Name ... " 
+      class="ion-no-padding"
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchChange($event)"
+      (ionClear)="clearSearch()">
+    </ion-searchbar>
+  </div>
+
+    <!-- Show searching indicator -->
+    <div *ngIf="isLoading && searchTerm" class="ion-text-center ion-padding-bottom">
+      <ion-text color="medium">Searching for "{{searchTerm}}"...</ion-text>
+    </div>
 
   <ion-list lines="none" color="none" class="ion-no-padding ion-bg-transparent listCards">
     <div *ngIf="nocList && nocList.length == 0">
@@ -60,7 +72,24 @@
     </ion-item>
   </ion-list>
 
+    <!-- Loading indicator -->
+    <div *ngIf="isLoading" class="ion-text-center ion-padding">
+      <ion-spinner color="light" name="bubbles"></ion-spinner>
+      <p style="color:aliceblue">Loading...</p>
+    </div>
+    
+    <!-- Infinite scroll component with disabled property -->
+    <ion-infinite-scroll [disabled]="isInfiniteScrollDisabled" (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content>
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    
+    <!-- Message when all data is loaded -->
+    <div *ngIf="isInfiniteScrollDisabled && nocList && nocList.length > 0" class="ion-text-center ion-padding">
+      <ion-text color="light">No more data to load</ion-text>
+    </div>
 
+    
 
   <!-- listNocInformation -->
   <ion-modal class="breakPointModal listNocInformation" #modal trigger="open-modal" [initialBreakpoint]="0.50" [breakpoints]="[0, 0.25, 0.5, 0.75]">

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, Subject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { NocService } from 'src/app/services/noc.service';
@@ -18,6 +18,12 @@ export class UnderProcessListPage implements OnInit {
   errorMsg: any;
   nocList: any = [];
   encryptedUserType: any;
+    pageno: number = 1;
+    totalPages: number = 1;
+    isLoading: boolean = false;
+    searchTerm: string = '';
+    searchSubject: Subject<string> = new Subject<string>();
+    isInfiniteScrollDisabled: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,7 +34,15 @@ export class UnderProcessListPage implements OnInit {
     private nocService: NocService,
     private activatedRouteService: ActivatedRoute,
     private authService: AuthService
-  ) { }
+  ) {
+        this.searchSubject.pipe(
+          debounceTime(500), // Wait for 500ms after user stops typing
+          distinctUntilChanged() // Only emit if value has changed
+        ).subscribe(searchValue => {
+          this.searchTerm = searchValue;
+          this.resetAndSearch();
+        });
+   }
 
   ngOnInit() {
     this.encryptuserType();
@@ -55,24 +69,24 @@ export class UnderProcessListPage implements OnInit {
   }
 
   async fetchNOCList(userType: string) {
-    await this.loaderService.loadingPresent();
-    this.nocService.getNocs(userType).pipe(finalize(() => {
-      this.loaderService.loadingDismiss();
-    })).subscribe((res: any) => {
-      console.log("Res", res);
-      if(res.status == 200 && res.success == true){
-        this.nocList = res.data;
-        this.loaderService.loadingDismiss(); 
-      }
-      else {
-        this.loaderService.loadingDismiss();
-        this.toastService.showError(res.message, "Error");
-      }
-    }, error => {
-      this.loaderService.loadingDismiss();
-      this.errorMsg = error;
-      this.toastService.showError('Something went wrong', "Error");
-    })
+    // await this.loaderService.loadingPresent();
+    // this.nocService.getNocs(userType, this.pageno,this.searchTerm).pipe(finalize(() => {
+    //   this.loaderService.loadingDismiss();
+    // })).subscribe((res: any) => {
+    //   console.log("Res", res);
+    //   if(res.status == 200 && res.success == true){
+    //     this.nocList = res.data;
+    //     this.loaderService.loadingDismiss(); 
+    //   }
+    //   else {
+    //     this.loaderService.loadingDismiss();
+    //     this.toastService.showError(res.message, "Error");
+    //   }
+    // }, error => {
+    //   this.loaderService.loadingDismiss();
+    //   this.errorMsg = error;
+    //   this.toastService.showError('Something went wrong', "Error");
+    // })
   }
   doRefresh(event: any) {
     console.log('Refreshing data...');
@@ -90,6 +104,12 @@ export class UnderProcessListPage implements OnInit {
 
   logout(){
     this.authService.logout();
+  }
+  resetAndSearch() {
+    this.pageno = 1;
+    this.nocList = [];
+    this.isInfiniteScrollDisabled = false;
+    this.fetchNOCList(this.encryptedUserType);
   }
 
 }

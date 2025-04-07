@@ -55,25 +55,25 @@ export class CompletedNocPage implements OnInit {
   }
 
   async fetchNOCList(userType: string) {
-    await this.loaderService.loadingPresent();
-    this.nocService.getNocs(userType).pipe(finalize(() => {
-      this.loaderService.loadingDismiss();
-    })).subscribe((res: any) => {
-      console.log("Res", res);
-      if (res.status == 200 && res.success == true) {
-        this.nocList = res.data;
-        this.loaderService.loadingDismiss();
-      }
-      else {
-        this.loaderService.loadingDismiss();
-        this.toastService.showError(res.message, "Error");
-      }
-    }, error => {
-      this.loaderService.loadingDismiss();
-      this.errorMsg = error;
+    // await this.loaderService.loadingPresent();
+    // this.nocService.getNocs(userType).pipe(finalize(() => {
+    //   this.loaderService.loadingDismiss();
+    // })).subscribe((res: any) => {
+    //   console.log("Res", res);
+    //   if (res.status == 200 && res.success == true) {
+    //     this.nocList = res.data;
+    //     this.loaderService.loadingDismiss();
+    //   }
+    //   else {
+    //     this.loaderService.loadingDismiss();
+    //     this.toastService.showError(res.message, "Error");
+    //   }
+    // }, error => {
+    //   this.loaderService.loadingDismiss();
+    //   this.errorMsg = error;
 
-      this.toastService.showError('Something went wrong', "Error");
-    })
+    //   this.toastService.showError('Something went wrong', "Error");
+    // })
   }
   doRefresh(event: any) {
     console.log('Refreshing data...');
